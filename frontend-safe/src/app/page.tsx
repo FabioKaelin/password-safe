@@ -1,10 +1,11 @@
 import Image from "next/image";
+import LogIn from "./components/LogIn";
 
 export default function Home() {
   return (
     <div>
       <h1 className="text-red-500">Home</h1>
-      <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
+      <LogIn />
     </div>
   );
 }
