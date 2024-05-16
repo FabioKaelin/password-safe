@@ -21,8 +21,8 @@ var (
 type ContextKeyUserName string
 
 const (
-	// UserNameKey is the key for the username in the context
-	UserNameKey = ContextKeyUserName("username")
+	// EmailKey is the key for the username in the context
+	EmailKey = ContextKeyUserName("email")
 )
 
 // DefaultLogFormatter is the default log formatter
@@ -72,19 +72,19 @@ func DefaultLogFormatter(param gin.LogFormatterParams) string {
 			queryParams = queryParams + fmt.Sprintf("%s=%s  ", k, value)
 		}
 	}
-	username := param.Request.Context().Value(UserNameKey)
-	if username == nil {
-		username = "<nil>"
+	email := param.Request.Context().Value(EmailKey)
+	if email == nil {
+		email = "<nil>"
 	}
-	if len(username.(string)) > 11 {
-		username = username.(string)[:8] + ".."
+	if len(email.(string)) > 11 {
+		email = email.(string)[:8] + ".."
 	}
 
 	return fmt.Sprintf("[GIN] %v %s %3d %s %10v | %-10s |%s %-7s %s %-15s | %s\n%s",
 		param.TimeStamp.Format("02.01.2006 - 15:04:05"), // time (%v)
 		statusColor, param.StatusCode, resetColor, // status code (%s %3d %s)
 		param.Latency,                         // latency (%10v)
-		username,                              // username (%-10v)
+		email,                                 // email (%-10v)
 		methodColor, param.Method, resetColor, // method (%s %-7s %s)
 		cuttedPath,         // path (%-15s)
 		queryParams,        // query (%#v)

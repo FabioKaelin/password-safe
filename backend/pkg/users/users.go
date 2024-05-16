@@ -12,7 +12,7 @@ import (
 type (
 	User struct {
 		ID       string `json:"id,omitempty"`
-		Name     string `json:"name,omitempty"`
+		Email    string `json:"email,omitempty"`
 		Password string `json:"password,omitempty"`
 	}
 )
@@ -27,7 +27,7 @@ func Create(user User) (User, error) {
 
 	dbUser := db.DatabaseUser{
 		ID:       user.ID,
-		Name:     user.Name,
+		Email:    user.Email,
 		Password: hashedPassword,
 	}
 
@@ -43,7 +43,7 @@ func Create(user User) (User, error) {
 
 	newUser := User{
 		ID:       newDBUser.ID,
-		Name:     newDBUser.Name,
+		Email:    newDBUser.Email,
 		Password: newDBUser.Password,
 	}
 
@@ -51,7 +51,7 @@ func Create(user User) (User, error) {
 }
 
 func Login(user User) (string, error) {
-	dbUser, err := db.UsersGetByName(user.Name)
+	dbUser, err := db.UsersGetByEmail(user.Email)
 	if err != nil {
 		return "", err
 	}
@@ -71,7 +71,7 @@ func Login(user User) (string, error) {
 
 func (user *User) FilteredUser() User {
 	return User{
-		ID:   user.ID,
-		Name: user.Name,
+		ID:    user.ID,
+		Email: user.Email,
 	}
 }
