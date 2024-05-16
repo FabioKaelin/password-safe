@@ -1,0 +1,25 @@
+version: '3'
+services:
+  mariadb:
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: safe
+      MYSQL_USER: safeuser
+      MYSQL_PASSWORD: safepass
+    volumes:
+      - "./mariadb/data:/var/lib/mysql/data/"
+      - "./mariadb/logs:/var/lib/mysql/logs/"
+      - ./import.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "3306:3306"
+    command: --max_connections=10000
+  phpmyadmin:
+    image: phpmyadmin:latest
+    ports:
+      - 28345:80
+    environment:
+      - PMA_HOST=mariadb
+    depends_on:
+      - mariadb
