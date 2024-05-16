@@ -3,7 +3,10 @@ package main
 import (
 	"fmt"
 
-	"github.com/fabiokaelin/passowrd-safe/config"
+	"github.com/fabiokaelin/password-safe/config"
+	"github.com/fabiokaelin/password-safe/controllers"
+	"github.com/fabiokaelin/password-safe/pkg/logger"
+	"github.com/fabiokaelin/password-safe/pkg/middleware"
 	"github.com/gin-gonic/gin"
 )
 
@@ -15,12 +18,18 @@ func main() {
 		panic(err)
 	}
 
-	router := gin.Default()
-	router.GET("/ping", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "pong",
-		})
-	})
+	gin.SetMode(config.GinMode)
+
+	router := gin.New()
+	router.Use(gin.Recovery())
+	router.Use(gin.LoggerWithConfig(logger.LoggerConfig))
+	router.ForwardedByClientIP = true
+	router.HandleMethodNotAllowed = true
+	router.Use(middleware.CORSMiddleware())
+
+	apiGroup := router.Group("/api")
+
+	controllers.UserRouter(apiGroup)
 
 	router.Run(":8080")
 }
