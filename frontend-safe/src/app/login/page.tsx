@@ -10,10 +10,13 @@ export default function LogIn() {
   return (
     <div>
       <Header title={"Log In"} />
-      <form>
+      <form className="grid grid-gap-5 grid-row-7">
         <input type="text" placeholder="Username" />
+        <br />
         <input type="password" placeholder="Password" />
+        <br />
         <button>Log In</button>
+        <br />
         <Link href="/register">Sign Up</Link>
       </form>
     </div>
