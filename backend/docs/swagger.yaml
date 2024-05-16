@@ -1,0 +1,86 @@
+basePath: /api
+definitions:
+  ErrorResponse:
+    properties:
+      message:
+        example: error appeared
+        type: string
+    type: object
+  users.User:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+    type: object
+info:
+  contact: {}
+  description: The API for the Password Safe Application
+  title: Password Safe API
+  version: 1.0.0
+paths:
+  /users:
+    post:
+      description: Register a new user and return the user
+      parameters:
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/users.User'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/users.User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      summary: Register a new user
+      tags:
+      - users
+  /users/login:
+    post:
+      description: Log in a user and set a cookie with the token
+      parameters:
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/users.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      summary: Log in a user
+      tags:
+      - users
+securityDefinitions:
+  ApiKeyAuth:
+    description: Token for authentication
+    in: header
+    name: token
+    type: apiKey
+swagger: "2.0"
