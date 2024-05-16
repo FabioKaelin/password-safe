@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/davecgh/go-spew/spew"
 	"github.com/fabiokaelin/password-safe/config"
 	"github.com/fabiokaelin/password-safe/pkg/db"
 	token_pkg "github.com/fabiokaelin/password-safe/pkg/token"
@@ -43,6 +44,8 @@ func SetUserToContext() gin.HandlerFunc {
 
 		var user user_pkg.User
 
+		fmt.Println("sub", sub)
+
 		rows, err := db.RunSQL("SELECT `id`, `email`, `password` FROM `users` WHERE `id` = ? LIMIT 1;", fmt.Sprint(sub))
 
 		if err != nil {
@@ -57,6 +60,8 @@ func SetUserToContext() gin.HandlerFunc {
 			break
 		}
 
+		spew.Dump(user)
+
 		// spew.Dump(user)
 
 		ctx.Set("currentUser", user)
@@ -67,7 +72,7 @@ func SetUserToContext() gin.HandlerFunc {
 
 // GetCurrentUser returns the current user from the context
 func GetCurrentUser(c *gin.Context) (users.User, error) {
-	userData, exist := c.Get("user")
+	userData, exist := c.Get("currentUser")
 	if !exist {
 		return users.User{}, errors.New("user not found")
 	}
