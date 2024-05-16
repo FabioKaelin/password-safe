@@ -115,10 +115,10 @@ const docTemplate = `{
         "users.User": {
             "type": "object",
             "properties": {
-                "id": {
+                "email": {
                     "type": "string"
                 },
-                "name": {
+                "id": {
                     "type": "string"
                 },
                 "password": {

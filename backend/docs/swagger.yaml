@@ -8,9 +8,9 @@ definitions:
     type: object
   users.User:
     properties:
-      id:
+      email:
         type: string
-      name:
+      id:
         type: string
       password:
         type: string
