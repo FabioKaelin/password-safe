@@ -10,7 +10,7 @@ SHOW databases;
 CREATE TABLE
     `users` (
         `id` varchar(64) NOT NULL,
-        `name` varchar(64) DEFAULT NULL,
+        `email` varchar(64) DEFAULT NULL,
         `password` varchar(512) NOT NULL
     );
 

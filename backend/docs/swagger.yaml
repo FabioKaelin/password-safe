@@ -21,6 +21,19 @@ info:
   title: Password Safe API
   version: 1.0.0
 paths:
+  /test:
+    get:
+      description: Test if the user is logged in
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/users.User'
+      summary: Test if the user is logged in
+      tags:
+      - test
   /users:
     post:
       description: Register a new user and return the user

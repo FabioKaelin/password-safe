@@ -60,7 +60,7 @@ func Login(user User) (string, error) {
 		return "", nil
 	}
 
-	tokenString, err := token.GenerateToken(time.Duration(24*time.Hour), dbUser, config.JWTTokenSecret)
+	tokenString, err := token.GenerateToken(time.Duration(24*time.Hour), dbUser.ID, config.JWTTokenSecret)
 
 	if err != nil {
 		return "", err

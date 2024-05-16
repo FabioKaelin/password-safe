@@ -8,6 +8,26 @@
     },
     "basePath": "/api",
     "paths": {
+        "/test": {
+            "get": {
+                "description": "Test if the user is logged in",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "test"
+                ],
+                "summary": "Test if the user is logged in",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/users.User"
+                        }
+                    }
+                }
+            }
+        },
         "/users": {
             "post": {
                 "description": "Register a new user and return the user",

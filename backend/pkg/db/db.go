@@ -3,6 +3,7 @@ package db
 import (
 	// "backend/config"
 
+	"database/sql"
 	"errors"
 	"fmt"
 	"time"
@@ -63,4 +64,21 @@ func SetConnectionString(newConnString string) {
 // GetDBConnection returns the database connection string
 func GetDBConnection() *sqlx.DB {
 	return dbConn
+}
+
+func RunSQL(sqlStatement string, parameters ...any) (*sql.Rows, error) {
+	err := dbConn.Ping()
+	if err != nil {
+		fmt.Println("DB Connection lost, reconnecting...")
+		err := UpdateDBConnection()
+		if err != nil {
+			return &sql.Rows{}, err
+		}
+	}
+	rows, err := dbConn.Query(sqlStatement, parameters...)
+	if err != nil {
+		err := errors.Join(errors.New("error durring executing "+sqlStatement), err)
+		return &sql.Rows{}, err
+	}
+	return rows, nil
 }
