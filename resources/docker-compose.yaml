@@ -9,8 +9,7 @@ services:
       MYSQL_USER: safeuser
       MYSQL_PASSWORD: safepass
     volumes:
-      - "./mariadb/data:/var/lib/mysql/data/"
-      - "./mariadb/logs:/var/lib/mysql/logs/"
+      - "./mariadb/:/var/lib/mysql/"
       - ./import.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - "3306:3306"

@@ -1,15 +1,18 @@
-START TRANSACTION;
 
 CREATE DATABASE IF NOT EXISTS `safe`;
 
-use `safe`;
+USE `safe`;
+
+SELECT 4;
+
+SHOW databases;
 
 CREATE TABLE
     `users` (
         `id` varchar(64) NOT NULL,
         `name` varchar(64) DEFAULT NULL,
         `password` varchar(512) NOT NULL,
-        `role` varchar(64) DEFAULT NULL,
+        `role` varchar(64) DEFAULT NULL
     );
 
 CREATE TABLE
@@ -17,10 +20,12 @@ CREATE TABLE
         `id` varchar(64) NOT NULL,
         `useridfk` varchar(64) DEFAULT NULL,
         `password` varchar(512) NOT NULL,
-        `description` varchar(64) DEFAULT NULL,
+        `description` varchar(64) DEFAULT NULL
     );
 
 ALTER TABLE `users` ADD PRIMARY KEY (`id`);
 
+ALTER TABLE `passwords` ADD PRIMARY KEY (`id`),
+ADD KEY `fk_password_user` (`useridfk`);
 
-COMMIT;
+ALTER TABLE `password` ADD CONSTRAINT `fk_password_user` FOREIGN KEY (`useridfk`) REFERENCES `users` (`id`);
