@@ -10,17 +10,15 @@ SHOW databases;
 CREATE TABLE
     `users` (
         `id` varchar(64) NOT NULL,
-        `email` varchar(64) DEFAULT NULL,
-        `password` varchar(512) NOT NULL
+        `name` varchar(64) DEFAULT NULL,
+        `password` varchar(512) NOT NULL,
+        `role` varchar(64) DEFAULT NULL
     );
 
 CREATE TABLE
     `passwords` (
         `id` varchar(64) NOT NULL,
         `useridfk` varchar(64) DEFAULT NULL,
-        `title` varchar(64) NOT NULL,
-        `url` varchar(64) NOT NULL,
-        `username` varchar(64) NOT NULL,
         `password` varchar(512) NOT NULL,
         `description` varchar(64) DEFAULT NULL
     );
