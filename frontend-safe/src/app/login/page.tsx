@@ -29,20 +29,19 @@ export default function LogIn() {
     } catch (error) {
       console.error("Error logging in:", error);
     }
-
   }
 
   return (
     <div>
       <Header title={"Log In"} />
-      <form className="grid grid-gap-5 grid-row-7" onSubmit={handleLogIn}>
+      <form className="grid grid-gap-5 grid-row-7 text-black" onSubmit={handleLogIn}>
         <input type="text" placeholder="Email" onChange={(e) => setUser({ ...user, email: e.target.value })} />
         <br />
         <input type="password" placeholder="Password" onChange={(e) => setUser({ ...user, password: e.target.value })} />
         <br />
-        <button type="submit">Log In</button>
+        <button type="submit" className="text-white">Log In</button>
         <br />
-        <Link href="/register">Sign Up</Link>
+        <Link href="/register " className="text-white">Sign Up</Link>
       </form>
     </div>
   );
