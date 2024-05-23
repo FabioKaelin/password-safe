@@ -23,5 +23,6 @@ func TestRouter(apiGroup *gin.RouterGroup) {
 //	@Router			/test [get]
 func testGet(c *gin.Context) {
 	currentUser, _ := middleware.GetCurrentUser(c)
-	c.JSON(200, currentUser)
+	filteredUser := currentUser.FilteredUser()
+	c.JSON(200, filteredUser)
 }

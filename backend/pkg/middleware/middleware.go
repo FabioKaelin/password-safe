@@ -10,7 +10,6 @@ import (
 	"github.com/fabiokaelin/password-safe/config"
 	"github.com/fabiokaelin/password-safe/pkg/db"
 	token_pkg "github.com/fabiokaelin/password-safe/pkg/token"
-	"github.com/fabiokaelin/password-safe/pkg/users"
 	user_pkg "github.com/fabiokaelin/password-safe/pkg/users"
 	"github.com/gin-gonic/gin"
 )
@@ -60,9 +59,7 @@ func SetUserToContext() gin.HandlerFunc {
 			break
 		}
 
-		spew.Dump(user)
-
-		// spew.Dump(user)
+		spew.Dump(user.FilteredUser())
 
 		ctx.Set("currentUser", user)
 		ctx.Next()
@@ -71,13 +68,13 @@ func SetUserToContext() gin.HandlerFunc {
 }
 
 // GetCurrentUser returns the current user from the context
-func GetCurrentUser(c *gin.Context) (users.User, error) {
+func GetCurrentUser(c *gin.Context) (user_pkg.User, error) {
 	userData, exist := c.Get("currentUser")
 	if !exist {
-		return users.User{}, errors.New("user not found")
+		return user_pkg.User{}, errors.New("user not found")
 	}
 	// var userResponse UserResponse
-	userResponse := userData.(users.User)
+	userResponse := userData.(user_pkg.User)
 	return userResponse, nil
 }
 
