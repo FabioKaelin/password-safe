@@ -4,5 +4,5 @@
 2. Für das LogIn wird ein bearer `token` erstellt und im frontend in einem cookie gespeichert
 3. Passworteinträge werden im `Backend` verschlüsselt
 4. User kann seine Passwörter anzeigen lassen
-5. User kann bestehende Passwörter bearbeiten
-6. User kann bestehende Passwörter löschen
+5. User kann bestehende Passworteinträge bearbeiten
+6. User kann bestehende Passworteinträge löschen
