@@ -1,6 +1,8 @@
 package controllers
 
 import (
+	"net/http"
+
 	"github.com/fabiokaelin/password-safe/pkg/users"
 	"github.com/gin-gonic/gin"
 )
@@ -49,7 +51,7 @@ func userPost(c *gin.Context) {
 //	@Produce		json
 //	@Success		200	{string}	token
 //	@Failure		400	{object}	ErrorResponse
-//	@Failure		500	{object}	ErrorResponse
+//	@Failure		401	{object}	ErrorResponse
 //	@Router			/users/login [post]
 func userLogin(c *gin.Context) {
 	var body users.User
@@ -60,7 +62,7 @@ func userLogin(c *gin.Context) {
 
 	token, err := users.Login(body)
 	if err != nil {
-		c.JSON(500, errorResponse{Message: err.Error()})
+		c.JSON(http.StatusUnauthorized, errorResponse{Message: err.Error()})
 		return
 	}
 

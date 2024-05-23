@@ -6,6 +6,23 @@ definitions:
         example: error appeared
         type: string
     type: object
+  Password:
+    properties:
+      description:
+        type: string
+      id:
+        type: string
+      password:
+        type: string
+      title:
+        type: string
+      url:
+        type: string
+      userid:
+        type: string
+      username:
+        type: string
+    type: object
   users.User:
     properties:
       email:
@@ -21,6 +38,54 @@ info:
   title: Password Safe API
   version: 1.0.0
 paths:
+  /passwords:
+    get:
+      description: Get all passwords of the user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/Password'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      summary: Get all passwords
+      tags:
+      - passwords
+    post:
+      consumes:
+      - application/json
+      description: Create a password entry for the user
+      parameters:
+      - description: Password object that needs to be created
+        in: body
+        name: password
+        required: true
+        schema:
+          $ref: '#/definitions/Password'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Password'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      summary: Create a password entry
+      tags:
+      - passwords
   /test:
     get:
       description: Test if the user is logged in
@@ -31,6 +96,10 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/users.User'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
       summary: Test if the user is logged in
       tags:
       - test
@@ -83,8 +152,8 @@ paths:
           description: Bad Request
           schema:
             $ref: '#/definitions/ErrorResponse'
-        "500":
-          description: Internal Server Error
+        "401":
+          description: Unauthorized
           schema:
             $ref: '#/definitions/ErrorResponse'
       summary: Log in a user

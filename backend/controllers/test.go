@@ -20,9 +20,14 @@ func TestRouter(apiGroup *gin.RouterGroup) {
 //	@Tags			test
 //	@Produce		json
 //	@Success		200	{object}	users.User
+//	@Success		500	{object}	errorResponse
 //	@Router			/test [get]
 func testGet(c *gin.Context) {
-	currentUser, _ := middleware.GetCurrentUser(c)
+	currentUser, err := middleware.GetCurrentUser(c)
+	if err != nil {
+		c.JSON(500, errorResponse{Message: err.Error()})
+		return
+	}
 	filteredUser := currentUser.FilteredUser()
 	c.JSON(200, filteredUser)
 }
