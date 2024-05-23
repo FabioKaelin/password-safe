@@ -4,7 +4,6 @@
 2. Für das LogIn wird ein bearer `token` erstellt und im frontend in einem cookie gespeichert
 3. Passworteinträge werden im `Backend` verschlüsselt
 
-
 # Features & Nice-to-have
 
 1. User kann seine Passwörter anzeigen lassen
