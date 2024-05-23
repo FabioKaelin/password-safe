@@ -11,4 +11,5 @@
 3. User kann bestehende Passworteinträge löschen
 4. Die URL der entsprechenden Loginseiten kann den Passworteinträgen zugewiesen werden
 5. *Der User kann Passwörter generieren lassen
+6. 
 
