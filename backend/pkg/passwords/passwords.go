@@ -108,3 +108,12 @@ func Update(password Password) error {
 
 	return nil
 }
+
+func Delete(id string) error {
+	err := db.PasswordsDelete(id)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}

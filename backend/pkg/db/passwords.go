@@ -62,3 +62,11 @@ func PasswordsUpdate(password DatabasePassword) error {
 	}
 	return nil
 }
+
+func PasswordsDelete(id string) error {
+	_, err := dbConn.Exec("DELETE FROM passwords WHERE id = ?", id)
+	if err != nil {
+		return err
+	}
+	return nil
+}
