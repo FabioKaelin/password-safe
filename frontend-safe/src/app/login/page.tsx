@@ -1,21 +1,46 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Header from "../components/Header";
-import Router, { useRouter } from "next/navigation";
 import Link from "next/link";
+import { LogInToVault } from "./api";
+import { useRouter } from "next/navigation";
+
+export type User = {
+  email: string;
+  password: string;
+}
 
 export default function LogIn() {
+  const [user, setUser] = useState<User>({ email: "", password: "" });
+
   const router = useRouter();
+
+  const handleLogIn = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const resp = await LogInToVault(user);
+
+      if (resp.status === 200) {
+        router.push("/vault");
+      } else {
+        router.push("/loginfailed");
+      }
+    } catch (error) {
+      console.error("Error logging in:", error);
+    }
+
+  }
+
   return (
     <div>
       <Header title={"Log In"} />
-      <form className="grid grid-gap-5 grid-row-7">
-        <input type="text" placeholder="Username" />
+      <form className="grid grid-gap-5 grid-row-7" onSubmit={handleLogIn}>
+        <input type="text" placeholder="Email" onChange={(e) => setUser({ ...user, email: e.target.value })} />
         <br />
-        <input type="password" placeholder="Password" />
+        <input type="password" placeholder="Password" onChange={(e) => setUser({ ...user, password: e.target.value })} />
         <br />
-        <button>Log In</button>
+        <button type="submit">Log In</button>
         <br />
         <Link href="/register">Sign Up</Link>
       </form>
