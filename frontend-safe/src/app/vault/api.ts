@@ -15,3 +15,24 @@ export async function getPasswordForUser(): Promise<VaultEntry[]> {
 
     return resp.json()
 }
+
+export async function createNewEntry(entry: VaultEntry): Promise<VaultEntry> {
+    const resp = await fetch(`${BACKENDURL}passwords/`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            title: entry.title,
+            description: entry.description,
+            url: entry.url,
+            username: entry.username,
+            password: entry.password
+        }),
+        cache: "no-cache",
+        credentials: "include",
+        mode: "cors",
+    })
+
+    return resp.json()
+}
