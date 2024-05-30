@@ -17,7 +17,7 @@ export default function Register() {
     try {
       const resp = await RegisterUser(user);
 
-      if (resp.status === 204) {
+      if (resp.status === 201) {
         handleLogIn(e);
       } else {
         router.push("/loginfailed");

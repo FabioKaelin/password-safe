@@ -20,7 +20,9 @@ export default function LogIn() {
     e.preventDefault();
     try {
       const resp = await LogInToVault(user);
-
+      // TODO comment out in end product
+      console.log(resp.json())
+      
       if (resp.status === 200) {
         router.push("/vault");
       } else {
