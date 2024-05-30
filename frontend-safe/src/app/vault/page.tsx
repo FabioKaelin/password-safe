@@ -13,17 +13,21 @@ export default function Page() {
     useEffect(() => {
         const handlePassword = async () => {
             const entries = await getPasswordForUser();
-            setEntries(entries)
+            setEntries(entries == null ?  [] : entries)
             console.log(entries)
         }
         handlePassword()
     }, []);
 
     return (
-        <div>
+        <>
             <Header title={"Vault"}/>
-            <PasswordTable entries={entries}/>
-            <NewPasswordModal />
-        </div>
+            <div className={"flex justify-center"}>
+                <PasswordTable entries={entries}/>
+            </div>
+            <NewPasswordModal/>
+            
+        </>
+
     );
 }
