@@ -1,7 +1,12 @@
+import Header from "@/app/components/Header";
+
 export default function Page() {
+    
+    
+    
     return (
         <div>
-            <h1>Log In succeeded</h1>
+            <Header title={"Vault"} />
         </div>
     );
 }
