@@ -1,6 +1,8 @@
 package passwords
 
-import "github.com/fabiokaelin/password-safe/pkg/db"
+import (
+	"github.com/fabiokaelin/password-safe/pkg/db"
+)
 
 type (
 	Password struct {
@@ -15,13 +17,17 @@ type (
 )
 
 func Create(password Password) (Password, error) {
+	encryptedPassword, err := Encrypt(password.Password)
+	if err != nil {
+		return Password{}, err
+	}
 	dbPassword := db.DatabasePassword{
 		ID:          password.ID,
 		UserID:      password.UserID,
 		Title:       password.Title,
 		URL:         password.URL,
 		Username:    password.Username,
-		Password:    password.Password,
+		Password:    encryptedPassword,
 		Description: password.Description,
 	}
 
@@ -35,13 +41,18 @@ func Create(password Password) (Password, error) {
 		return Password{}, err
 	}
 
+	decryptedPassword, err := Decrypt(newDBPassword.Password)
+	if err != nil {
+		return Password{}, err
+	}
+
 	newPassword := Password{
 		ID:          newDBPassword.ID,
 		UserID:      newDBPassword.UserID,
 		Title:       newDBPassword.Title,
 		URL:         newDBPassword.URL,
 		Username:    newDBPassword.Username,
-		Password:    newDBPassword.Password,
+		Password:    decryptedPassword,
 		Description: newDBPassword.Description,
 	}
 
@@ -54,13 +65,18 @@ func Get(id string) (Password, error) {
 		return Password{}, err
 	}
 
+	decryptedPassword, err := Decrypt(dbPassword.Password)
+	if err != nil {
+		return Password{}, err
+	}
+
 	password := Password{
 		ID:          dbPassword.ID,
 		UserID:      dbPassword.UserID,
 		Title:       dbPassword.Title,
 		URL:         dbPassword.URL,
 		Username:    dbPassword.Username,
-		Password:    dbPassword.Password,
+		Password:    decryptedPassword,
 		Description: dbPassword.Description,
 	}
 
@@ -75,13 +91,18 @@ func GetByUserID(userId string) ([]Password, error) {
 
 	var passwords []Password
 	for _, dbPassword := range dbPasswords {
+		decryptedPassword, err := Decrypt(dbPassword.Password)
+		if err != nil {
+			return nil, err
+		}
+
 		password := Password{
 			ID:          dbPassword.ID,
 			UserID:      dbPassword.UserID,
 			Title:       dbPassword.Title,
 			URL:         dbPassword.URL,
 			Username:    dbPassword.Username,
-			Password:    dbPassword.Password,
+			Password:    decryptedPassword,
 			Description: dbPassword.Description,
 		}
 		passwords = append(passwords, password)
@@ -91,17 +112,21 @@ func GetByUserID(userId string) ([]Password, error) {
 }
 
 func Update(password Password) error {
+	encryptedPassword, err := Encrypt(password.Password)
+	if err != nil {
+		return err
+	}
 	dbPassword := db.DatabasePassword{
 		ID:          password.ID,
 		UserID:      password.UserID,
 		Title:       password.Title,
 		URL:         password.URL,
 		Username:    password.Username,
-		Password:    password.Password,
+		Password:    encryptedPassword,
 		Description: password.Description,
 	}
 
-	err := db.PasswordsUpdate(dbPassword)
+	err = db.PasswordsUpdate(dbPassword)
 	if err != nil {
 		return err
 	}

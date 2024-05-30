@@ -18,6 +18,7 @@ var (
 	FrontEndOrigin string
 
 	JWTTokenSecret string
+	PasswordSecret string
 )
 
 func getString(key string) (string, error) {
@@ -66,6 +67,11 @@ func Load() error {
 	}
 
 	JWTTokenSecret, err = getString("JWT_TOKEN_SECRET")
+	if err != nil {
+		return err
+	}
+
+	PasswordSecret, err = getString("PASSWORD_SECRET")
 	if err != nil {
 		return err
 	}
