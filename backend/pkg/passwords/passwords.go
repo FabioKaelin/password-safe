@@ -1,6 +1,8 @@
 package passwords
 
-import "github.com/fabiokaelin/password-safe/pkg/db"
+import (
+	"github.com/fabiokaelin/password-safe/pkg/db"
+)
 
 type (
 	Password struct {
