@@ -1,15 +1,17 @@
-import {fetch} from "undici-types";
 import {User} from "@/app/login/page";
 import {BACKENDURL} from "@/app/statics";
 import {VaultEntry} from "@/app/vault/vaultEntry";
 
-export function getPasswordForUser() {
-    const resp = fetch(`http://${BACKENDURL}passwords`, {
+export async function getPasswordForUser(): Promise<VaultEntry[]> {
+    const resp = await fetch(`${BACKENDURL}passwords/`, {
         method: "GET",
-        credentials: "include",
         headers: {
             "Content-Type": "application/json",
-        }
+        },
+        cache: "no-cache",
+        credentials: "include",
+        mode: "cors",
     })
-    return resp
+
+    return resp.json()
 }
