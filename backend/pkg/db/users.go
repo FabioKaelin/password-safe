@@ -34,3 +34,11 @@ func UsersGetByEmail(email string) (DatabaseUser, error) {
 	}
 	return user, nil
 }
+
+func UsersUpdate(user DatabaseUser) error {
+	_, err := dbConn.Exec("UPDATE users SET email = ?, password = ? WHERE id = ?", user.Email, user.Password, user.ID)
+	if err != nil {
+		return err
+	}
+	return nil
+}

@@ -1,6 +1,7 @@
 package users
 
 import (
+	"errors"
 	"time"
 
 	"github.com/fabiokaelin/password-safe/config"
@@ -57,7 +58,7 @@ func Login(user User) (string, error) {
 	}
 
 	if !hash.ComparePasswords(dbUser.Password, []byte(user.Password)) {
-		return "", nil
+		return "", errors.New("invalid password")
 	}
 
 	tokenString, err := token.GenerateToken(time.Duration(24*time.Hour), dbUser.ID, config.JWTTokenSecret)
@@ -74,4 +75,29 @@ func (user *User) FilteredUser() User {
 		ID:    user.ID,
 		Email: user.Email,
 	}
+}
+
+func Update(id string, user User) (User, error) {
+	hashedPassword, err := hash.HashAndSalt([]byte(user.Password))
+
+	if err != nil {
+		return User{}, err
+	}
+
+	if id != user.ID {
+		return User{}, errors.New("ID in URL does not match ID in body")
+	}
+
+	dbUser := db.DatabaseUser{
+		ID:       user.ID,
+		Email:    user.Email,
+		Password: hashedPassword,
+	}
+
+	err = db.UsersUpdate(dbUser)
+	if err != nil {
+		return User{}, err
+	}
+
+	return user.FilteredUser(), nil
 }
