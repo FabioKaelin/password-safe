@@ -2,7 +2,7 @@
 
 import {VaultEntry} from "@/app/vault/vaultEntry";
 import React, {useEffect, useState} from "react";
-import {deletePassword, getPasswordForUser} from "@/app/vault/api";
+import {deletePassword, getPasswordForUser, editEntryAPI} from "@/app/vault/api";
 
 export default function PasswordTable() {
 
@@ -26,7 +26,7 @@ export default function PasswordTable() {
     const getPasswordContent = (entry: VaultEntry): React.JSX.Element => {
         let password =
             see ? entry.password
-                : "*".repeat(entry.password.length);
+                : "*".repeat(entry.password?.length);
 
         return <p>{password}</p>
     }
@@ -42,6 +42,24 @@ export default function PasswordTable() {
         deleteEntry()
         
     }
+
+    const handleEdit = async (id: string, updatedEntry: VaultEntry) => {
+        const editEntry = async () => {
+            console.log(id)
+            const response = editEntryAPI(id, updatedEntry)
+            response.then((value) => {
+                if (value.id === id) {
+                    console.log("Password successfully updated");
+                    setLoadEntries(true);
+                } else {
+                    console.error("Failed to update password", value);
+                }
+            }).catch((error) => {
+                console.error("Error updating password:", error);
+            });
+        }
+    }
+
     return (
         <table className="table-fixed">
             <thead>
@@ -75,6 +93,7 @@ export default function PasswordTable() {
                     </div>
                 </th>
                 <th>Delete</th>
+                <th>Edit</th>
             </tr>
             </thead>
             <tbody>
@@ -91,6 +110,9 @@ export default function PasswordTable() {
                             </td>
                             <td>
                                 <button onClick={() => handleDelete(entry.id)}>Delete</button>
+                            </td>
+                            <td>
+                                <button onClick={() => handleEdit(entry.id, entry)}>Edit</button>
                             </td>
                         </tr>
                     )

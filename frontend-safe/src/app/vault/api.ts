@@ -54,3 +54,29 @@ export async function deletePassword(id: string): Promise<string> {
 
     return "Password deleted"
 }
+
+export async function editEntryAPI(id: string, entry: VaultEntry): Promise<VaultEntry> {
+    const resp = await fetch(`${BACKENDURL}passwords/${id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            title: entry.title,
+            description: entry.description,
+            url: entry.url,
+            username: entry.username,
+            password: entry.password
+        }),
+        cache: "no-cache",
+        credentials: "include",
+        mode: "cors",
+    })
+
+    if (!resp.ok) {
+        throw new Error('Failed to update the password entry.');
+    }
+
+    return resp.json();
+
+}
