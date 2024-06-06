@@ -2,6 +2,7 @@
 
 import {VaultEntry} from "@/app/vault/vaultEntry";
 import React, {useState} from "react";
+import {deletePassword} from "@/app/vault/api";
 
 type PasswordTableProps = {
     entries: VaultEntry[]
@@ -19,6 +20,14 @@ export default function PasswordTable({entries}: PasswordTableProps) {
         return <p>{password}</p>
     }
 
+    const handleDelete = async (id: string) => {
+        const deleteEntry = async () => {
+            console.log(id)
+            const response = deletePassword(id)
+        }
+        deleteEntry()
+    }
+    
     return (
         <table className="table-fixed">
             <thead>
@@ -51,6 +60,7 @@ export default function PasswordTable({entries}: PasswordTableProps) {
 
                     </div>
                 </th>
+                <th>Delete</th>
             </tr>
             </thead>
             <tbody>
@@ -64,6 +74,9 @@ export default function PasswordTable({entries}: PasswordTableProps) {
                             <td>{entry.username}</td>
                             <td>
                                 {getPasswordContent(entry)}
+                            </td>
+                            <td>
+                                <button onClick={() => handleDelete(entry.id)}>Delete</button>
                             </td>
                         </tr>
                     )

@@ -36,3 +36,21 @@ export async function createNewEntry(entry: VaultEntry): Promise<VaultEntry> {
 
     return resp.json()
 }
+
+export async function deletePassword(id: string): Promise<string> {
+    const resp = await fetch(`${BACKENDURL}passwords/${id}`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        cache: "no-cache",
+        credentials: "include",
+        mode: "cors",
+    })
+
+    if (resp.status !== 204) {
+        return "Failed to delete password"
+    }
+
+    return "Password deleted"
+}
