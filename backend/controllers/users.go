@@ -3,6 +3,7 @@ package controllers
 import (
 	"net/http"
 
+	"github.com/fabiokaelin/password-safe/pkg/middleware"
 	"github.com/fabiokaelin/password-safe/pkg/users"
 	"github.com/gin-gonic/gin"
 )
@@ -12,6 +13,8 @@ func UserRouter(apiGroup *gin.RouterGroup) {
 	{
 		userGroup.POST("/", userPost)
 		userGroup.POST("/login", userLogin)
+		userGroup.PUT("/:id", userPut)
+		userGroup.GET("/check", userCheckLogin)
 	}
 }
 
@@ -24,7 +27,6 @@ func UserRouter(apiGroup *gin.RouterGroup) {
 //	@Produce		json
 //	@Success		201	{object}	users.User
 //	@Failure		400	{object}	ErrorResponse
-//	@Failure		500	{object}	ErrorResponse
 //	@Router			/users [post]
 func userPost(c *gin.Context) {
 	var body users.User
@@ -35,7 +37,7 @@ func userPost(c *gin.Context) {
 
 	newUser, err := users.Create(body)
 	if err != nil {
-		c.JSON(500, errorResponse{Message: err.Error()})
+		c.JSON(400, errorResponse{Message: err.Error()})
 		return
 	}
 
@@ -69,4 +71,52 @@ func userLogin(c *gin.Context) {
 	c.SetCookie("token", token, 24*60, "/", "localhost", false, true)
 
 	c.JSON(200, token)
+}
+
+// userPut             godoc
+//
+//	@Summary		Update a user
+//	@Description	Update a user and return the user
+//	@Tags			users
+//	@Param			id		path	string		true	"The user ID"
+//	@Param			body	body	users.User	true	"body"
+//	@Produce		json
+//	@Success		200	{object}	users.User
+//	@Failure		400	{object}	ErrorResponse
+//	@Failure		401	{object}	ErrorResponse
+//	@Router			/users/{id} [put]
+func userPut(c *gin.Context) {
+	id := c.Param("id")
+	var body users.User
+	if err := c.ShouldBindJSON(&body); err != nil {
+		c.JSON(400, errorResponse{Message: err.Error()})
+		return
+	}
+
+	user, err := users.Update(id, body)
+	if err != nil {
+		c.JSON(400, errorResponse{Message: err.Error()})
+		return
+	}
+
+	c.JSON(200, user)
+}
+
+// userCheckLogin             godoc
+//
+//	@Summary		Check if the user is logged in
+//	@Description	Check if the user is logged in
+//	@Tags			users
+//	@Produce		json
+//	@Success		200	{object}	users.User
+//	@Success		400	{object}	errorResponse
+//	@Router			/users/check [get]
+func userCheckLogin(c *gin.Context) {
+	currentUser, err := middleware.GetCurrentUser(c)
+	if err != nil {
+		c.JSON(400, errorResponse{Message: err.Error()})
+		return
+	}
+	filteredUser := currentUser.FilteredUser()
+	c.JSON(200, filteredUser)
 }

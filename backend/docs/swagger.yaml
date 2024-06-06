@@ -50,8 +50,8 @@ paths:
             items:
               $ref: '#/definitions/Password'
             type: array
-        "500":
-          description: Internal Server Error
+        "400":
+          description: Bad Request
           schema:
             $ref: '#/definitions/ErrorResponse'
       summary: Get all passwords
@@ -79,10 +79,6 @@ paths:
           description: Bad Request
           schema:
             $ref: '#/definitions/ErrorResponse'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/ErrorResponse'
       summary: Create a password entry
       tags:
       - passwords
@@ -98,8 +94,8 @@ paths:
       responses:
         "204":
           description: No Content
-        "500":
-          description: Internal Server Error
+        "400":
+          description: Bad Request
           schema:
             $ref: '#/definitions/ErrorResponse'
       summary: Delete a password entry
@@ -122,8 +118,8 @@ paths:
             items:
               $ref: '#/definitions/Password'
             type: array
-        "500":
-          description: Internal Server Error
+        "400":
+          description: Bad Request
           schema:
             $ref: '#/definitions/ErrorResponse'
       summary: Get a Password
@@ -156,30 +152,9 @@ paths:
           description: Bad Request
           schema:
             $ref: '#/definitions/ErrorResponse'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/ErrorResponse'
       summary: Update a password entry
       tags:
       - passwords
-  /test:
-    get:
-      description: Test if the user is logged in
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/users.User'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-      summary: Test if the user is logged in
-      tags:
-      - test
   /users:
     post:
       description: Register a new user and return the user
@@ -201,11 +176,57 @@ paths:
           description: Bad Request
           schema:
             $ref: '#/definitions/ErrorResponse'
-        "500":
-          description: Internal Server Error
+      summary: Register a new user
+      tags:
+      - users
+  /users/{id}:
+    put:
+      description: Update a user and return the user
+      parameters:
+      - description: The user ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: body
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/users.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/users.User'
+        "400":
+          description: Bad Request
           schema:
             $ref: '#/definitions/ErrorResponse'
-      summary: Register a new user
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      summary: Update a user
+      tags:
+      - users
+  /users/check:
+    get:
+      description: Check if the user is logged in
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/users.User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      summary: Check if the user is logged in
       tags:
       - users
   /users/login:
