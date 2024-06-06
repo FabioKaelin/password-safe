@@ -22,4 +22,6 @@ Ich habe heute hinzugefüt dass man das Masterpasswort ändern kann (im backend)
 
 ### Lukas
 
+Heute habe ging es bei mir darum, für den 'PUT' Endpunkt, welcher zum Bearbeiten von existierenden Einträgen verwendet wird, die Logik und Funktion im Frontend zu programmieren. Aktuell funktioniert der Edit Button im Frontend aber noch nicht. Das Ziel wäre hier, dass per JavaScript Alert der User direkt im Browser den Eintrag bearbeiten kann.
+
 ### Shansai
