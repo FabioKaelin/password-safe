@@ -25,3 +25,5 @@ Ich habe heute hinzugefüt dass man das Masterpasswort ändern kann (im backend)
 Heute habe ging es bei mir darum, für den 'PUT' Endpunkt, welcher zum Bearbeiten von existierenden Einträgen verwendet wird, die Logik und Funktion im Frontend zu programmieren. Aktuell funktioniert der Edit Button im Frontend aber noch nicht. Das Ziel wäre hier, dass per JavaScript Alert der User direkt im Browser den Eintrag bearbeiten kann.
 
 ### Shansai
+
+Heute hatten wir das Gespräch it Herrn Lanza, welches gut verlofen ist. Man kann nun Passwörter löschen. Ich habe auch am Design gearbeitet, welches momentan noch wie: https://info.cern.ch/ aussieht. Das hat sich nun schon bisschen verbessert. Auf nächste Woche möchte ich den Master Password ändern können und auch das Design fertig machen.
