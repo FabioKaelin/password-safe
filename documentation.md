@@ -26,4 +26,4 @@ Heute habe ging es bei mir darum, für den 'PUT' Endpunkt, welcher zum Bearbeite
 
 ### Shansai
 
-Heute hatten wir das Gespräch it Herrn Lanza, welches gut verlofen ist. Man kann nun Passwörter löschen. Ich habe auch am Design gearbeitet, welches momentan noch wie: https://info.cern.ch/ aussieht. Das hat sich nun schon bisschen verbessert. Auf nächste Woche möchte ich den Master Password ändern können und auch das Design fertig machen.
+Heute hatten wir das Gespräch mit Herrn Lanza, welches gut verlaufen ist. Man kann nun Passwörter löschen. Ich habe auch am Design gearbeitet, welches momentan noch wie: https://info.cern.ch/ aussieht. Das hat sich nun schon bisschen verbessert. Auf nächste Woche möchte ich den Master Password ändern können und auch das Design fertig machen.
