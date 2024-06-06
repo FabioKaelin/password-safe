@@ -25,12 +25,12 @@ func PasswordRouter(apiGroup *gin.RouterGroup) {
 //	@Tags			passwords
 //	@Produce		json
 //	@Success		200	{array}		Password
-//	@Success		500	{object}	errorResponse
+//	@Success		400	{object}	errorResponse
 //	@Router			/passwords [get]
 func passwordGet(c *gin.Context) {
 	currentUser, err := middleware.GetCurrentUser(c)
 	if err != nil {
-		c.JSON(500, errorResponse{Message: err.Error()})
+		c.JSON(400, errorResponse{Message: err.Error()})
 		return
 	}
 
@@ -41,7 +41,7 @@ func passwordGet(c *gin.Context) {
 			c.JSON(200, []passwords.Password{})
 			return
 		}
-		c.JSON(500, errorResponse{Message: err.Error()})
+		c.JSON(400, errorResponse{Message: err.Error()})
 		return
 	}
 
@@ -58,7 +58,6 @@ func passwordGet(c *gin.Context) {
 //	@Param			password	body		Password	true	"Password object that needs to be created"
 //	@Success		200			{object}	Password
 //	@Success		400			{object}	errorResponse
-//	@Success		500			{object}	errorResponse
 //	@Router			/passwords [post]
 func passwordPost(c *gin.Context) {
 	var password passwords.Password
@@ -69,7 +68,7 @@ func passwordPost(c *gin.Context) {
 
 	currentUser, err := middleware.GetCurrentUser(c)
 	if err != nil {
-		c.JSON(500, errorResponse{Message: err.Error()})
+		c.JSON(400, errorResponse{Message: err.Error()})
 		return
 	}
 
@@ -77,7 +76,7 @@ func passwordPost(c *gin.Context) {
 
 	newPassword, err := passwords.Create(password)
 	if err != nil {
-		c.JSON(500, errorResponse{Message: err.Error()})
+		c.JSON(400, errorResponse{Message: err.Error()})
 		return
 	}
 
@@ -92,7 +91,7 @@ func passwordPost(c *gin.Context) {
 //	@Param			id	path	string	true	"id"
 //	@Produce		json
 //	@Success		200	{array}		Password
-//	@Success		500	{object}	errorResponse
+//	@Success		400	{object}	errorResponse
 //	@Router			/passwords/{id} [get]
 func passwordGetByID(c *gin.Context) {
 	passwordID := c.Param("id")
@@ -103,13 +102,13 @@ func passwordGetByID(c *gin.Context) {
 			c.JSON(404, "not found")
 			return
 		}
-		c.JSON(500, errorResponse{Message: err.Error()})
+		c.JSON(400, errorResponse{Message: err.Error()})
 		return
 	}
 
 	currentUser, err := middleware.GetCurrentUser(c)
 	if err != nil {
-		c.JSON(500, errorResponse{Message: err.Error()})
+		c.JSON(400, errorResponse{Message: err.Error()})
 		return
 	}
 
@@ -132,12 +131,11 @@ func passwordGetByID(c *gin.Context) {
 //	@Param			password	body		Password	true	"Password object that needs to be updated"
 //	@Success		200			{object}	Password
 //	@Success		400			{object}	errorResponse
-//	@Success		500			{object}	errorResponse
 //	@Router			/passwords/{id} [put]
 func passwordUpdate(c *gin.Context) {
 	currentUser, err := middleware.GetCurrentUser(c)
 	if err != nil {
-		c.JSON(500, errorResponse{Message: err.Error()})
+		c.JSON(400, errorResponse{Message: err.Error()})
 		return
 	}
 
@@ -157,13 +155,13 @@ func passwordUpdate(c *gin.Context) {
 
 	err = passwords.Update(password)
 	if err != nil {
-		c.JSON(500, errorResponse{Message: err.Error()})
+		c.JSON(400, errorResponse{Message: err.Error()})
 		return
 	}
 
 	updatedPassword, err := passwords.Get(passwordID)
 	if err != nil {
-		c.JSON(500, errorResponse{Message: err.Error()})
+		c.JSON(400, errorResponse{Message: err.Error()})
 		return
 	}
 
@@ -177,19 +175,19 @@ func passwordUpdate(c *gin.Context) {
 //	@Tags			passwords
 //	@Param			id	path	string	true	"id"
 //	@Success		204
-//	@Success		500	{object}	errorResponse
+//	@Success		400	{object}	errorResponse
 //	@Router			/passwords/{id} [delete]
 func passwordDelete(c *gin.Context) {
 	currentUser, err := middleware.GetCurrentUser(c)
 	if err != nil {
-		c.JSON(500, errorResponse{Message: err.Error()})
+		c.JSON(400, errorResponse{Message: err.Error()})
 		return
 	}
 
 	passwordID := c.Param("id")
 	password, err := passwords.Get(passwordID)
 	if err != nil {
-		c.JSON(500, errorResponse{Message: err.Error()})
+		c.JSON(400, errorResponse{Message: err.Error()})
 		return
 	}
 
@@ -200,7 +198,7 @@ func passwordDelete(c *gin.Context) {
 
 	err = passwords.Delete(passwordID)
 	if err != nil {
-		c.JSON(500, errorResponse{Message: err.Error()})
+		c.JSON(400, errorResponse{Message: err.Error()})
 		return
 	}
 

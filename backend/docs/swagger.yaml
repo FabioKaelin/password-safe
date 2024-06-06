@@ -50,8 +50,8 @@ paths:
             items:
               $ref: '#/definitions/Password'
             type: array
-        "500":
-          description: Internal Server Error
+        "400":
+          description: Bad Request
           schema:
             $ref: '#/definitions/ErrorResponse'
       summary: Get all passwords
@@ -79,10 +79,6 @@ paths:
           description: Bad Request
           schema:
             $ref: '#/definitions/ErrorResponse'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/ErrorResponse'
       summary: Create a password entry
       tags:
       - passwords
@@ -98,8 +94,8 @@ paths:
       responses:
         "204":
           description: No Content
-        "500":
-          description: Internal Server Error
+        "400":
+          description: Bad Request
           schema:
             $ref: '#/definitions/ErrorResponse'
       summary: Delete a password entry
@@ -122,8 +118,8 @@ paths:
             items:
               $ref: '#/definitions/Password'
             type: array
-        "500":
-          description: Internal Server Error
+        "400":
+          description: Bad Request
           schema:
             $ref: '#/definitions/ErrorResponse'
       summary: Get a Password
@@ -156,10 +152,6 @@ paths:
           description: Bad Request
           schema:
             $ref: '#/definitions/ErrorResponse'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/ErrorResponse'
       summary: Update a password entry
       tags:
       - passwords
@@ -182,10 +174,6 @@ paths:
             $ref: '#/definitions/users.User'
         "400":
           description: Bad Request
-          schema:
-            $ref: '#/definitions/ErrorResponse'
-        "500":
-          description: Internal Server Error
           schema:
             $ref: '#/definitions/ErrorResponse'
       summary: Register a new user
@@ -234,8 +222,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/users.User'
-        "500":
-          description: Internal Server Error
+        "400":
+          description: Bad Request
           schema:
             $ref: '#/definitions/ErrorResponse'
       summary: Check if the user is logged in

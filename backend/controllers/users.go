@@ -27,7 +27,6 @@ func UserRouter(apiGroup *gin.RouterGroup) {
 //	@Produce		json
 //	@Success		201	{object}	users.User
 //	@Failure		400	{object}	ErrorResponse
-//	@Failure		500	{object}	ErrorResponse
 //	@Router			/users [post]
 func userPost(c *gin.Context) {
 	var body users.User
@@ -38,7 +37,7 @@ func userPost(c *gin.Context) {
 
 	newUser, err := users.Create(body)
 	if err != nil {
-		c.JSON(500, errorResponse{Message: err.Error()})
+		c.JSON(400, errorResponse{Message: err.Error()})
 		return
 	}
 
@@ -96,7 +95,7 @@ func userPut(c *gin.Context) {
 
 	user, err := users.Update(id, body)
 	if err != nil {
-		c.JSON(500, errorResponse{Message: err.Error()})
+		c.JSON(400, errorResponse{Message: err.Error()})
 		return
 	}
 
@@ -110,12 +109,12 @@ func userPut(c *gin.Context) {
 //	@Tags			users
 //	@Produce		json
 //	@Success		200	{object}	users.User
-//	@Success		500	{object}	errorResponse
+//	@Success		400	{object}	errorResponse
 //	@Router			/users/check [get]
 func userCheckLogin(c *gin.Context) {
 	currentUser, err := middleware.GetCurrentUser(c)
 	if err != nil {
-		c.JSON(500, errorResponse{Message: err.Error()})
+		c.JSON(400, errorResponse{Message: err.Error()})
 		return
 	}
 	filteredUser := currentUser.FilteredUser()
