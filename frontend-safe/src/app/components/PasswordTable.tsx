@@ -1,16 +1,27 @@
 "use client"
 
 import {VaultEntry} from "@/app/vault/vaultEntry";
-import React, {useState} from "react";
-import {deletePassword} from "@/app/vault/api";
+import React, {useEffect, useState} from "react";
+import {deletePassword, getPasswordForUser} from "@/app/vault/api";
 
-type PasswordTableProps = {
-    entries: VaultEntry[]
-}
-
-export default function PasswordTable({entries}: PasswordTableProps) {
+export default function PasswordTable() {
 
     const [see, setSee] = useState<boolean>(false)
+    const [entries, setEntries] = useState<VaultEntry[]>([])
+    const [loadEntries, setLoadEntries] = useState<boolean>(true)
+
+    useEffect(() => {
+        const handlePassword = async () => {
+            const entries = await getPasswordForUser();
+            setEntries(entries == null ? [] : entries)
+            console.log(entries)
+        }
+        if (loadEntries) {
+            handlePassword()
+            setLoadEntries(false)
+        }
+    }, [loadEntries])
+
 
     const getPasswordContent = (entry: VaultEntry): React.JSX.Element => {
         let password =
@@ -24,10 +35,13 @@ export default function PasswordTable({entries}: PasswordTableProps) {
         const deleteEntry = async () => {
             console.log(id)
             const response = deletePassword(id)
+            response.then((value) => {
+                value === "Password deleted" ? setLoadEntries(true) : console.log(value)
+            })
         }
         deleteEntry()
+        
     }
-    
     return (
         <table className="table-fixed">
             <thead>
