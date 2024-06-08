@@ -9,7 +9,12 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
 
 // TODO refresh is not executed after adding a new entry
-export default function NewPasswordModal() {
+
+export type RefreshType = {
+    isRefresh: boolean,
+    setIsRefresh: React.Dispatch<React.SetStateAction<boolean>>
+};
+export default function NewPasswordModal({setIsRefresh}: RefreshType) {
     const [entry, setEntry] = useState<VaultEntry>({
         description: "",
         id: "",
@@ -23,13 +28,13 @@ export default function NewPasswordModal() {
     const [isOpen, setIsOpen] = useState(false);
     const [showPassword, setShowPassword] = useState<boolean>(false)
 
-    // TODO missing auto refresh and validation of inputs
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
         const createEntry = async () => {
             const createdEntry = await createNewEntry(entry);
             setEntry(createdEntry);
             setIsOpen(false);
+            setIsRefresh(true)
         };
         createEntry()
     };
@@ -95,7 +100,8 @@ export default function NewPasswordModal() {
                                     })}
                                     className="px-4 py-2 input input-bordered border border-blue-500 rounded w-4/5"
                                 />
-                               <button type="button" onClick={() => setShowPassword(!showPassword)} className={"px-4 py-2 border border-blue-500 rounded h-full mx-1 w-1/6"}>
+                               <button type="button" onClick={() => setShowPassword(!showPassword)}
+                                       className={"px-4 py-2 border border-blue-500 rounded h-full mx-1 w-1/6"}>
                                   {showPassword ? (
                                       <>
                                           <FontAwesomeIcon icon={faEyeSlash}/>

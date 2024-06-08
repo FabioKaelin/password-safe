@@ -6,12 +6,12 @@ import {deletePassword, getPasswordForUser, editEntryAPI} from "@/app/vault/api"
 import entry from "next/dist/server/typescript/rules/entry";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
+import {RefreshType} from "@/app/components/NewPasswordModal";
 
-export default function PasswordTable() {
+export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
 
     const [see, setSee] = useState<boolean>(false)
     const [entries, setEntries] = useState<VaultEntry[]>([])
-    const [loadEntries, setLoadEntries] = useState<boolean>(true)
 
     useEffect(() => {
         const handlePassword = async () => {
@@ -19,11 +19,11 @@ export default function PasswordTable() {
             setEntries(entries == null ? [] : entries)
             console.log(entries)
         }
-        if (loadEntries) {
+        if (isRefresh) {
             handlePassword()
-            setLoadEntries(false)
+            setIsRefresh(false)
         }
-    }, [loadEntries])
+    }, [isRefresh])
 
 
     const getPasswordContent = (entry: VaultEntry): React.JSX.Element => {
@@ -39,7 +39,7 @@ export default function PasswordTable() {
             console.log(id)
             const response = deletePassword(id)
             response.then((value) => {
-                value === "Password deleted" ? setLoadEntries(true) : console.log(value)
+                value === "Password deleted" ? setIsRefresh(true) : console.log(value)
             })
         }
         deleteEntry()
@@ -53,7 +53,7 @@ export default function PasswordTable() {
             response.then((value) => {
                 if (value.id === id) {
                     console.log("Password successfully updated");
-                    setLoadEntries(true);
+                    setIsRefresh(true);
                 } else {
                     console.error("Failed to update password", value);
                 }
@@ -78,7 +78,7 @@ export default function PasswordTable() {
                             <div onClick={() => setSee(!see)} className={"h-full"}>
                                   {see ? (
                                       <>
-                                          <FontAwesomeIcon icon={faEyeSlash} className={"h-2/4"} />
+                                          <FontAwesomeIcon icon={faEyeSlash} className={"h-2/4"}/>
                                       </>
                                   ) : (
                                       <>
