@@ -41,7 +41,7 @@ export default function NewPasswordModal() {
             </button>
 
             {isOpen && (
-                <div className="fixed inset-0 bg-opacity-75 flex items-center justify-center">
+                <div className="fixed inset-0 flex items-center justify-center z-10">
                     <div className="bg-neutral rounded-lg shadow-lg w-full max-w-md p-6 relative">
                         <button
                             onClick={() => setIsOpen(false)}
