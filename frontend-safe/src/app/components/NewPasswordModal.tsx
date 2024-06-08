@@ -59,6 +59,13 @@ export default function NewPasswordModal() {
                                 className="px-4 py-2 input input-bordered border border-blue-500 rounded"
                             />
                             <input
+                                name="description"
+                                placeholder="Description"
+                                value={entry.description}
+                                onChange={(e) => setEntry({...entry, description: e.target.value})}
+                                className="px-4 py-2 input input-bordered border border-blue-500 rounded"
+                            />
+                            <input
                                 name="url"
                                 placeholder="URL"
                                 value={entry.url}
