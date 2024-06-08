@@ -1,10 +1,12 @@
 "use client"
 
-import {useState} from "react";
+import React, {useState} from "react";
 import {VaultEntry} from "@/app/vault/vaultEntry";
 import {createNewEntry} from "@/app/vault/api";
 import {useRouter} from "next/navigation";
 import Router from "next/router";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
 
 // TODO refresh is not executed after adding a new entry
 export default function NewPasswordModal() {
@@ -19,8 +21,9 @@ export default function NewPasswordModal() {
     });
 
     const [isOpen, setIsOpen] = useState(false);
-    const router = useRouter()
+    const [showPassword, setShowPassword] = useState<boolean>(false)
 
+    // TODO missing auto refresh and validation of inputs
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
         const createEntry = async () => {
@@ -28,20 +31,21 @@ export default function NewPasswordModal() {
             setEntry(createdEntry);
             setIsOpen(false);
         };
-        createEntry().then(() => Router.reload())
+        createEntry()
     };
 
+    // TODO show password button needs to be added
     return (
         <>
             <button
                 onClick={() => setIsOpen(true)}
-                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                className="px-4 py-2 bg-teal-400 text-black rounded hover:bg-teal-500"
             >
                 Add New Entry
             </button>
 
             {isOpen && (
-                <div className="fixed inset-0 bg-opacity-75 flex items-center justify-center">
+                <div className="fixed inset-0 flex items-center justify-center z-10">
                     <div className="bg-neutral rounded-lg shadow-lg w-full max-w-md p-6 relative">
                         <button
                             onClick={() => setIsOpen(false)}
@@ -59,6 +63,13 @@ export default function NewPasswordModal() {
                                 className="px-4 py-2 input input-bordered border border-blue-500 rounded"
                             />
                             <input
+                                name="description"
+                                placeholder="Description"
+                                value={entry.description}
+                                onChange={(e) => setEntry({...entry, description: e.target.value})}
+                                className="px-4 py-2 input input-bordered border border-blue-500 rounded"
+                            />
+                            <input
                                 name="url"
                                 placeholder="URL"
                                 value={entry.url}
@@ -72,14 +83,31 @@ export default function NewPasswordModal() {
                                 onChange={(e) => setEntry({...entry, username: e.target.value})}
                                 className="px-4 py-2 input input-bordered border border-blue-500 rounded"
                             />
-                            <input
-                                name="password"
-                                placeholder="Password"
-                                type="password"
-                                value={entry.password} 
-                                onChange={(e) => setEntry({...entry, password: e.target.value})}
-                                className="px-4 py-2 input input-bordered border border-blue-500 rounded"
-                            />
+                            <span>
+                                <input
+                                    name="password"
+                                    placeholder="Password"
+                                    type={showPassword ? "text" : "password"}
+                                    value={entry.password}
+                                    onChange={(e) => setEntry({
+                                        ...entry,
+                                        password: e.target.value
+                                    })}
+                                    className="px-4 py-2 input input-bordered border border-blue-500 rounded w-4/5"
+                                />
+                               <button type="button" onClick={() => setShowPassword(!showPassword)} className={"px-4 py-2 border border-blue-500 rounded h-full mx-1 w-1/6"}>
+                                  {showPassword ? (
+                                      <>
+                                          <FontAwesomeIcon icon={faEyeSlash}/>
+                                      </>
+                                  ) : (
+                                      <>
+                                          <FontAwesomeIcon icon={faEye}/>
+                                      </>
+                                  )}
+                               </button>
+                            </span>
+                            <br/>
                             <button
                                 type="submit"
                                 className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
