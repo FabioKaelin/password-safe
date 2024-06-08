@@ -1,58 +1,80 @@
 "use client"
 
-import { useRouter } from "next/navigation";
+import {useRouter} from "next/navigation";
 import Header from "../components/Header";
-import { User } from "../login/page";
-import { useState } from "react";
-import { RegisterUser } from "./api";
-import { LogInToVault } from "../login/api";
+import {User} from "../login/page";
+import React, {useState} from "react";
+import {RegisterUser} from "./api";
+import {LogInToVault} from "../login/api";
+import ErrorAlert from "@/app/components/ErrorAlert";
+import Link from "next/link";
 
 export default function Register() {
-  const [user, setUser] = useState<User>({ email: "", password: "" });
+    const [user, setUser] = useState<User>({email: "", password: ""});
+    const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
-  const router = useRouter();
+    const router = useRouter();
 
-  const handleRegister = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      const resp = await RegisterUser(user);
+    const handleRegister = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setErrorMessage(null);
+        try {
+            const resp = await RegisterUser(user);
 
-      if (resp.status === 201) {
-        handleLogIn(e);
-      } else {
-        router.push("/loginfailed");
-      }
-    } catch (error) {
-      console.error("Error logging in:", error);
+            if (resp.status === 201) {
+                handleLogIn(e);
+            } else {
+                router.push("/loginfailed");
+            }
+        } catch (error) {
+            console.error("Error logging in:", error);
+        }
     }
-  }
 
-  const handleLogIn = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      const resp = await LogInToVault(user);
+    const handleLogIn = async (e: React.FormEvent) => {
+        e.preventDefault();
+        try {
+            const resp = await LogInToVault(user);
 
-      if (resp.status === 200) {
-        router.push("/vault");
-      } else {
-        router.push("/loginfailed");
-      }
-    } catch (error) {
-      console.error("Error logging in:", error);
+            if (resp.status === 200) {
+                router.push("/vault");
+            } else {
+
+                setErrorMessage("Error! It's on us. Sorry :( Please try again later");
+            }
+        } catch (error) {
+            console.error("Error logging in:", error);
+            setErrorMessage("An unexpected error occurred. Please try again later.");
+        }
     }
-  }
 
-  return (
-    <div>
-      <Header title={"Register"} />
-      <form className="grid grid-gap-5 grid-row-7 text-black" onSubmit={handleRegister}>
-        <input type="text" placeholder="Email" onChange={(e) => setUser({ ...user, email: e.target.value })} />
-        <br />
-        <input type="password" placeholder="Password" onChange={(e) => setUser({ ...user, password: e.target.value })} />
-        <br />
-        <button type="submit" className="text-white">Register</button>
-        <br />
-      </form>
-    </div>
-  );
+    return (
+        <div className="relative min-h-screen">
+            <Header title={"Register"}/>
+            {errorMessage && (
+                <div className="absolute top-0 left-1/2 transform -translate-x-1/2 mt-4 z-10">
+                    <ErrorAlert message={errorMessage}/>
+                </div>
+            )}
+            <div className="flex justify-center items-center min-h-full">
+                <form className="grid gap-5 text-black w-2/5" onSubmit={handleRegister}>
+                    <input
+                        type="text"
+                        placeholder="Email"
+                        className={"px-4 py-2 input input-bordered border border-blue-500 text-white rounded w-full"}
+                        onChange={(e) => setUser({...user, email: e.target.value})}
+                    />
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        className={"px-4 py-2 input input-bordered border border-blue-500 text-white rounded w-full"}
+                        onChange={(e) => setUser({...user, password: e.target.value})}
+                    />
+                    <button type="submit" className="btn bg-teal-400 hover:bg-teal-500 text-black">
+                        Register
+                    </button>
+                </form>
+            </div>
+        </div>
+    );
 }
