@@ -19,8 +19,8 @@ export default function NewPasswordModal() {
     });
 
     const [isOpen, setIsOpen] = useState(false);
-    const router = useRouter()
 
+    // TODO missing auto refresh and validation of inputs
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
         const createEntry = async () => {
@@ -28,14 +28,14 @@ export default function NewPasswordModal() {
             setEntry(createdEntry);
             setIsOpen(false);
         };
-        createEntry().then(() => Router.reload())
+        createEntry()
     };
 
     return (
         <>
             <button
                 onClick={() => setIsOpen(true)}
-                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                className="px-4 py-2 bg-teal-400 text-black rounded hover:bg-teal-500"
             >
                 Add New Entry
             </button>
