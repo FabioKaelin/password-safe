@@ -4,7 +4,9 @@ import {useState} from "react";
 import {VaultEntry} from "@/app/vault/vaultEntry";
 import {createNewEntry} from "@/app/vault/api";
 import {useRouter} from "next/navigation";
+import Router from "next/router";
 
+// TODO refresh is not executed after adding a new entry
 export default function NewPasswordModal() {
     const [entry, setEntry] = useState<VaultEntry>({
         description: "",
@@ -26,7 +28,7 @@ export default function NewPasswordModal() {
             setEntry(createdEntry);
             setIsOpen(false);
         };
-        createEntry().then(() => router.push("/vault"))
+        createEntry().then(() => Router.reload())
     };
 
     return (
