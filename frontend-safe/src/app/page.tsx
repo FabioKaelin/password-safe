@@ -5,8 +5,14 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Navbar from "@/app/components/Navbar";
 import Header from "@/app/components/Header";
+import {useEffect} from "react";
 
 export default function Home() {
+    // TODO to be removed when home page is existing
+    const router = useRouter();
+    useEffect(() => {
+        router.push("/login");
+    }, []);
   return (
       <>
           <div>

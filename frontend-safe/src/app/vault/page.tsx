@@ -8,10 +8,12 @@ export default function Page() {
     return (
         <>
             <Header title={"Vault"}/>
+            <div className={"flex justify-center mb-10"}> 
+                <NewPasswordModal/>
+            </div>
             <div className={"flex justify-center"}>
                 <PasswordTable/>
             </div>
-            <NewPasswordModal/>
 
         </>
 
