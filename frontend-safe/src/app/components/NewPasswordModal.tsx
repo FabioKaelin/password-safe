@@ -1,10 +1,12 @@
 "use client"
 
-import {useState} from "react";
+import React, {useState} from "react";
 import {VaultEntry} from "@/app/vault/vaultEntry";
 import {createNewEntry} from "@/app/vault/api";
 import {useRouter} from "next/navigation";
 import Router from "next/router";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
 
 // TODO refresh is not executed after adding a new entry
 export default function NewPasswordModal() {
@@ -91,10 +93,19 @@ export default function NewPasswordModal() {
                                         ...entry,
                                         password: e.target.value
                                     })}
-                                    className="px-4 py-2 input input-bordered border border-blue-500 rounded"
+                                    className="px-4 py-2 input input-bordered border border-blue-500 rounded w-4/5"
                                 />
-                              <button type={"button"}
-                                      onClick={() => setShowPassword(!showPassword)}>Show password</button>
+                               <button type="button" onClick={() => setShowPassword(!showPassword)} className={"px-4 py-2 border border-blue-500 rounded h-full mx-1 w-1/6"}>
+                                  {showPassword ? (
+                                      <>
+                                          <FontAwesomeIcon icon={faEyeSlash}/>
+                                      </>
+                                  ) : (
+                                      <>
+                                          <FontAwesomeIcon icon={faEye}/>
+                                      </>
+                                  )}
+                               </button>
                             </span>
                             <br/>
                             <button
