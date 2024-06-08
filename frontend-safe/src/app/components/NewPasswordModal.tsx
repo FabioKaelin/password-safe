@@ -8,7 +8,6 @@ import Router from "next/router";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
 
-// TODO refresh is not executed after adding a new entry
 
 export type RefreshType = {
     isRefresh: boolean,
@@ -39,7 +38,6 @@ export default function NewPasswordModal({setIsRefresh}: RefreshType) {
         createEntry()
     };
 
-    // TODO show password button needs to be added
     return (
         <>
             <button
