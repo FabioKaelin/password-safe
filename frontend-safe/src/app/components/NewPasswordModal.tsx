@@ -19,6 +19,7 @@ export default function NewPasswordModal() {
     });
 
     const [isOpen, setIsOpen] = useState(false);
+    const [showPassword, setShowPassword] = useState<boolean>(false)
 
     // TODO missing auto refresh and validation of inputs
     const handleSubmit = (event: React.FormEvent) => {
@@ -31,6 +32,7 @@ export default function NewPasswordModal() {
         createEntry()
     };
 
+    // TODO show password button needs to be added
     return (
         <>
             <button
@@ -79,14 +81,22 @@ export default function NewPasswordModal() {
                                 onChange={(e) => setEntry({...entry, username: e.target.value})}
                                 className="px-4 py-2 input input-bordered border border-blue-500 rounded"
                             />
-                            <input
-                                name="password"
-                                placeholder="Password"
-                                type="password"
-                                value={entry.password} 
-                                onChange={(e) => setEntry({...entry, password: e.target.value})}
-                                className="px-4 py-2 input input-bordered border border-blue-500 rounded"
-                            />
+                            <span>
+                                <input
+                                    name="password"
+                                    placeholder="Password"
+                                    type={showPassword ? "text" : "password"}
+                                    value={entry.password}
+                                    onChange={(e) => setEntry({
+                                        ...entry,
+                                        password: e.target.value
+                                    })}
+                                    className="px-4 py-2 input input-bordered border border-blue-500 rounded"
+                                />
+                              <button type={"button"}
+                                      onClick={() => setShowPassword(!showPassword)}>Show password</button>
+                            </span>
+                            <br/>
                             <button
                                 type="submit"
                                 className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
