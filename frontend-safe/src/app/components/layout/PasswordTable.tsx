@@ -7,11 +7,14 @@ import entry from "next/dist/server/typescript/rules/entry";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
 import {RefreshType} from "@/app/components/modals/NewPasswordModal";
+import DeleteConfirmation, {DeleteConfirmationProps} from "@/app/components/modals/DeleteConfirmation";
 
 export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
 
     const [see, setSee] = useState<boolean>(false)
     const [entries, setEntries] = useState<VaultEntry[]>([])
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+    const [toBeDeleted, setToBeDeleted] = useState<DeleteConfirmationProps>()
 
     useEffect(() => {
         const handlePassword = async () => {
@@ -19,11 +22,11 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
             setEntries(entries == null ? [] : entries)
             console.log(entries)
         }
-        if (isRefresh) {
+        if (isRefresh || !isModalOpen) {
             handlePassword()
             setIsRefresh(false)
         }
-    }, [isRefresh])
+    }, [isRefresh, isModalOpen])
 
 
     const getPasswordContent = (entry: VaultEntry): React.JSX.Element => {
@@ -34,18 +37,26 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
         return <p>{password}</p>
     }
 
-    const handleDelete = async (id: string) => {
-        const deleteEntry = async () => {
-            console.log(id)
-            const response = deletePassword(id)
-            response.then((value) => {
-                value === "Password deleted" ? setIsRefresh(true) : console.log(value)
-            })
-        }
-        deleteEntry()
-
+    const handleDelete = (id: string) => {
+        setToBeDeleted({
+            title: "Hi",
+            text: "Do you really want to?",
+            handleDelete: () => deleteEntry(id),
+            isModalOpen: setIsModalOpen,
+            id: id
+        })
+        setIsModalOpen(true)
+        console.log(toBeDeleted)
+        console.log(isModalOpen)
     }
 
+    const deleteEntry = async (id: string): Promise<void> => {
+        console.log(id)
+        const response = deletePassword(id)
+        response.then((value) => {
+            value === "Password deleted" ? setIsRefresh(true) : console.log(value)
+        })
+    }
     const handleEdit = async (id: string, updatedEntry: VaultEntry) => {
         const editEntry = async () => {
             console.log(id)
@@ -137,6 +148,14 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
                 </tr>
                 </tfoot>
             </table>
+
+            {
+                isModalOpen && (
+                    <DeleteConfirmation title={"Are you sure?"} text={"Do you really want to delete the entry you selected?"}
+                                        handleDelete={() => deleteEntry(toBeDeleted!.id)}   
+                                        isModalOpen={setIsModalOpen} id={toBeDeleted!.id}/>
+                )
+            }
         </div>
     )
 }
