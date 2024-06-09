@@ -37,7 +37,7 @@ export default function LogIn() {
     };
 
     return (
-        <div className="relative min-h-screen">
+        <div className="relative">
             <Header title={"Log In"} />
             {errorMessage && (
                 <div className="absolute top-0 left-1/2 transform -translate-x-1/2 mt-4 z-10">
