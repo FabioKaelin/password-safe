@@ -1,6 +1,8 @@
 "use client"
 
 import Header from "@/app/components/layout/Header";
+import UsCard from "@/app/components/layout/UsCard";
+import {getPasswordForUser} from "@/app/vault/api";
 
 export default function Page() {
     return (
@@ -27,20 +29,18 @@ export default function Page() {
                 <br/>
                 Thank you for joining us on this exciting journey as we work diligently to enhance your digital
                 security and convenience.</p>
-            <h1 className={"font-bold text-xl flex items-center justify-center mt-10"}>Who are we?</h1>
+            <h1 className={"font-bold text-xl flex items-center justify-center mt-10"}>Who are the Founders?</h1>
 
-            <div className={"flex items-center justify-center mx-10 mt-10"}>
-                <div className="card w-96 bg-base-100 shadow-xl">
-                    <figure><img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg"
-                                 alt="Shoes"/></figure>
-                    <div className="card-body">
-                        <h2 className="card-title">Shoes!</h2>
-                        <p>If a dog chews shoes whose shoes does he choose?</p>
-                        <div className="card-actions justify-end">
-                            <button className="btn btn-primary">Buy Now</button>
-                        </div>
-                    </div>
-                </div>
+            <div className={"flex items-center justify-center mx-10 gap-5"}>
+                <UsCard title={"Fabio Kälin"} jobDescription={"Developer Apprentice"}
+                        imageUrl={"https://media.licdn.com/dms/image/D4D03AQHJmp5uzF5zNw/profile-displayphoto-shrink_400_400/0/1670080638124?e=1723680000&v=beta&t=bwcUIRxAKgexmM0DnnBNb_V-ZALw9qjzME5xFttBmkQ"}
+                        linkedIn={"https://www.linkedin.com/in/fabio-k%C3%A4lin-21a3b4259/"} company={"SwissRe"}/>
+                <UsCard title={"Shansai Muraleetharan"} jobDescription={"Developer Apprentice"}
+                        imageUrl={"https://media.licdn.com/dms/image/D4D03AQEWm96EUA4Btw/profile-displayphoto-shrink_400_400/0/1675358935766?e=1723680000&v=beta&t=ywX4I0BMkIR7rMZYrgyjIjm4TKHeAHZ8pJ-H3DLYEmc"}
+                        linkedIn={"https://www.linkedin.com/in/shansai-muraleetharan/"} company={"KPMG Switzerland"}/>
+                <UsCard title={"Lukas Winterleitner"} jobDescription={"Developer Apprentice"}
+                        imageUrl={"https://media.licdn.com/dms/image/D4E03AQHvpV3WnqSORg/profile-displayphoto-shrink_800_800/0/1712923732042?e=1723680000&v=beta&t=pMTjwFUzRR0RJ5jtAxjOg2IsvDDOoGX5QNiaNhFZ3UU"}
+                        linkedIn={"https://www.linkedin.com/in/lukas-winterleitner-035601303/"} company={"NxtLvl"}/>
             </div>
         </>
     );
