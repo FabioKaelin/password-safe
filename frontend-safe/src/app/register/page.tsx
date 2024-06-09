@@ -1,12 +1,12 @@
 "use client"
 
 import {useRouter} from "next/navigation";
-import Header from "../components/Header";
+import Header from "../components/layout/Header";
 import {User} from "../login/page";
 import React, {useState} from "react";
 import {RegisterUser} from "./api";
 import {LogInToVault} from "../login/api";
-import ErrorAlert from "@/app/components/ErrorAlert";
+import ErrorAlert from "@/app/components/alerts/ErrorAlert";
 import Link from "next/link";
 
 export default function Register() {

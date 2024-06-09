@@ -1,8 +1,8 @@
 "use client"
 
-import Header from "@/app/components/Header";
-import PasswordTable from "@/app/components/PasswordTable";
-import NewPasswordModal from "@/app/components/NewPasswordModal";
+import Header from "@/app/components/layout/Header";
+import PasswordTable from "@/app/components/layout/PasswordTable";
+import NewPasswordModal from "@/app/components/modals/NewPasswordModal";
 import {useState} from "react";
 
 export default function Page() {

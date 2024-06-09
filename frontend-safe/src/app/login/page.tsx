@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
-import Header from "../components/Header";
+import Header from "../components/layout/Header";
 import Link from "next/link";
 import { LogInToVault } from "./api";
 import { useRouter } from "next/navigation";
-import ErrorAlert from "@/app/components/ErrorAlert";
+import ErrorAlert from "@/app/components/alerts/ErrorAlert";
 
 export type User = {
     email: string;
