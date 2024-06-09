@@ -13,6 +13,10 @@ export default function Home() {
         <>
             <div>
                 <Header title={"Home"}/>
+                <div className={"flex justify-center items-center"}>
+                    <Image src={"/passwordguy.png"} alt={"robo with password"} width={"300"} height={"300"}/>
+                    <h1 className={"text-3xl"}>RoboGuard</h1>
+                </div>
                 <div className={"flex justify-center items-center min-h-full"}>
                     <div className={"grid gap-5 text-black w-2/5"}>
                         <Link href="/login" className="btn bg-teal-400 hover:bg-teal-500 text-black">
