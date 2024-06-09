@@ -6,7 +6,7 @@ import {deletePassword, getPasswordForUser, editEntryAPI} from "@/app/vault/api"
 import entry from "next/dist/server/typescript/rules/entry";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
-import {RefreshType} from "@/app/components/NewPasswordModal";
+import {RefreshType} from "@/app/components/modals/NewPasswordModal";
 
 export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
 

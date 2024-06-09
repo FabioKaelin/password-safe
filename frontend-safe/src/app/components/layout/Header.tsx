@@ -1,6 +1,6 @@
 "use client"
 
-import Navbar from "@/app/components/Navbar";
+import Navbar from "@/app/components/layout/Navbar";
 
 type HeaderProps = {
     title: string;
