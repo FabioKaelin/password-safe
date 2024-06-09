@@ -2,7 +2,7 @@
 
 export default function Footer() {
     return (
-        <footer className="footer items-center p-4 bg-neutral text-neutral-content">
+        <footer className="footer items-center p-4 bg-neutral text-neutral-content bottom-0">
             <aside className="items-center grid-flow-col">
                 <svg width="36" height="36" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fillRule="evenodd"
                      clipRule="evenodd" className="fill-current">
