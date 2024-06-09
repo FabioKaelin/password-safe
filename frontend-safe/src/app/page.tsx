@@ -1,25 +1,33 @@
 "use client";
 
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import {useRouter} from "next/navigation";
 import Link from "next/link";
 import Navbar from "@/app/components/layout/Navbar";
 import Header from "@/app/components/layout/Header";
-import {useEffect} from "react";
+import React, {useEffect} from "react";
 
 export default function Home() {
-    // TODO to be removed when home page is existing
-    const router = useRouter();
-    useEffect(() => {
-        router.push("/login");
-    }, []);
-  return (
-      <>
-          <div>
-              <Header title={"Hi"} />
-              <h1 className="text-red-500">Home</h1>
-              <Link href="/login">Go to Login</Link>
-          </div>
-      </>
-  );
+
+    return (
+        <>
+            <div>
+                <Header title={"Home"}/>
+                <div className={"flex justify-center items-center"}>
+                    <Image src={"/passwordguy.png"} alt={"robo with password"} width={"300"} height={"300"}/>
+                    <h1 className={"text-3xl"}>RoboGuard</h1>
+                </div>
+                <div className={"flex justify-center items-center min-h-full"}>
+                    <div className={"grid gap-5 text-black w-2/5"}>
+                        <Link href="/login" className="btn bg-teal-400 hover:bg-teal-500 text-black">
+                            Log In
+                        </Link>
+                        <Link href="/register " className="btn bg-teal-400 hover:bg-teal-500 text-black">
+                            Sign Up
+                        </Link>
+                    </div>
+                </div>
+            </div>
+        </>
+    );
 }
