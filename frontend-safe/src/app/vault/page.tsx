@@ -14,7 +14,7 @@ export default function Page() {
                 <NewPasswordModal isRefresh={isRefresh} setIsRefresh={setIsRefresh}/>
             </div>
 
-            <div className={"flex justify-center"}>
+            <div className={"flex justify-center items-center"}>
                 <PasswordTable isRefresh={isRefresh} setIsRefresh={setIsRefresh}/>
             </div>
 
