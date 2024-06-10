@@ -14,7 +14,7 @@ func UserRouter(apiGroup *gin.RouterGroup) {
 		userGroup.POST("/", userPost)
 		userGroup.POST("/login", userLogin)
 		userGroup.PUT("/:id", userPut)
-		userGroup.GET("/check", userCheckLogin)
+		userGroup.GET("/check", middleware.SetUserToContext(), userCheckLogin)
 	}
 }
 
