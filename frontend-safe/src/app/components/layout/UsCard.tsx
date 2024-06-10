@@ -9,9 +9,10 @@ type UsCardProps = {
     company: string;
     imageUrl: string;
     linkedIn: string
+    roleInPasswordSafe: string
 }
 
-export default function UsCard({title, jobDescription, imageUrl, linkedIn, company}: UsCardProps) {
+export default function UsCard({title, jobDescription, imageUrl, linkedIn, company, roleInPasswordSafe}: UsCardProps) {
 
     return (
         <div className="card w-96 bg-base-100 shadow-xl my-10">
@@ -21,6 +22,7 @@ export default function UsCard({title, jobDescription, imageUrl, linkedIn, compa
                 <h2 className="card-title">{title}</h2>
                 <p className={"font-bold"}>{jobDescription}</p>
                 <p>{company}</p>
+                <p className={""}>{roleInPasswordSafe}</p>
                 <div className="card-actions justify-end">
                     <Link className="btn btn-teal-400" href={linkedIn}>Go to Linkedin</Link>
                 </div>
