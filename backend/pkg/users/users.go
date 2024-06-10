@@ -32,6 +32,11 @@ func Create(user User) (User, error) {
 		Password: hashedPassword,
 	}
 
+	existingUser, _ := db.UsersGetByEmail(user.Email)
+	if existingUser.ID != "" {
+		return User{}, errors.New("user already exists")
+	}
+
 	userid, err := db.UsersCreate(dbUser)
 	if err != nil {
 		return User{}, err
