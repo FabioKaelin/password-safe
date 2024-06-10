@@ -17,6 +17,7 @@ export async function getPasswordForUser(): Promise<VaultEntry[]> {
     
     if (resp.status === 401)
         Router.push("/login")
+    console.log("res")
     return resp.json()
 }
 
@@ -31,7 +32,8 @@ export async function createNewEntry(entry: VaultEntry): Promise<VaultEntry> {
             description: entry.description,
             url: entry.url,
             username: entry.username,
-            password: entry.password
+            password: entry.password,
+            category: entry.category
         }),
         cache: "no-cache",
         credentials: "include",

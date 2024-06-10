@@ -3,7 +3,7 @@ import {BACKENDURL} from "../statics"
 
 export function RegisterUser(user: User) {
     console.log(`${user.email} ${user.password}`)
-    const resp = fetch(`http://localhost:8000/api/users/`, {
+    const resp = fetch(`${BACKENDURL}users/`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -18,6 +18,6 @@ export function RegisterUser(user: User) {
     })
 
     console.log("I am after")
-    
+
     return resp
 }
