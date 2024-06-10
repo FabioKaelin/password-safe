@@ -5,9 +5,14 @@ import Link from "next/link";
 import Logo from "./Logo";
 import {CheckUser} from "@/app/login/api";
 import {UserWithId} from "@/app/login/page";
+import {useRouter} from "next/navigation";
+import {destroyCookie} from "nookies";
 
 const Navbar = () => {
     const [user, setUser] = useState<UserWithId>({id: "", email: "", password: ""});
+    const router = useRouter();
+
+
     useEffect(() => {
         const handleLoggedUser = async () => {
             const user = await CheckUser()
@@ -17,6 +22,13 @@ const Navbar = () => {
 
         handleLoggedUser()
     }, []);
+
+    const handleLogOut = async () => {
+        destroyCookie(null, "token", {
+            path: '/',
+        })
+        router.push("/")
+    }
 
     return (
         <>
@@ -50,11 +62,19 @@ const Navbar = () => {
                                         </li>
                                     </>
                                 ) : (
-                                    <li>
-                                        <Link href="/vault">
-                                            <p>Vault</p>
-                                        </Link>
-                                    </li>
+                                    <>
+                                        <li>
+                                            <Link href="/vault">
+                                                <p>Vault</p>
+                                            </Link>
+                                        </li>
+                                        <li>
+                                            <div onClick={() => handleLogOut()}>
+                                                <p>Log Out</p>
+                                            </div>
+                                        </li>
+                                    </>
+
                                 )
                             }
                         </ul>
