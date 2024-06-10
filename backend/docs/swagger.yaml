@@ -8,6 +8,8 @@ definitions:
     type: object
   Password:
     properties:
+      category:
+        type: string
       description:
         type: string
       id:

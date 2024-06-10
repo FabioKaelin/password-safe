@@ -362,6 +362,9 @@ const docTemplate = `{
         "Password": {
             "type": "object",
             "properties": {
+                "category": {
+                    "type": "string"
+                },
                 "description": {
                     "type": "string"
                 },

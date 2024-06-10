@@ -22,7 +22,8 @@ CREATE TABLE
         `url` varchar(64) NOT NULL,
         `username` varchar(64) NOT NULL,
         `password` varchar(512) NOT NULL,
-        `description` varchar(64) DEFAULT NULL
+        `description` varchar(64) DEFAULT NULL,
+        `category` varchar(64) DEFAULT NULL
     );
 
 ALTER TABLE `users` ADD PRIMARY KEY (`id`);

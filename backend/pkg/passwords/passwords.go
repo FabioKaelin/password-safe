@@ -13,6 +13,7 @@ type (
 		Username    string `json:"username,omitempty"`
 		Password    string `json:"password,omitempty"`
 		Description string `json:"description,omitempty"`
+		Category    string `json:"category,omitempty"`
 	} // @name Password
 )
 
@@ -29,6 +30,7 @@ func Create(password Password) (Password, error) {
 		Username:    password.Username,
 		Password:    encryptedPassword,
 		Description: password.Description,
+		Category:    password.Category,
 	}
 
 	passwordId, err := db.PasswordsCreate(dbPassword)
@@ -54,6 +56,7 @@ func Create(password Password) (Password, error) {
 		Username:    newDBPassword.Username,
 		Password:    decryptedPassword,
 		Description: newDBPassword.Description,
+		Category:    newDBPassword.Category,
 	}
 
 	return newPassword, nil
@@ -78,6 +81,7 @@ func Get(id string) (Password, error) {
 		Username:    dbPassword.Username,
 		Password:    decryptedPassword,
 		Description: dbPassword.Description,
+		Category:    dbPassword.Category,
 	}
 
 	return password, nil
@@ -104,6 +108,7 @@ func GetByUserID(userId string) ([]Password, error) {
 			Username:    dbPassword.Username,
 			Password:    decryptedPassword,
 			Description: dbPassword.Description,
+			Category:    dbPassword.Category,
 		}
 		passwords = append(passwords, password)
 	}
@@ -124,6 +129,7 @@ func Update(password Password) error {
 		Username:    password.Username,
 		Password:    encryptedPassword,
 		Description: password.Description,
+		Category:    password.Category,
 	}
 
 	err = db.PasswordsUpdate(dbPassword)
