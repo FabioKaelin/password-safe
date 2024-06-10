@@ -21,11 +21,11 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
     useEffect(() => {
         const handlePassword = async () => {
             let entries = await getPasswordForUser();
+            console.log(entries)
             entries = entries === null ? [] : entries;
-
+            console.log(entries)
             entries.forEach(x => setSee([...see, {id: x.id, visible: false}]))
             setEntries(entries)
-            console.log(entries)
         }
         if (isRefresh || !isModalOpen) {
             handlePassword();
@@ -72,7 +72,10 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
     };
 
     const togglePassword = (id: string) => {
-        let foundId = see.find(x => x.id === id)
+        let foundId = see.find(x => x.id == id)
+        console.log(foundId)
+        console.log(id)
+        console.log(see)
         if (foundId === undefined) {
             return
         }
@@ -81,9 +84,10 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
         setSee([...see.filter(x => x.id !== id), foundId])
     }
 
+    // TODO table fixed is not the way to go. when a password is too big it overlaps with the next column
     return (
         <div className="">
-            <table className="table">
+            <table className="table md:table-fixed mx-20">
                 <thead>
                 <tr>
                     <th>Title</th>
