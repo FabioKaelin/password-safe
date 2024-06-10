@@ -11,7 +11,7 @@ import EditPasswordModal from "@/app/components/modals/EditPasswordModal";
 
 export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
 
-    const [see, setSee] = useState<{ id: string, visible: boolean }[]>([])
+    const [see, setSee] = useState<{ id: string, visible: boolean }[]>([{id: "", visible: false}])
     const [entries, setEntries] = useState<VaultEntry[]>([])
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
     const [toBeDeleted, setToBeDeleted] = useState<DeleteConfirmationProps>()
@@ -24,7 +24,15 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
             console.log(entries)
             entries = entries === null ? [] : entries;
             console.log(entries)
-            entries.forEach(x => setSee([...see, {id: x.id, visible: false}]))
+            entries.map(x => {
+                setSee(prevState => {
+                    if (!prevState.some(entry => entry.id === x.id)) {
+                        return [...prevState, {id: x.id, visible: false}];
+                    }
+                    return prevState;
+                });
+            })
+            console.log(see)
             setEntries(entries)
         }
         if (isRefresh || !isModalOpen) {
@@ -116,10 +124,11 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
                                     <div className={"flex"}>
                                         {getPasswordContent(entry)}
                                         <button onClick={() => togglePassword(entry.id)} className={"ml-auto"}>
-                                            {see.find(x => x.id === entry.id)?.visible ? <FontAwesomeIcon icon={faEyeSlash} /> : <FontAwesomeIcon icon={faEye} /> }
+                                            {see.find(x => x.id === entry.id)?.visible ?
+                                                <FontAwesomeIcon icon={faEyeSlash}/> : <FontAwesomeIcon icon={faEye}/>}
                                         </button>
                                     </div>
-          
+
                                 </td>
                                 <th>
                                     <button className="btn btn-ghost btn-xs"
