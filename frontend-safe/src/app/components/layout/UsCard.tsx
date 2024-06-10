@@ -2,6 +2,9 @@
 
 
 import Link from "next/link";
+import React from "react";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import LinkedInIcon from "@/app/components/Icons/LinkedInIcon";
 
 type UsCardProps = {
     title: string;
@@ -23,8 +26,8 @@ export default function UsCard({title, jobDescription, imageUrl, linkedIn, compa
                 <p className={"font-bold"}>{jobDescription}</p>
                 <p>{company}</p>
                 <p className={""}>{roleInPasswordSafe}</p>
-                <div className="card-actions justify-end">
-                    <Link className="btn btn-teal-400" href={linkedIn}>Go to Linkedin</Link>
+                <div className="card-actions justify-center mt-5 flex">
+                    <Link className="btn btn-teal-400" href={linkedIn}>Go to Linkedin <LinkedInIcon className={"h-10"} /></Link>
                 </div>
             </div>
         </div>
