@@ -109,10 +109,13 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
                                 <td>{entry.url}</td>
                                 <td>{entry.username}</td>
                                 <td>
-                                    {getPasswordContent(entry)}
-                                    <button onClick={() => togglePassword(entry.id)}>
-                                        TEST
-                                    </button>
+                                    <div className={"flex"}>
+                                        {getPasswordContent(entry)}
+                                        <button onClick={() => togglePassword(entry.id)} className={"ml-auto"}>
+                                            {see.find(x => x.id === entry.id)?.visible ? <FontAwesomeIcon icon={faEyeSlash} /> : <FontAwesomeIcon icon={faEye} /> }
+                                        </button>
+                                    </div>
+          
                                 </td>
                                 <th>
                                     <button className="btn btn-ghost btn-xs"
