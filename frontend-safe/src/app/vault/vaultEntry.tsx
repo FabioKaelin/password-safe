@@ -6,4 +6,5 @@ export type VaultEntry = {
     url: string;
     userid: string;
     username: string
+    category: string
 }

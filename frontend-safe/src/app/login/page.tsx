@@ -11,6 +11,11 @@ export type User = {
     email: string;
     password: string;
 };
+export type UserWithId = {
+    id: string;
+    email: string;
+    password: string;
+};
 
 export default function LogIn() {
     const [user, setUser] = useState<User>({ email: "", password: "" });

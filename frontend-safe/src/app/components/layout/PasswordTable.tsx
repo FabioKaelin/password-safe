@@ -21,9 +21,9 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
     useEffect(() => {
         const handlePassword = async () => {
             let entries = await getPasswordForUser();
+            console.log("entries")
             console.log(entries)
             entries = entries === null ? [] : entries;
-            console.log(entries)
             entries.map(x => {
                 setSee(prevState => {
                     if (!prevState.some(entry => entry.id === x.id)) {
@@ -32,7 +32,6 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
                     return prevState;
                 });
             })
-            console.log(see)
             setEntries(entries)
         }
         if (isRefresh || !isModalOpen) {
@@ -42,12 +41,10 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
     }, [isRefresh, isModalOpen]);
 
     const getPasswordContent = (entry: VaultEntry): React.JSX.Element => {
-        console.log(see)
         let visible = see.find(x => x.id === entry.id)?.visible;
         if (visible === undefined) {
             visible = false;
         }
-        console.log(visible)
         let password =
             visible ? entry.password
                 : "*".repeat(entry.password?.length);
@@ -67,7 +64,6 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
     };
 
     const deleteEntry = async (id: string): Promise<void> => {
-        console.log(id);
         const response = deletePassword(id);
         response.then((value) => {
             value === "Password deleted" ? setIsRefresh(true) : console.log(value);
@@ -81,9 +77,6 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
 
     const togglePassword = (id: string) => {
         let foundId = see.find(x => x.id == id)
-        console.log(foundId)
-        console.log(id)
-        console.log(see)
         if (foundId === undefined) {
             return
         }

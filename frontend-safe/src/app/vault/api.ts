@@ -1,4 +1,4 @@
-import {User} from "@/app/login/page";
+import {User, UserWithId} from "@/app/login/page";
 import {BACKENDURL} from "@/app/statics";
 import {VaultEntry} from "@/app/vault/vaultEntry";
 import Router from 'next/router';
@@ -14,9 +14,10 @@ export async function getPasswordForUser(): Promise<VaultEntry[]> {
         credentials: "include",
         mode: "cors",
     })
-    
+
     if (resp.status === 401)
         Router.push("/login")
+    console.log("res")
     return resp.json()
 }
 
@@ -31,13 +32,14 @@ export async function createNewEntry(entry: VaultEntry): Promise<VaultEntry> {
             description: entry.description,
             url: entry.url,
             username: entry.username,
-            password: entry.password
+            password: entry.password,
+            category: entry.category
         }),
         cache: "no-cache",
         credentials: "include",
         mode: "cors",
     })
-    
+
     if (resp.status === 401)
         Router.push("/login")
 
@@ -57,7 +59,7 @@ export async function deletePassword(id: string): Promise<string> {
 
     if (resp.status === 401)
         Router.push("/login")
-    
+
     if (resp.status !== 204) {
         return "Failed to delete password"
     }
@@ -100,3 +102,24 @@ export async function editEntryAPI(id: string, entry: VaultEntry): Promise<Vault
     }
 }
 
+export async function changeMasterPassword(user: UserWithId): Promise<UserWithId> {
+    const resp = await fetch(`${BACKENDURL}users/${user.id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        cache: "no-cache",
+        credentials: "include",
+        mode: "cors",
+        body: JSON.stringify({
+            email: user.email,
+            password: user.password,
+            id: user.id
+        })
+    })
+
+    if (resp.status === 401)
+        Router.push("/login")
+
+    return resp.json()
+}
