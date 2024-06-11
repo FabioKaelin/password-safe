@@ -6,6 +6,7 @@ import {editEntryAPI} from "@/app/vault/api";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
 import {Category, GetAllCategoriesFromVault} from "@/app/vault/category";
+import CreateNewCategory from "@/app/components/layout/CreateNewCategory";
 
 type EditPasswordModalProps = {
     entry: VaultEntry;
@@ -18,6 +19,8 @@ export default function EditPasswordModal({entry, isOpen, onClose, onUpdated}: E
     const [editedEntry, setEditedEntry] = useState<VaultEntry>(entry);
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [categories, setCategories] = useState<Category[]>([]);
+    const [isNewCategory, setIsNewCategory] = useState<boolean>(false);
+    const [newCategory, setNewCategory] = useState<Category>({category: ""});
 
     useEffect(() => {
         if (isOpen) {
@@ -116,6 +119,12 @@ export default function EditPasswordModal({entry, isOpen, onClose, onUpdated}: E
                             })
                         }
                     </select>
+
+                    <CreateNewCategory isNewCategory={isNewCategory} setIsNewCategory={setIsNewCategory}
+                                       newCategory={newCategory} setNewCategory={setNewCategory}
+                                       categories={categories} setCategories={setCategories}
+                                       entry={entry}/>
+                    
                     <button type="submit" className="px-4 py-2 bg-teal-400 text-black rounded hover:bg-teal-500">
                         Update
                     </button>
