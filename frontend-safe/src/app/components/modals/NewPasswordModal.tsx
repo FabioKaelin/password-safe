@@ -87,6 +87,7 @@ export default function NewPasswordModal({setIsRefresh}: RefreshType) {
                                 onChange={(e) => setEntry({...entry, username: e.target.value})}
                                 className="px-4 py-2 input input-bordered border border-blue-500 rounded"
                             />
+
                             <span>
                                 <input
                                     name="password"
@@ -99,6 +100,7 @@ export default function NewPasswordModal({setIsRefresh}: RefreshType) {
                                     })}
                                     className="px-4 py-2 input input-bordered border border-blue-500 rounded w-4/5"
                                 />
+                                
                                <button type="button" onClick={() => setShowPassword(!showPassword)}
                                        className={"px-4 py-2 border border-blue-500 rounded h-full mx-1 w-1/6"}>
                                   {showPassword ? (
@@ -112,6 +114,15 @@ export default function NewPasswordModal({setIsRefresh}: RefreshType) {
                                   )}
                                </button>
                             </span>
+                            
+                            <input
+                                name="category"
+                                placeholder="Category"
+                                value={entry.category}
+                                onChange={(e) => setEntry({...entry, category: e.target.value})}
+                                className="px-4 py-2 input input-bordered border border-blue-500 rounded"
+                            />
+
                             <br/>
                             <button
                                 type="submit"
