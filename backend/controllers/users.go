@@ -35,6 +35,11 @@ func userPost(c *gin.Context) {
 		return
 	}
 
+	if body.Email == "" || body.Password == "" {
+		c.JSON(400, errorResponse{Message: "email and password are required"})
+		return
+	}
+
 	newUser, err := users.Create(body)
 	if err != nil {
 		c.JSON(400, errorResponse{Message: err.Error()})
@@ -59,6 +64,11 @@ func userLogin(c *gin.Context) {
 	var body users.User
 	if err := c.ShouldBindJSON(&body); err != nil {
 		c.JSON(400, errorResponse{Message: err.Error()})
+		return
+	}
+
+	if body.Email == "" || body.Password == "" {
+		c.JSON(400, errorResponse{Message: "email and password are required"})
 		return
 	}
 
@@ -90,6 +100,11 @@ func userPut(c *gin.Context) {
 	var body users.User
 	if err := c.ShouldBindJSON(&body); err != nil {
 		c.JSON(400, errorResponse{Message: err.Error()})
+		return
+	}
+
+	if body.Email == "" || body.Password == "" {
+		c.JSON(400, errorResponse{Message: "email and password are required"})
 		return
 	}
 

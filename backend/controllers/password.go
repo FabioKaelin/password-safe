@@ -66,6 +66,11 @@ func passwordPost(c *gin.Context) {
 		return
 	}
 
+	if password.Title == "" || password.Username == "" || password.Password == "" || password.URL == "" {
+		c.JSON(400, errorResponse{Message: "title, username, password and url are required"})
+		return
+	}
+
 	currentUser, err := middleware.GetCurrentUser(c)
 	if err != nil {
 		c.JSON(400, errorResponse{Message: err.Error()})
@@ -95,6 +100,10 @@ func passwordPost(c *gin.Context) {
 //	@Router			/passwords/{id} [get]
 func passwordGetByID(c *gin.Context) {
 	passwordID := c.Param("id")
+	if passwordID == "" {
+		c.JSON(400, errorResponse{Message: "id is required"})
+		return
+	}
 
 	password, err := passwords.Get(passwordID)
 	if err != nil {
@@ -150,7 +159,18 @@ func passwordUpdate(c *gin.Context) {
 		return
 	}
 
+	if password.Title == "" || password.Username == "" || password.Password == "" || password.URL == "" {
+		c.JSON(400, errorResponse{Message: "title, username, password and url are required"})
+		return
+	}
+
 	passwordID := c.Param("id")
+
+	if passwordID == "" {
+		c.JSON(400, errorResponse{Message: "id is required in path"})
+		return
+	}
+
 	password.ID = passwordID
 
 	err = passwords.Update(password)
@@ -185,6 +205,12 @@ func passwordDelete(c *gin.Context) {
 	}
 
 	passwordID := c.Param("id")
+
+	if passwordID == "" {
+		c.JSON(400, errorResponse{Message: "id is required in path"})
+		return
+	}
+
 	password, err := passwords.Get(passwordID)
 	if err != nil {
 		c.JSON(400, errorResponse{Message: err.Error()})
