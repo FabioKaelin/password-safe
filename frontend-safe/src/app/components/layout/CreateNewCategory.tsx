@@ -1,27 +1,19 @@
-import React from "react";
+import React, {useState} from "react";
 import {Category} from "@/app/vault/category";
 import {VaultEntry} from "@/app/vault/vaultEntry";
 
 
 export type NewCategoryProps = {
-    isNewCategory: boolean;
-    setIsNewCategory: React.Dispatch<React.SetStateAction<boolean>>;
     newCategory: Category;
     setNewCategory: React.Dispatch<React.SetStateAction<Category>>
     categories: Category[];
     setCategories: React.Dispatch<React.SetStateAction<Category[]>>;
     entry: VaultEntry;
 }
-export default function CreateNewCategory({
-                                              isNewCategory,
-                                              setIsNewCategory,
-                                              newCategory,
-                                              setNewCategory,
-                                              categories,
-                                              setCategories,
-                                              entry
-                                          }: NewCategoryProps) {
+export default function CreateNewCategory({newCategory, setNewCategory, categories, setCategories, entry}: NewCategoryProps) {
 
+
+    const [isNewCategory, setIsNewCategory] = useState<boolean>(false)
     return (
         <div>
             <div className={"flex items-center justify-center"}>
@@ -65,7 +57,7 @@ export default function CreateNewCategory({
                             }
                             setNewCategory({category: ""})
                             setIsNewCategory(!isNewCategory)
-                        }}>Close modal
+                        }}>Create category
                         </button>
                     </div>
 
