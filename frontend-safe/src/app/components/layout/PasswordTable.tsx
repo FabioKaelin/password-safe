@@ -96,6 +96,7 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
                     <th>Url</th>
                     <th>Username</th>
                     <th>Password</th>
+                    <th>Category</th>
                     <th>Delete</th>
                     <th>Edit</th>
                 </tr>
@@ -123,6 +124,7 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
                                     </div>
 
                                 </td>
+                                <td>{entry.category === "" || entry.category === null ? "No category set" : entry.category}</td>
                                 <th>
                                     <button className="btn btn-ghost btn-xs"
                                             onClick={() => handleDelete(entry.id)}>
@@ -147,6 +149,7 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
                     <th>Url</th>
                     <th>Username</th>
                     <th>Password</th>
+                    <th>Category</th>
                     <th>Delete</th>
                     <th>Edit</th>
                 </tr>
@@ -170,6 +173,6 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
                     onUpdated={() => setIsRefresh(true)}
                 />
             )}
-        </div>  
+        </div>
     );
 }
