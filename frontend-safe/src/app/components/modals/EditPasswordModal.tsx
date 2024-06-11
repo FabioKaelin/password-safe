@@ -7,6 +7,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
 import {Category, GetAllCategoriesFromVault} from "@/app/vault/category";
 import CreateNewCategory from "@/app/components/layout/CreateNewCategory";
+import {retry} from "next/dist/compiled/@next/font/dist/google/retry";
 
 type EditPasswordModalProps = {
     entry: VaultEntry;
@@ -110,11 +111,13 @@ export default function EditPasswordModal({entry, isOpen, onClose, onUpdated}: E
                     <select className="px-4 py-2 select select-bordered border border-blue-500 rounded"
                             onChange={(e) => handleInputChange("category", e.target.value)}>
 
-                        <option disabled selected value={editedEntry.category}></option>
+                        <option disabled selected value={editedEntry.category}>{editedEntry.category}</option>
                         {
                             categories.map((category) => {
-                                return <option key={category.category}
-                                               value={category.category}>{category.category}</option>
+                                return category.category === editedEntry.category ?
+                                    null :
+                                    <option key={category.category}
+                                            value={category.category}>{category.category}</option>
                             })
                         }
                     </select>
