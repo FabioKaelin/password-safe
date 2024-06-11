@@ -1,10 +1,10 @@
 // code has been refactored with chatgpt
 
-import React, { useEffect, useState } from "react";
-import { VaultEntry } from "@/app/vault/vaultEntry";
-import { editEntryAPI } from "@/app/vault/api";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import React, {useEffect, useState} from "react";
+import {VaultEntry} from "@/app/vault/vaultEntry";
+import {editEntryAPI} from "@/app/vault/api";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
 
 type EditPasswordModalProps = {
     entry: VaultEntry;
@@ -13,7 +13,7 @@ type EditPasswordModalProps = {
     onUpdated: () => void;
 };
 
-export default function EditPasswordModal({ entry, isOpen, onClose, onUpdated }: EditPasswordModalProps) {
+export default function EditPasswordModal({entry, isOpen, onClose, onUpdated}: EditPasswordModalProps) {
     const [editedEntry, setEditedEntry] = useState<VaultEntry>(entry);
     const [showPassword, setShowPassword] = useState<boolean>(false);
 
@@ -42,7 +42,7 @@ export default function EditPasswordModal({ entry, isOpen, onClose, onUpdated }:
 
 
     const handleInputChange = (name: keyof VaultEntry, value: string) => {
-        setEditedEntry(prev => ({ ...prev, [name]: value }));
+        setEditedEntry(prev => ({...prev, [name]: value}));
     };
 
     return isOpen ? (
@@ -81,6 +81,7 @@ export default function EditPasswordModal({ entry, isOpen, onClose, onUpdated }:
                         onChange={(e) => handleInputChange("username", e.target.value)}
                         className="px-4 py-2 input input-bordered border border-blue-500 rounded"
                     />
+
                     <div className="flex items-center">
                         <input
                             name="password"
@@ -92,9 +93,17 @@ export default function EditPasswordModal({ entry, isOpen, onClose, onUpdated }:
                         />
                         <button type="button" onClick={() => setShowPassword(!showPassword)}
                                 className="ml-2 px-4 py-2 border border-blue-500 rounded h-full">
-                            <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+                            <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye}/>
                         </button>
                     </div>
+
+                    <input
+                        name="category"
+                        placeholder="Category"
+                        value={editedEntry.category}
+                        onChange={(e) => handleInputChange("category", e.target.value)}
+                        className="px-4 py-2 input input-bordered border border-blue-500 rounded"
+                    />
                     <button type="submit" className="px-4 py-2 bg-teal-400 text-black rounded hover:bg-teal-500">
                         Update
                     </button>
