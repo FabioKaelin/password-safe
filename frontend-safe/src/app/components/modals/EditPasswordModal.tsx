@@ -5,6 +5,7 @@ import {VaultEntry} from "@/app/vault/vaultEntry";
 import {editEntryAPI} from "@/app/vault/api";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
+import {Category, GetAllCategoriesFromVault} from "@/app/vault/category";
 
 type EditPasswordModalProps = {
     entry: VaultEntry;
@@ -16,11 +17,18 @@ type EditPasswordModalProps = {
 export default function EditPasswordModal({entry, isOpen, onClose, onUpdated}: EditPasswordModalProps) {
     const [editedEntry, setEditedEntry] = useState<VaultEntry>(entry);
     const [showPassword, setShowPassword] = useState<boolean>(false);
+    const [categories, setCategories] = useState<Category[]>([]);
 
     useEffect(() => {
         if (isOpen) {
             setEditedEntry(entry);
         }
+
+        const getCategories = async () => {
+            const categories = await GetAllCategoriesFromVault();
+            setCategories(categories);
+        }
+        getCategories()
     }, [isOpen, entry]); // Update bei jeder Öffnung und bei Änderung der entry-Prop
 
     const handleSubmit = async (event: React.FormEvent) => {
@@ -97,13 +105,17 @@ export default function EditPasswordModal({entry, isOpen, onClose, onUpdated}: E
                         </button>
                     </div>
 
-                    <input
-                        name="category"
-                        placeholder="Category"
-                        value={editedEntry.category}
-                        onChange={(e) => handleInputChange("category", e.target.value)}
-                        className="px-4 py-2 input input-bordered border border-blue-500 rounded"
-                    />
+                    <select className="px-4 py-2 select select-bordered border border-blue-500 rounded"
+                            onChange={(e) => handleInputChange("category", e.target.value)}>
+
+                        <option disabled selected value={editedEntry.category}></option>
+                        {
+                            categories.map((category) => {
+                                return <option key={category.category}
+                                               value={category.category}>{category.category}</option>
+                            })
+                        }
+                    </select>
                     <button type="submit" className="px-4 py-2 bg-teal-400 text-black rounded hover:bg-teal-500">
                         Update
                     </button>

@@ -1,12 +1,13 @@
 "use client"
 
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {VaultEntry} from "@/app/vault/vaultEntry";
 import {createNewEntry} from "@/app/vault/api";
 import {useRouter} from "next/navigation";
 import Router from "next/router";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
+import {Category, GetAllCategoriesFromVault} from "@/app/vault/category";
 
 
 export type RefreshType = {
@@ -24,13 +25,25 @@ export default function NewPasswordModal({setIsRefresh}: RefreshType) {
         userid: "",
         username: ""
     });
+    const [categories, setCategories] = useState<Category[]>([])
 
     const [isOpen, setIsOpen] = useState(false);
     const [showPassword, setShowPassword] = useState<boolean>(false)
 
+    useEffect(() => {
+        const getCategories = async () => {
+            const categories = await GetAllCategoriesFromVault();
+            setCategories(categories);
+        }
+        getCategories()
+    }, []);
+
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
         const createEntry = async () => {
+            if (entry.category == "" || entry.category == null) {
+                entry.category = ""
+            }
             const createdEntry = await createNewEntry(entry);
             setEntry(createdEntry);
             setIsOpen(false);
@@ -115,14 +128,17 @@ export default function NewPasswordModal({setIsRefresh}: RefreshType) {
                                </button>
                             </span>
                             
-                            <input
-                                name="category"
-                                placeholder="Category"
-                                value={entry.category}
-                                onChange={(e) => setEntry({...entry, category: e.target.value})}
-                                className="px-4 py-2 input input-bordered border border-blue-500 rounded"
-                            />
-
+                            <select className="px-4 py-2 select select-bordered border border-blue-500 rounded"
+                                    onChange={(e) => setEntry({...entry, category: e.target.value})}>
+                                
+                                <option disabled selected value={""}>Select a category if you like</option>
+                                {
+                                    categories.map((category) => {
+                                        return <option key={category.category}
+                                                       value={category.category}>{category.category}</option>
+                                    })
+                                }
+                            </select>
                             <br/>
                             <button
                                 type="submit"
