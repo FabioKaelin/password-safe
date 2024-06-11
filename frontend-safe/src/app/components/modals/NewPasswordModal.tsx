@@ -15,17 +15,21 @@ export type RefreshType = {
     isRefresh: boolean,
     setIsRefresh: React.Dispatch<React.SetStateAction<boolean>>
 };
+
+const defaultModal: VaultEntry = {
+    category: "",
+    description: "",
+    id: "",
+    password: "",
+    title: "",
+    url: "",
+    userid: "",
+    username: ""
+};
+
 export default function NewPasswordModal({setIsRefresh}: RefreshType) {
-    const [entry, setEntry] = useState<VaultEntry>({
-        category: "",
-        description: "",
-        id: "",
-        password: "",
-        title: "",
-        url: "",
-        userid: "",
-        username: ""
-    });
+
+    const [entry, setEntry] = useState<VaultEntry>(defaultModal);
     const [categories, setCategories] = useState<Category[]>([])
 
     const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -39,7 +43,7 @@ export default function NewPasswordModal({setIsRefresh}: RefreshType) {
             setCategories(categories);
         }
         getCategories()
-    }, []);
+    }, [isOpen]);
 
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
@@ -48,7 +52,7 @@ export default function NewPasswordModal({setIsRefresh}: RefreshType) {
                 entry.category = ""
             }
             const createdEntry = await createNewEntry(entry);
-            setEntry(createdEntry);
+            setEntry(defaultModal);
             setIsOpen(false);
             setIsRefresh(true)
         };
