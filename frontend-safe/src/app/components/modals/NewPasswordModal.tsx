@@ -33,7 +33,6 @@ export default function NewPasswordModal({setIsRefresh}: RefreshType) {
     const [categories, setCategories] = useState<Category[]>([])
 
     const [isOpen, setIsOpen] = useState<boolean>(false);
-    const [isNewCategory, setIsNewCategory] = useState<boolean>(false);
     const [newCategory, setNewCategory] = useState<Category>({category: ""});
     const [showPassword, setShowPassword] = useState<boolean>(false)
 
@@ -147,8 +146,7 @@ export default function NewPasswordModal({setIsRefresh}: RefreshType) {
                                 }
                             </select>
 
-                            <CreateNewCategory isNewCategory={isNewCategory} setIsNewCategory={setIsNewCategory}
-                                               newCategory={newCategory} setNewCategory={setNewCategory}
+                            <CreateNewCategory newCategory={newCategory} setNewCategory={setNewCategory}
                                                categories={categories} setCategories={setCategories}
                                                entry={entry}/>
 
