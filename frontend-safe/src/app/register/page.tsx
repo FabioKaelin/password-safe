@@ -23,8 +23,10 @@ export default function Register() {
 
             if (resp.status === 201) {
                 handleLogIn(e);
+            } else if (resp.status === 400) {
+                setErrorMessage("A user with that email already exists. Please log in instead.");
             } else {
-                router.push("/loginfailed");
+                setErrorMessage("An unexpected error occurred. Please try again later.");
             }
         } catch (error) {
             console.error("Error logging in:", error);
