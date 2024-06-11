@@ -30,7 +30,7 @@ func SetUserToContext() gin.HandlerFunc {
 
 		if token == "" {
 			fmt.Println("token is empty 1")
-			ctx.AbortWithStatusJSON(http.StatusUnauthorized, `gin.H{"status": "fail", "message": "You are not logged in"}1`)
+			ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"status": "fail", "message": "You are not logged in"})
 			return
 		}
 
