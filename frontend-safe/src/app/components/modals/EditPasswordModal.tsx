@@ -1,10 +1,13 @@
 // code has been refactored with chatgpt
 
-import React, { useEffect, useState } from "react";
-import { VaultEntry } from "@/app/vault/vaultEntry";
-import { editEntryAPI } from "@/app/vault/api";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import React, {useEffect, useState} from "react";
+import {VaultEntry} from "@/app/vault/vaultEntry";
+import {editEntryAPI} from "@/app/vault/api";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
+import {Category, GetAllCategoriesFromVault} from "@/app/vault/category";
+import CreateNewCategory from "@/app/components/layout/CreateNewCategory";
+import {retry} from "next/dist/compiled/@next/font/dist/google/retry";
 
 type EditPasswordModalProps = {
     entry: VaultEntry;
@@ -13,14 +16,22 @@ type EditPasswordModalProps = {
     onUpdated: () => void;
 };
 
-export default function EditPasswordModal({ entry, isOpen, onClose, onUpdated }: EditPasswordModalProps) {
+export default function EditPasswordModal({entry, isOpen, onClose, onUpdated}: EditPasswordModalProps) {
     const [editedEntry, setEditedEntry] = useState<VaultEntry>(entry);
     const [showPassword, setShowPassword] = useState<boolean>(false);
+    const [categories, setCategories] = useState<Category[]>([]);
+    const [newCategory, setNewCategory] = useState<Category>({category: ""});
 
     useEffect(() => {
         if (isOpen) {
             setEditedEntry(entry);
         }
+
+        const getCategories = async () => {
+            const categories = await GetAllCategoriesFromVault();
+            setCategories(categories);
+        }
+        getCategories()
     }, [isOpen, entry]); // Update bei jeder Öffnung und bei Änderung der entry-Prop
 
     const handleSubmit = async (event: React.FormEvent) => {
@@ -42,7 +53,7 @@ export default function EditPasswordModal({ entry, isOpen, onClose, onUpdated }:
 
 
     const handleInputChange = (name: keyof VaultEntry, value: string) => {
-        setEditedEntry(prev => ({ ...prev, [name]: value }));
+        setEditedEntry(prev => ({...prev, [name]: value}));
     };
 
     return isOpen ? (
@@ -81,6 +92,7 @@ export default function EditPasswordModal({ entry, isOpen, onClose, onUpdated }:
                         onChange={(e) => handleInputChange("username", e.target.value)}
                         className="px-4 py-2 input input-bordered border border-blue-500 rounded"
                     />
+
                     <div className="flex items-center">
                         <input
                             name="password"
@@ -92,9 +104,28 @@ export default function EditPasswordModal({ entry, isOpen, onClose, onUpdated }:
                         />
                         <button type="button" onClick={() => setShowPassword(!showPassword)}
                                 className="ml-2 px-4 py-2 border border-blue-500 rounded h-full">
-                            <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+                            <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye}/>
                         </button>
                     </div>
+
+                    <select className="px-4 py-2 select select-bordered border border-blue-500 rounded"
+                            onChange={(e) => handleInputChange("category", e.target.value)}>
+
+                        <option disabled selected value={editedEntry.category}>{editedEntry.category}</option>
+                        {
+                            categories.map((category) => {
+                                return category.category === editedEntry.category ?
+                                    null :
+                                    <option key={category.category}
+                                            value={category.category}>{category.category}</option>
+                            })
+                        }
+                    </select>
+
+                    <CreateNewCategory newCategory={newCategory} setNewCategory={setNewCategory}
+                                       categories={categories} setCategories={setCategories}
+                                       entry={entry}/>
+
                     <button type="submit" className="px-4 py-2 bg-teal-400 text-black rounded hover:bg-teal-500">
                         Update
                     </button>

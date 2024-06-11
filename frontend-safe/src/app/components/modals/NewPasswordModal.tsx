@@ -1,38 +1,57 @@
 "use client"
 
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {VaultEntry} from "@/app/vault/vaultEntry";
 import {createNewEntry} from "@/app/vault/api";
 import {useRouter} from "next/navigation";
 import Router from "next/router";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
+import {Category, GetAllCategoriesFromVault} from "@/app/vault/category";
+import CreateNewCategory from "@/app/components/layout/CreateNewCategory";
 
 
 export type RefreshType = {
     isRefresh: boolean,
     setIsRefresh: React.Dispatch<React.SetStateAction<boolean>>
 };
-export default function NewPasswordModal({setIsRefresh}: RefreshType) {
-    const [entry, setEntry] = useState<VaultEntry>({
-        category: "",
-        description: "",
-        id: "",
-        password: "",
-        title: "",
-        url: "",
-        userid: "",
-        username: ""
-    });
 
-    const [isOpen, setIsOpen] = useState(false);
+const defaultModal: VaultEntry = {
+    category: "",
+    description: "",
+    id: "",
+    password: "",
+    title: "",
+    url: "",
+    userid: "",
+    username: ""
+};
+
+export default function NewPasswordModal({setIsRefresh}: RefreshType) {
+
+    const [entry, setEntry] = useState<VaultEntry>(defaultModal);
+    const [categories, setCategories] = useState<Category[]>([])
+
+    const [isOpen, setIsOpen] = useState<boolean>(false);
+    const [newCategory, setNewCategory] = useState<Category>({category: ""});
     const [showPassword, setShowPassword] = useState<boolean>(false)
+
+    useEffect(() => {
+        const getCategories = async () => {
+            const categories = await GetAllCategoriesFromVault();
+            setCategories(categories);
+        }
+        getCategories()
+    }, [isOpen]);
 
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
         const createEntry = async () => {
+            if (entry.category == "" || entry.category == null) {
+                entry.category = ""
+            }
             const createdEntry = await createNewEntry(entry);
-            setEntry(createdEntry);
+            setEntry(defaultModal);
             setIsOpen(false);
             setIsRefresh(true)
         };
@@ -87,6 +106,7 @@ export default function NewPasswordModal({setIsRefresh}: RefreshType) {
                                 onChange={(e) => setEntry({...entry, username: e.target.value})}
                                 className="px-4 py-2 input input-bordered border border-blue-500 rounded"
                             />
+
                             <span>
                                 <input
                                     name="password"
@@ -99,6 +119,7 @@ export default function NewPasswordModal({setIsRefresh}: RefreshType) {
                                     })}
                                     className="px-4 py-2 input input-bordered border border-blue-500 rounded w-4/5"
                                 />
+                                
                                <button type="button" onClick={() => setShowPassword(!showPassword)}
                                        className={"px-4 py-2 border border-blue-500 rounded h-full mx-1 w-1/6"}>
                                   {showPassword ? (
@@ -112,6 +133,23 @@ export default function NewPasswordModal({setIsRefresh}: RefreshType) {
                                   )}
                                </button>
                             </span>
+
+                            <select className="px-4 py-2 select select-bordered border border-blue-500 rounded"
+                                    onChange={(e) => setEntry({...entry, category: e.target.value})}>
+
+                                <option disabled selected value={""}>Select a category if you like</option>
+                                {
+                                    categories.map((category) => {
+                                        return <option key={category.category}
+                                                       value={category.category}>{category.category}</option>
+                                    })
+                                }
+                            </select>
+
+                            <CreateNewCategory newCategory={newCategory} setNewCategory={setNewCategory}
+                                               categories={categories} setCategories={setCategories}
+                                               entry={entry}/>
+
                             <br/>
                             <button
                                 type="submit"

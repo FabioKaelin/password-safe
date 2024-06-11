@@ -61,11 +61,10 @@ export default function ChangeMasterPassword({setIsRefresh}: RefreshType) {
                         <h2 className="text-2xl mb-4 font-bold text-white">Change Master password</h2>
                         <form onSubmit={handleSubmit} className="grid gap-4">
                             <input
-                                name="title"
-                                placeholder="Title"
+                                name="user"
+                                placeholder="User"
                                 value={user.email}
-                                onChange={(e) => setUser({...user, email: e.target.value})}
-                                className="px-4 py-2 input input-bordered border border-blue-500 rounded"
+                                className="px-4 py-2 input input-bordered border border-blue-500 rounded disabled"
                             />
                             <span>
                                 <input
