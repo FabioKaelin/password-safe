@@ -1,51 +1,52 @@
 "use client"
 
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {VaultEntry} from "@/app/vault/vaultEntry";
-import {createNewEntry} from "@/app/vault/api";
+import {changeMasterPassword, createNewEntry} from "@/app/vault/api";
 import {useRouter} from "next/navigation";
 import Router from "next/router";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
+import {UserWithId} from "@/app/login/page";
+import {CheckUser} from "@/app/login/api";
 
 
 export type RefreshType = {
     isRefresh: boolean,
     setIsRefresh: React.Dispatch<React.SetStateAction<boolean>>
 };
-export default function NewPasswordModal({setIsRefresh}: RefreshType) {
-    const [entry, setEntry] = useState<VaultEntry>({
-        category: "",
-        description: "",
-        id: "",
-        password: "",
-        title: "",
-        url: "",
-        userid: "",
-        username: ""
-    });
+export default function ChangeMasterPassword({setIsRefresh}: RefreshType) {
+    const [user, setUser] = useState<UserWithId>({email: "", id: "", password: ""});
 
     const [isOpen, setIsOpen] = useState(false);
     const [showPassword, setShowPassword] = useState<boolean>(false)
 
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-        const createEntry = async () => {
-            const createdEntry = await createNewEntry(entry);
-            setEntry(createdEntry);
+        const changeUserDetails = async () => {
+            const userResp = await changeMasterPassword(user);
+            setUser(userResp);
             setIsOpen(false);
             setIsRefresh(true)
         };
-        createEntry()
+        changeUserDetails()
     };
+
+    useEffect(() => {
+        const getUser = async () => {
+            const user = await CheckUser();
+            setUser(user);
+        }
+        getUser()
+    }, []);
 
     return (
         <>
             <button
                 onClick={() => setIsOpen(true)}
-                className="px-4 py-2 bg-teal-400 text-black rounded hover:bg-teal-500"
+                className="px-4 py-2 bg-teal-400 text-black rounded hover:bg-teal-500 mx-5"
             >
-                Add New Entry
+                Change Master Password
             </button>
 
             {isOpen && (
@@ -57,34 +58,13 @@ export default function NewPasswordModal({setIsRefresh}: RefreshType) {
                         >
                             &times;
                         </button>
-                        <h2 className="text-2xl mb-4 font-bold text-white">New Password Entry</h2>
+                        <h2 className="text-2xl mb-4 font-bold text-white">Change Master password</h2>
                         <form onSubmit={handleSubmit} className="grid gap-4">
                             <input
                                 name="title"
                                 placeholder="Title"
-                                value={entry.title}
-                                onChange={(e) => setEntry({...entry, title: e.target.value})}
-                                className="px-4 py-2 input input-bordered border border-blue-500 rounded"
-                            />
-                            <input
-                                name="description"
-                                placeholder="Description"
-                                value={entry.description}
-                                onChange={(e) => setEntry({...entry, description: e.target.value})}
-                                className="px-4 py-2 input input-bordered border border-blue-500 rounded"
-                            />
-                            <input
-                                name="url"
-                                placeholder="URL"
-                                value={entry.url}
-                                onChange={(e) => setEntry({...entry, url: e.target.value})}
-                                className="px-4 py-2 input input-bordered border border-blue-500 rounded"
-                            />
-                            <input
-                                name="username"
-                                placeholder="Username"
-                                value={entry.username}
-                                onChange={(e) => setEntry({...entry, username: e.target.value})}
+                                value={user.email}
+                                onChange={(e) => setUser({...user, email: e.target.value})}
                                 className="px-4 py-2 input input-bordered border border-blue-500 rounded"
                             />
                             <span>
@@ -92,9 +72,9 @@ export default function NewPasswordModal({setIsRefresh}: RefreshType) {
                                     name="password"
                                     placeholder="Password"
                                     type={showPassword ? "text" : "password"}
-                                    value={entry.password}
-                                    onChange={(e) => setEntry({
-                                        ...entry,
+                                    value={user.password}
+                                    onChange={(e) => setUser({
+                                        ...user,
                                         password: e.target.value
                                     })}
                                     className="px-4 py-2 input input-bordered border border-blue-500 rounded w-4/5"
@@ -117,7 +97,7 @@ export default function NewPasswordModal({setIsRefresh}: RefreshType) {
                                 type="submit"
                                 className="px-4 py-2 bg-teal-400 text-black rounded hover:bg-teal-500 rounded "
                             >
-                                Register
+                                Change Master Password
                             </button>
                         </form>
                     </div>

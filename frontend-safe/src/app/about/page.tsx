@@ -9,7 +9,7 @@ export default function Page() {
         <>
             <Header title={"About"}/>
             <h1 className={"font-bold text-xl flex items-center justify-center"}>Who are we?</h1>
-            <p className={"flex items-center justify-center mx-20 mt-10"}>Welcome to our password safe project! We're a
+            <p className={"flex items-center justify-center mx-20 mt-10"}>Welcome to our password safe project! We are a
                 group of passionate individuals who embarked on our
                 journey in software development in 2021. Despite coming from diverse backgrounds, we share a common
                 goal: to create a secure and user-friendly solution for managing passwords.
