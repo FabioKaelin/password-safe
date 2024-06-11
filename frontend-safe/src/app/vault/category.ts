@@ -9,7 +9,8 @@ export function FilterAllCategories(entry: VaultEntry[]): Category[] {
     let categories: Category[] = [];
     entry.forEach((entry) => {
         entry.category !== "" && entry.category !== null &&
-            categories.push({category: entry.category})
+            categories.filter((category) => category.category === entry.category).length === 0 &&
+                categories.push({category: entry.category})
     })
 
     return categories;
