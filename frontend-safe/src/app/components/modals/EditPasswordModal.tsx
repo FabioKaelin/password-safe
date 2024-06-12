@@ -2,12 +2,13 @@
 
 import React, {useEffect, useState} from "react";
 import {VaultEntry} from "@/app/vault/vaultEntry";
-import {editEntryAPI} from "@/app/vault/api";
+import {createNewEntry, editEntryAPI} from "@/app/vault/api";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
 import {Category, GetAllCategoriesFromVault} from "@/app/vault/category";
 import CreateNewCategory from "@/app/components/layout/CreateNewCategory";
 import {retry} from "next/dist/compiled/@next/font/dist/google/retry";
+import ErrorAlert from "@/app/components/alerts/ErrorAlert";
 
 type EditPasswordModalProps = {
     entry: VaultEntry;
@@ -21,6 +22,7 @@ export default function EditPasswordModal({entry, isOpen, onClose, onUpdated}: E
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [categories, setCategories] = useState<Category[]>([]);
     const [newCategory, setNewCategory] = useState<Category>({category: ""});
+    const [errorMessage, setErrorMessage] = useState<string>("")
 
     useEffect(() => {
         if (isOpen) {
@@ -42,10 +44,15 @@ export default function EditPasswordModal({entry, isOpen, onClose, onUpdated}: E
         }
 
         try {
-            const response = await editEntryAPI(editedEntry.id, editedEntry);
-            console.log("Update response:", response);
-            onUpdated();  // Refresh the parent component's data
-            onClose();    // Close the modal
+            if (editedEntry.password != "" && editedEntry.url != "" && editedEntry.username != "" && editedEntry.title != "" && editedEntry.description != "") {
+                const response = await editEntryAPI(editedEntry.id, editedEntry);
+                console.log("Update response:", response);
+                onUpdated();
+                onClose();
+            } else {
+                setErrorMessage("Please fill in all fields")
+            }
+
         } catch (error) {
             console.error("Error updating the entry:", error);
         }
@@ -59,9 +66,17 @@ export default function EditPasswordModal({entry, isOpen, onClose, onUpdated}: E
     return isOpen ? (
         <div className="fixed inset-0 flex items-center justify-center z-10">
             <div className="bg-neutral rounded-lg shadow-lg w-full max-w-md p-6 relative">
-                <button onClick={onClose} className="absolute top-2 right-2 text-gray-600 hover:text-gray-800">
+                <button onClick={() => {
+                    onClose()
+                    setErrorMessage("")
+                }} className="absolute top-2 right-2 text-gray-600 hover:text-gray-800">
                     &times;
                 </button>
+                {
+                    errorMessage != "" && (
+                        <ErrorAlert message={errorMessage}/>
+                    )
+                }
                 <h2 className="text-2xl mb-4 font-bold text-white">Edit Password Entry</h2>
                 <form onSubmit={handleSubmit} className="grid gap-4">
                     <input
