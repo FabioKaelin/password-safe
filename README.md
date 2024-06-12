@@ -38,7 +38,7 @@ Das Frontend von diesem Projekt wurde mit Next.JS gestaltet. Zwar hatte jeder Er
 Folgende seiten wurden gestaltetl:
 | Route | Beschreibung | Bild |
 | ----- | ------------ | ---- |
-| / |           Die Home Seite zeigt ein einfaches Interface, welches zum Sign up oder LogIn weiterleitet   |  !["Home"]("/resources/docImg/home.jpeg")    |
+| / |           Die Home Seite zeigt ein einfaches Interface, welches zum Sign up oder LogIn weiterleitet   |   ![home](https://github.com/FabioKaelin/password-safe/assets/61542805/b4b9b4ab-3b02-41f1-af88-81f999a5c236)|
 
 ## Nutzung im Dev Modus
 
