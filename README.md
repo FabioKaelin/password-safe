@@ -1,5 +1,5 @@
 # RoboGuard (Password-safe)
-<center>![passwordguy](https://github.com/FabioKaelin/password-safe/assets/61542805/78085ec4-5b83-4b79-ae18-0206f1bdaf6e)</center>
+<center><img src="https://github.com/FabioKaelin/password-safe/assets/61542805/78085ec4-5b83-4b79-ae18-0206f1bdaf6e" /></center>
 
 ## Project Team
 
