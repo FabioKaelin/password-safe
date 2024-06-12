@@ -33,7 +33,12 @@ Unser Auftrag war es ein Password-Safe zu erstellen. Dabei sollten wir ein Front
 
 ## Frontend
 
-TODO: @Shansai
+Das Frontend von diesem Projekt wurde mit Next.JS gestaltet. Zwar hatte jeder Erfahrung mit react, jedoch nicht mit Next.
+
+Folgende seiten wurden gestaltetl:
+| Route | Beschreibung | Bild |
+| ----- | ------------ | ---- |
+| / |           Die Home Seite zeigt ein einfaches Interface, welches zum Sign up oder LogIn weiterleitet   |  !["Home"]("/resources/docImg/home.jpeg")    |
 
 ## Nutzung im Dev Modus
 
