@@ -19,7 +19,8 @@ export function FilterAllCategories(entry: VaultEntry[]): Category[] {
 }
 
 export async function GetAllCategoriesFromVault(): Promise<Category[]> {
-    return await getPasswordForUser().then((entries) => {
-        return FilterAllCategories(entries);
+    return await getPasswordForUser().then(async (entries) => {
+        const vaultEntries = await entries.vault
+        return FilterAllCategories(vaultEntries);
     });
 }

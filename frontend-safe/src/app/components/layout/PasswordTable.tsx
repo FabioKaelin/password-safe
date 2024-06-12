@@ -8,6 +8,7 @@ import {deletePassword, getPasswordForUser, editEntryAPI} from "@/app/vault/api"
 import {RefreshType} from "@/app/components/modals/NewPasswordModal";
 import DeleteConfirmation, {DeleteConfirmationProps} from "@/app/components/modals/DeleteConfirmation";
 import EditPasswordModal from "@/app/components/modals/EditPasswordModal";
+import {useRouter} from "next/navigation";
 
 export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
 
@@ -20,14 +21,22 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
     const [currentEditEntry, setCurrentEditEntry] = useState<VaultEntry | null>(null);
     const [categoryInput, setCategoryInout] = useState<string>(" ");
 
+    const router = useRouter()
+
 
     useEffect(() => {
         const handlePassword = async () => {
             let entries = await getPasswordForUser();
+            if (entries.status === 401) {
+                router.push("/login");
+            }
+
+            let entriesOnly = await entries.vault;
+
             console.log("entries")
             console.log(entries)
-            entries = entries === null ? [] : entries;
-            entries.map(x => {
+            entriesOnly = entriesOnly === null ? [] : entriesOnly;
+            entriesOnly.map(x => {
                 setSee(prevState => {
                     if (!prevState.some(entry => entry.id === x.id)) {
                         return [...prevState, {id: x.id, visible: false}];
@@ -35,8 +44,8 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
                     return prevState;
                 });
             })
-            setEntries(entries)
-            setFilteredEntries(entries)
+            setEntries(entriesOnly)
+            setFilteredEntries(entriesOnly)
         }
         if (isRefresh || !isModalOpen) {
             handlePassword();
@@ -80,8 +89,10 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
 
     const deleteEntry = async (id: string): Promise<void> => {
         const response = deletePassword(id);
+        
         response.then((value) => {
-            value === "Password deleted" ? setIsRefresh(true) : console.log(value);
+            value === 401 && router.push("/login")
+            value === 204 ? setIsRefresh(true) : console.log(value);
         });
     };
 

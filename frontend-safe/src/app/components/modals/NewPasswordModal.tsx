@@ -31,6 +31,7 @@ const defaultModal: VaultEntry = {
 };
 
 export default function NewPasswordModal({setIsRefresh}: RefreshType) {
+    const router = useRouter()
 
     const [entry, setEntry] = useState<VaultEntry>(defaultModal);
     const [categories, setCategories] = useState<Category[]>([])
@@ -56,7 +57,10 @@ export default function NewPasswordModal({setIsRefresh}: RefreshType) {
             }
 
             if (entry.password != "" && entry.url != "" && entry.username != "" && entry.title != "" && entry.description != "") {
-                await createNewEntry(entry);
+                const resp = await createNewEntry(entry);
+                if (resp.status === 401) {
+                    router.push("/login");
+                }
                 setEntry(defaultModal);
                 setIsOpen(false);
                 setIsRefresh(true)

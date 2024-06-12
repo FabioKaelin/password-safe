@@ -16,8 +16,8 @@ export type RefreshType = {
     setIsRefresh: React.Dispatch<React.SetStateAction<boolean>>
 };
 export default function ChangeMasterPassword({setIsRefresh}: RefreshType) {
+    const router = useRouter();
     const [user, setUser] = useState<UserWithId>({email: "", id: "", password: ""});
-
     const [isOpen, setIsOpen] = useState(false);
     const [showPassword, setShowPassword] = useState<boolean>(false)
 
@@ -25,7 +25,12 @@ export default function ChangeMasterPassword({setIsRefresh}: RefreshType) {
         event.preventDefault();
         const changeUserDetails = async () => {
             const userResp = await changeMasterPassword(user);
-            setUser(userResp);
+            if (userResp.status === 401) {
+                router.push("/login");
+            }
+
+            const userWithId = await userResp.user
+            setUser(userWithId);
             setIsOpen(false);
             setIsRefresh(true)
         };
