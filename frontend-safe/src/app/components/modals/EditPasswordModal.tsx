@@ -44,6 +44,11 @@ export default function EditPasswordModal({entry, isOpen, onClose, onUpdated}: E
         }
 
         try {
+            if (entry.password.length < 8) {
+                setErrorMessage("Password must be at least 8 characters long")
+                return
+            }
+            
             if (editedEntry.password != "" && editedEntry.url != "" && editedEntry.username != "" && editedEntry.title != "" && editedEntry.description != "") {
                 const response = await editEntryAPI(editedEntry.id, editedEntry);
                 console.log("Update response:", response);
