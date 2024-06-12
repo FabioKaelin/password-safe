@@ -9,6 +9,9 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
 import {Category, GetAllCategoriesFromVault} from "@/app/vault/category";
 import CreateNewCategory from "@/app/components/layout/CreateNewCategory";
+import {Simulate} from "react-dom/test-utils";
+import error = Simulate.error;
+import ErrorAlert from "@/app/components/alerts/ErrorAlert";
 
 
 export type RefreshType = {
@@ -35,6 +38,7 @@ export default function NewPasswordModal({setIsRefresh}: RefreshType) {
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [newCategory, setNewCategory] = useState<Category>({category: ""});
     const [showPassword, setShowPassword] = useState<boolean>(false)
+    const [errorMessage, setErrorMessage] = useState<string>("")
 
     useEffect(() => {
         const getCategories = async () => {
@@ -50,18 +54,26 @@ export default function NewPasswordModal({setIsRefresh}: RefreshType) {
             if (entry.category == "" || entry.category == null) {
                 entry.category = ""
             }
-            const createdEntry = await createNewEntry(entry);
-            setEntry(defaultModal);
-            setIsOpen(false);
-            setIsRefresh(true)
-        };
+
+            if (entry.password != "" && entry.url != "" && entry.username != "" && entry.title != "" && entry.description != "") {
+                await createNewEntry(entry);
+                setEntry(defaultModal);
+                setIsOpen(false);
+                setIsRefresh(true)
+            } else {
+                setErrorMessage("Please fill in all fields")
+            }
+        }
         createEntry()
     };
 
     return (
         <>
             <button
-                onClick={() => setIsOpen(true)}
+                onClick={() => {
+                    setIsOpen(true)
+                    setErrorMessage("")
+                }}
                 className="px-4 py-2 bg-teal-400 text-black rounded hover:bg-teal-500"
             >
                 Add New Entry
@@ -76,19 +88,27 @@ export default function NewPasswordModal({setIsRefresh}: RefreshType) {
                         >
                             &times;
                         </button>
+                        {
+                            errorMessage != "" && (
+                                <ErrorAlert message={errorMessage}/>
+                            )
+                        }
                         <h2 className="text-2xl mb-4 font-bold text-white">New Password Entry</h2>
+
                         <form onSubmit={handleSubmit} className="grid gap-4">
                             <input
                                 name="title"
                                 placeholder="Title"
                                 value={entry.title}
                                 onChange={(e) => setEntry({...entry, title: e.target.value})}
+                                minLength={1}
                                 className="px-4 py-2 input input-bordered border border-blue-500 rounded"
                             />
                             <input
                                 name="description"
                                 placeholder="Description"
                                 value={entry.description}
+                                minLength={1}
                                 onChange={(e) => setEntry({...entry, description: e.target.value})}
                                 className="px-4 py-2 input input-bordered border border-blue-500 rounded"
                             />
@@ -96,6 +116,7 @@ export default function NewPasswordModal({setIsRefresh}: RefreshType) {
                                 name="url"
                                 placeholder="URL"
                                 value={entry.url}
+                                minLength={1}
                                 onChange={(e) => setEntry({...entry, url: e.target.value})}
                                 className="px-4 py-2 input input-bordered border border-blue-500 rounded"
                             />
@@ -103,6 +124,7 @@ export default function NewPasswordModal({setIsRefresh}: RefreshType) {
                                 name="username"
                                 placeholder="Username"
                                 value={entry.username}
+                                minLength={1}
                                 onChange={(e) => setEntry({...entry, username: e.target.value})}
                                 className="px-4 py-2 input input-bordered border border-blue-500 rounded"
                             />
@@ -113,6 +135,7 @@ export default function NewPasswordModal({setIsRefresh}: RefreshType) {
                                     placeholder="Password"
                                     type={showPassword ? "text" : "password"}
                                     value={entry.password}
+                                    minLength={1}
                                     onChange={(e) => setEntry({
                                         ...entry,
                                         password: e.target.value
