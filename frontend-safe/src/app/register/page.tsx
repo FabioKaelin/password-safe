@@ -19,6 +19,11 @@ export default function Register() {
         e.preventDefault();
         setErrorMessage(null);
         try {
+            if (user.email === "" || user.password === "") {
+                setErrorMessage("Please fill in all fields");
+                return;
+            }
+            
             const resp = await RegisterUser(user);
 
             if (resp.status === 201) {
