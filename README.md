@@ -35,7 +35,7 @@ Unser Auftrag war es ein Password-Safe zu erstellen. Dabei sollten wir ein Front
 
 Das Frontend von diesem Projekt wurde mit Next.JS gestaltet. Zwar hatte jeder Erfahrung mit react, jedoch nicht mit Next.
 
-Folgende seiten wurden gestaltetl:
+Folgende Seiten wurden gestaltet:
 | Route | Beschreibung | Bild |
 | ----- | ------------ | ---- |
 | / |           Die Home Seite zeigt ein einfaches Interface, welches zum Sign up oder LogIn weiterleitet   |   ![home](https://github.com/FabioKaelin/password-safe/assets/61542805/b4b9b4ab-3b02-41f1-af88-81f999a5c236)|
