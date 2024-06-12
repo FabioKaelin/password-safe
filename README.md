@@ -1,4 +1,4 @@
-# Password-safe project
+# RoboGuard (Password-safe)
 
 ## Project Team
 
