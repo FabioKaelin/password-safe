@@ -23,6 +23,10 @@ export default function Register() {
                 setErrorMessage("Please fill in all fields");
                 return;
             }
+            if (user.password.length < 8) {
+                setErrorMessage("Password must be at least 8 characters long");
+                return;
+            }
             
             const resp = await RegisterUser(user);
 

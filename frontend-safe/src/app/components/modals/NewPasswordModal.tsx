@@ -55,6 +55,11 @@ export default function NewPasswordModal({setIsRefresh}: RefreshType) {
             if (entry.category == "" || entry.category == null) {
                 entry.category = ""
             }
+            
+            if (entry.password.length < 8) {
+                setErrorMessage("Password must be at least 8 characters long")
+                return
+            }
 
             if (entry.password != "" && entry.url != "" && entry.username != "" && entry.title != "" && entry.description != "") {
                 const resp = await createNewEntry(entry);
