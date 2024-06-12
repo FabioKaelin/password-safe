@@ -36,13 +36,13 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
                 });
             })
             setEntries(entries)
-            setFilteredEntries(entries)            
+            setFilteredEntries(entries)
         }
         if (isRefresh || !isModalOpen) {
             handlePassword();
             setIsRefresh(false);
         }
-        
+
     }, [isRefresh, isModalOpen]);
 
     useEffect(() => {
@@ -53,7 +53,7 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
         }
         const filtered = entries.filter(entry => entry.category?.toLowerCase().includes(categoryInput.toLowerCase()));
         setFilteredEntries(filtered)
-    }, [categoryInput]);   
+    }, [categoryInput]);
 
     const getPasswordContent = (entry: VaultEntry): React.JSX.Element => {
         let visible = see.find(x => x.id === entry.id)?.visible;
@@ -103,13 +103,20 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
     // TODO table fixed is not the way to go. when a password is too big it overlaps with the next column
     return (
         <div className="">
-            <input
-                name="title"
-                placeholder="Title"
-                value={categoryInput}
-                onChange={(e) => setCategoryInout(e.target.value)}
-                className="px-4 py-2 input input-bordered border border-blue-500 rounded"
-            />
+            <div className={"flex items-center justify-center"}>
+                <div>
+                    <label className="label">Filter for a category:</label>
+                    <input
+                        name="category"
+                        placeholder="Filter for a category"
+                        value={categoryInput}
+                        onChange={(e) => setCategoryInout(e.target.value)}
+                        className="px-4 py-2 mb-3 input input-bordered border border-blue-500 rounded"
+                    />
+                </div>
+
+            </div>
+
 
             <table className="table md:table-fixed mx-20">
                 <thead>
