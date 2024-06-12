@@ -86,3 +86,11 @@ npm run dev
 [http://localhost:3000](http://localhost:3000)
 
 ## Reflexion
+
+### fabio
+
+### Lukas
+
+### Shansai
+
+Allgemein ein gelungenes Projekt. Leider musste ich die Frontend Aufgaben übernehen, als einer der Frotnend abnormal hasst ist das ein challeng gewesen, jedoch war es doch letztendlich recht interessant und hat spass gemacht. Ich hätte mir gewünscht, dass ich weniger Logik im Frontend bräuchte, jedoch ist das nicht der Fall, weil das Model der Datenbank doch nicht das beste ist. Die Zusammenarbeit mit Lukas im Frontend war recht gut. Wir konnten beide voneinander lernen und haben auch zusammen "Coding Sessions" gemacht. Ebenfalls konnten wir viele Probleme dank künstlicher Intelligenz und StackOverflow lösen können. Dabei war mir wichtig, dass ich eine gute Balance zwischen Künstlicher Intelligenz, Googlen und nachfragen bei Frontend Entwicklern in der Firma zu finden.
