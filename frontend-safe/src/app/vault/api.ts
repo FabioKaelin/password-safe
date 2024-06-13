@@ -17,7 +17,7 @@ export async function getPasswordForUser(): Promise<{ vault: Promise<VaultEntry[
 
     if (resp.status === 401)
         return {vault: Promise.resolve([]), status: resp.status}
-
+    
     return {vault: resp.json(), status: resp.status}
 }
 
