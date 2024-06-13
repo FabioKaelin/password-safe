@@ -5,12 +5,12 @@ export type Category = {
     category: string;
 }
 
-export function FilterAllCategories(entry: VaultEntry[]): Category[] {
+export function FilterAllCategories(entries: VaultEntry[]): Category[] {
     let categories: Category[] = [];
-    if (entry == null || entry.length === 0)
+    if (entries == null || entries.length === 0)
         return categories;
-    entry.forEach((entry) => {
-        entry.category !== "" && entry.category !== null &&
+    entries.forEach((entry) => {
+        entry !== null && entry.category !== null && entry.category !== "" &&
         categories.filter((category) => category.category === entry.category).length === 0 &&
         categories.push({category: entry.category})
     })
