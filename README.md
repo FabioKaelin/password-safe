@@ -86,7 +86,7 @@ npm run dev
 
 ### Fabio
 
-Da ich bereits ein Login in einem privaten Projekt gemacht habe, habe ich das Backend übernommen. Ich konnte den Code für das Login wiederverwenden und konnte nachschauen wie das hashing funktioniert. Das Login war desshalb schnell implementiert und ich konnte mit den Passwort-Entries weitermachen.
+Da ich bereits ein Login in einem privaten Projekt gemacht habe, habe ich das Backend übernommen. Ich konnte den Code für das Login wiederverwenden und konnte nachschauen wie das hashing funktioniert. Das Login war desshalb schnell implementiert und ich konnte mit den Passwort-Entries weitermachen. Um die Arbeit für die anderen zu erleichtern habe ich eine Swagger Dokumentation erstellt. Es gab zwar manchmal Kommunikationsprobleme, jedoch waren diese nicht sehr gravierend. Ich habe auch die Erstellung der Datenbank sowie die Docker-Compose Datei übernommen.
 
 ### Lukas
 
