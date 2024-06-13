@@ -30,8 +30,23 @@ export async function CheckUser(): Promise<UserWithId> {
         mode: "cors",
     })
 
-    if (resp.status === 400)
+    if (resp.status === 401)
         return {id: "", email: "", password: ""}
 
     return resp.json()
+}
+
+export async function LogOut(): Promise<void> {
+    const resp = await fetch(`${BACKENDURL}users/logout`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        cache: "no-cache",
+        credentials: "include",
+        mode: "cors",
+    })
+
+    if (!resp.ok)
+        throw new Error("Error logging out")
 }

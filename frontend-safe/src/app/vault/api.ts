@@ -15,10 +15,11 @@ export async function getPasswordForUser(): Promise<{ vault: Promise<VaultEntry[
         mode: "cors",
     })
 
-    if (resp.status === 401)
-        return {vault: Promise.resolve([]), status: resp.status}
+    if (resp.status === 200)
+        return {vault: resp.json(), status: resp.status}
 
-    return {vault: resp.json(), status: resp.status}
+    return {vault: Promise.resolve([]), status: resp.status}
+
 }
 
 export async function createNewEntry(entry: VaultEntry): Promise<{ vault: Promise<VaultEntry>, status: number }> {
@@ -40,10 +41,22 @@ export async function createNewEntry(entry: VaultEntry): Promise<{ vault: Promis
         mode: "cors",
     })
 
-    if (resp.status === 401)
-        return {vault: Promise.resolve({id: "", url: "", category: "", password: "", description: "", username: "", userid: "", title: ""}), status: resp.status}
+    if (resp.status === 200)
+        return {vault: resp.json(), status: 200}
 
-    return {vault: resp.json(), status: 200}
+    return {
+        vault: Promise.resolve({
+            id: "",
+            url: "",
+            category: "",
+            password: "",
+            description: "",
+            username: "",
+            userid: "",
+            title: ""
+        }), status: resp.status
+    }
+
 }
 
 export async function deletePassword(id: string): Promise<number> {
@@ -111,8 +124,8 @@ export async function changeMasterPassword(user: UserWithId): Promise<{ user: Pr
         })
     })
 
-    if (resp.status === 401)
-        return {user: Promise.resolve({id: "", email: "", password: ""}), status: resp.status}
+    if (resp.status === 200)
+        return {user: resp.json(), status: resp.status}
+    return {user: Promise.resolve({id: "", email: "", password: ""}), status: resp.status}
 
-    return {user: resp.json(), status: resp.status}
 }

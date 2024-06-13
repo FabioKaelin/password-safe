@@ -19,7 +19,7 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
     const [toBeDeleted, setToBeDeleted] = useState<DeleteConfirmationProps>()
     const [editModalOpen, setEditModalOpen] = useState(false);
     const [currentEditEntry, setCurrentEditEntry] = useState<VaultEntry | null>(null);
-    const [categoryInput, setCategoryInout] = useState<string>(" ");
+    const [categoryInput, setCategoryInput] = useState<string>("");
 
     const router = useRouter()
 
@@ -123,7 +123,7 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
                         name="category"
                         placeholder="Filter for a category"
                         value={categoryInput}
-                        onChange={(e) => setCategoryInout(e.target.value)}
+                        onChange={(e) => setCategoryInput(e.target.value)}
                         className="px-4 py-2 mb-3 input input-bordered border border-blue-500 rounded"
                     />
                 </div>
