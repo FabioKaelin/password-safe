@@ -3,6 +3,7 @@ package controllers
 import (
 	"net/http"
 
+	"github.com/davecgh/go-spew/spew"
 	"github.com/fabiokaelin/password-safe/pkg/middleware"
 	"github.com/fabiokaelin/password-safe/pkg/users"
 	"github.com/gin-gonic/gin"
@@ -13,7 +14,7 @@ func UserRouter(apiGroup *gin.RouterGroup) {
 	{
 		userGroup.POST("/", userPost)
 		userGroup.POST("/login", userLogin)
-		userGroup.PUT("/:id", userPut)
+		userGroup.PUT("/:id", middleware.SetUserToContext(), userPut)
 		userGroup.GET("/check", middleware.SetUserToContext(), userCheckLogin)
 		userGroup.POST("/logout", authLogout)
 	}
@@ -155,6 +156,7 @@ func userCheckLogin(c *gin.Context) {
 		return
 	}
 	filteredUser := currentUser.FilteredUser()
+	spew.Dump()
 	c.JSON(200, filteredUser)
 }
 
