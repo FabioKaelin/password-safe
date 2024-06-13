@@ -31,13 +31,14 @@ const Navbar = () => {
         setUser({id: "", email: "", password: ""})
         router.push("/login")
     }
+    
     return (
         <>
-            <div className="w-full h-20 bg-teal-700 top-0">
+            <div className="w-full h-20 bg-teal-700 top-0 text-white">
                 <div className="container mx-auto px-4 h-full">
                     <div className="flex justify-between items-center h-full">
                         <Logo/>
-                        <ul className="hidden md:flex gap-x-6 text-white">
+                        <ul className="menu menu-horizontal px-1 rounded">
                             <li>
                                 <Link href="/">
                                     <p>Home</p>
