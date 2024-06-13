@@ -93,6 +93,15 @@ func Update(id string, user User) (User, error) {
 		return User{}, errors.New("ID in URL does not match ID in body")
 	}
 
+	otherUser, err := db.UsersGetByEmail(user.Email)
+	if err != nil {
+		return User{}, err
+	}
+
+	if otherUser.ID != user.ID {
+		return User{}, errors.New("email already exists")
+	}
+
 	dbUser := db.DatabaseUser{
 		ID:       user.ID,
 		Email:    user.Email,

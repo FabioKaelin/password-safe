@@ -119,6 +119,17 @@ func userPut(c *gin.Context) {
 		return
 	}
 
+	currentUser, err := middleware.GetCurrentUser(c)
+	if err != nil {
+		c.JSON(400, errorResponse{Message: err.Error()})
+		return
+	}
+
+	if id != currentUser.ID {
+		c.JSON(401, errorResponse{Message: "unauthorized"})
+		return
+	}
+
 	user, err := users.Update(id, body)
 	if err != nil {
 		c.JSON(400, errorResponse{Message: err.Error()})
