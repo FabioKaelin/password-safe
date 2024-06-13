@@ -259,6 +259,19 @@ paths:
       summary: Log in a user
       tags:
       - users
+  /users/logout:
+    post:
+      description: Log out a user and remove the token cookie
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Log out a user
+      tags:
+      - users
 securityDefinitions:
   ApiKeyAuth:
     description: Token for authentication

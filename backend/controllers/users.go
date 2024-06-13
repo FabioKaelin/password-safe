@@ -15,6 +15,7 @@ func UserRouter(apiGroup *gin.RouterGroup) {
 		userGroup.POST("/login", userLogin)
 		userGroup.PUT("/:id", userPut)
 		userGroup.GET("/check", middleware.SetUserToContext(), userCheckLogin)
+		userGroup.POST("/logout", authLogout)
 	}
 }
 
@@ -37,6 +38,16 @@ func userPost(c *gin.Context) {
 
 	if body.Email == "" || body.Password == "" {
 		c.JSON(400, errorResponse{Message: "email and password are required"})
+		return
+	}
+
+	if len(body.Password) < 8 {
+		c.JSON(400, errorResponse{Message: "password must have at least 8 characters"})
+		return
+	}
+
+	if len(body.Email) > 128 || len(body.Password) > 128 {
+		c.JSON(400, errorResponse{Message: "email and password must have at most 128 characters"})
 		return
 	}
 
@@ -134,4 +145,17 @@ func userCheckLogin(c *gin.Context) {
 	}
 	filteredUser := currentUser.FilteredUser()
 	c.JSON(200, filteredUser)
+}
+
+// authLogout 		   godoc
+//
+//	@Summary		Log out a user
+//	@Description	Log out a user and remove the token cookie
+//	@Tags			users
+//	@Produce		json
+//	@Success		200	{object}	string
+//	@Router			/users/logout [post]
+func authLogout(ctx *gin.Context) {
+	ctx.SetCookie("token", "", -1, "/", "localhost", false, true)
+	ctx.JSON(http.StatusOK, "success")
 }
