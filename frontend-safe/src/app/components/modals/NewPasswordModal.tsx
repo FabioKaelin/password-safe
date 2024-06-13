@@ -9,8 +9,6 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
 import {Category, GetAllCategoriesFromVault} from "@/app/vault/category";
 import CreateNewCategory from "@/app/components/layout/CreateNewCategory";
-import {Simulate} from "react-dom/test-utils";
-import error = Simulate.error;
 import ErrorAlert from "@/app/components/alerts/ErrorAlert";
 
 
@@ -52,6 +50,9 @@ export default function NewPasswordModal({setIsRefresh}: RefreshType) {
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
         const createEntry = async () => {
+            if (entry === null)
+                setErrorMessage("Please fill in all fields")
+
             if (entry.category == "" || entry.category == null) {
                 entry.category = ""
             }
@@ -110,14 +111,12 @@ export default function NewPasswordModal({setIsRefresh}: RefreshType) {
                                 placeholder="Title"
                                 value={entry.title}
                                 onChange={(e) => setEntry({...entry, title: e.target.value})}
-                                minLength={1}
                                 className="px-4 py-2 input input-bordered border border-blue-500 rounded"
                             />
                             <input
                                 name="description"
                                 placeholder="Description"
                                 value={entry.description}
-                                minLength={1}
                                 onChange={(e) => setEntry({...entry, description: e.target.value})}
                                 className="px-4 py-2 input input-bordered border border-blue-500 rounded"
                             />
@@ -125,7 +124,6 @@ export default function NewPasswordModal({setIsRefresh}: RefreshType) {
                                 name="url"
                                 placeholder="URL"
                                 value={entry.url}
-                                minLength={1}
                                 onChange={(e) => setEntry({...entry, url: e.target.value})}
                                 className="px-4 py-2 input input-bordered border border-blue-500 rounded"
                             />
@@ -133,7 +131,6 @@ export default function NewPasswordModal({setIsRefresh}: RefreshType) {
                                 name="username"
                                 placeholder="Username"
                                 value={entry.username}
-                                minLength={1}
                                 onChange={(e) => setEntry({...entry, username: e.target.value})}
                                 className="px-4 py-2 input input-bordered border border-blue-500 rounded"
                             />
@@ -144,7 +141,6 @@ export default function NewPasswordModal({setIsRefresh}: RefreshType) {
                                     placeholder="Password"
                                     type={showPassword ? "text" : "password"}
                                     value={entry.password}
-                                    minLength={1}
                                     onChange={(e) => setEntry({
                                         ...entry,
                                         password: e.target.value
