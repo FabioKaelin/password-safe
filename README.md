@@ -3,7 +3,7 @@
 
 ## Project Team
 
-1. Lukas Winterleitner (NxtLvl)
+1. Lukas Winterleitner (NxtLvl Development GmbH)
 2. Fabio Kälin (Swiss Re)
 3. Shansai Muraleetharan (KPMG Switzerland)
 
