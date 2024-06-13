@@ -31,13 +31,35 @@ const Navbar = () => {
         setUser({id: "", email: "", password: ""})
         router.push("/login")
     }
+
+    <div className="navbar bg-base-100">
+        <div className="flex-1">
+            <a className="btn btn-ghost text-xl">daisyUI</a>
+        </div>
+        <div className="flex-none">
+            <ul className="menu menu-horizontal px-1">
+                <li><a>Link</a></li>
+                <li>
+                    <details>
+                        <summary>
+                            Parent
+                        </summary>
+                        <ul className="p-2 bg-base-100 rounded-t-none">
+                            <li><a>Link 1</a></li>
+                            <li><a>Link 2</a></li>
+                        </ul>
+                    </details>
+                </li>
+            </ul>
+        </div>
+    </div>
     return (
         <>
             <div className="w-full h-20 bg-teal-700 top-0">
                 <div className="container mx-auto px-4 h-full">
                     <div className="flex justify-between items-center h-full">
                         <Logo/>
-                        <ul className="hidden md:flex gap-x-6 text-white">
+                        <ul className="menu menu-horizontal px-1 rounded">
                             <li>
                                 <Link href="/">
                                     <p>Home</p>
