@@ -1,5 +1,14 @@
 basePath: /api
 definitions:
+  Category:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      userid:
+        type: string
+    type: object
   ErrorResponse:
     properties:
       message:
@@ -9,7 +18,7 @@ definitions:
   Password:
     properties:
       category:
-        type: string
+        $ref: '#/definitions/Category'
       description:
         type: string
       id:
@@ -40,6 +49,145 @@ info:
   title: Password Safe API
   version: 1.0.0
 paths:
+  /categories:
+    get:
+      description: Get all categories of the user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/Category'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      summary: Get all categories
+      tags:
+      - categories
+    post:
+      consumes:
+      - application/json
+      description: Create a category for the user
+      parameters:
+      - description: Category object that needs to be created
+        in: body
+        name: category
+        required: true
+        schema:
+          $ref: '#/definitions/Category'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Category'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      summary: Create a category
+      tags:
+      - categories
+  /categories/{id}:
+    delete:
+      description: Delete a category by its ID
+      parameters:
+      - description: Category ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      summary: Delete a category
+      tags:
+      - categories
+    get:
+      description: Get a category by its ID
+      parameters:
+      - description: Category ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Category'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      summary: Get a category by ID
+      tags:
+      - categories
+    put:
+      consumes:
+      - application/json
+      description: Update a category by its ID
+      parameters:
+      - description: Category ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Category object that needs to be updated
+        in: body
+        name: category
+        required: true
+        schema:
+          $ref: '#/definitions/Category'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Category'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      summary: Update a category
+      tags:
+      - categories
   /passwords:
     get:
       description: Get all passwords of the user
@@ -54,6 +202,10 @@ paths:
             type: array
         "400":
           description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "401":
+          description: Unauthorized
           schema:
             $ref: '#/definitions/ErrorResponse'
       summary: Get all passwords
@@ -81,6 +233,10 @@ paths:
           description: Bad Request
           schema:
             $ref: '#/definitions/ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/ErrorResponse'
       summary: Create a password entry
       tags:
       - passwords
@@ -98,6 +254,10 @@ paths:
           description: No Content
         "400":
           description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "401":
+          description: Unauthorized
           schema:
             $ref: '#/definitions/ErrorResponse'
       summary: Delete a password entry
@@ -122,6 +282,10 @@ paths:
             type: array
         "400":
           description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "401":
+          description: Unauthorized
           schema:
             $ref: '#/definitions/ErrorResponse'
       summary: Get a Password
@@ -152,6 +316,10 @@ paths:
             $ref: '#/definitions/Password'
         "400":
           description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "401":
+          description: Unauthorized
           schema:
             $ref: '#/definitions/ErrorResponse'
       summary: Update a password entry

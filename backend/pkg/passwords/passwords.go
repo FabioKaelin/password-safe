@@ -1,19 +1,20 @@
 package passwords
 
 import (
+	"github.com/fabiokaelin/password-safe/pkg/category"
 	"github.com/fabiokaelin/password-safe/pkg/db"
 )
 
 type (
 	Password struct {
-		ID          string `json:"id,omitempty"`
-		UserID      string `json:"userid,omitempty"`
-		Title       string `json:"title,omitempty"`
-		URL         string `json:"url,omitempty"`
-		Username    string `json:"username,omitempty"`
-		Password    string `json:"password,omitempty"`
-		Description string `json:"description,omitempty"`
-		Category    string `json:"category,omitempty"`
+		ID          string            `json:"id,omitempty"`
+		UserID      string            `json:"userid,omitempty"`
+		Title       string            `json:"title,omitempty"`
+		URL         string            `json:"url,omitempty"`
+		Username    string            `json:"username,omitempty"`
+		Password    string            `json:"password,omitempty"`
+		Description string            `json:"description,omitempty"`
+		Category    category.Category `json:"category,omitempty"`
 	} // @name Password
 )
 
@@ -30,7 +31,7 @@ func Create(password Password) (Password, error) {
 		Username:    password.Username,
 		Password:    encryptedPassword,
 		Description: password.Description,
-		Category:    password.Category,
+		CategoryID:  password.Category.ID,
 	}
 
 	passwordId, err := db.PasswordsCreate(dbPassword)
@@ -48,6 +49,11 @@ func Create(password Password) (Password, error) {
 		return Password{}, err
 	}
 
+	category, err := category.Get(newDBPassword.CategoryID, newDBPassword.UserID)
+	if err != nil {
+		return Password{}, err
+	}
+
 	newPassword := Password{
 		ID:          newDBPassword.ID,
 		UserID:      newDBPassword.UserID,
@@ -56,7 +62,7 @@ func Create(password Password) (Password, error) {
 		Username:    newDBPassword.Username,
 		Password:    decryptedPassword,
 		Description: newDBPassword.Description,
-		Category:    newDBPassword.Category,
+		Category:    category,
 	}
 
 	return newPassword, nil
@@ -73,6 +79,11 @@ func Get(id string) (Password, error) {
 		return Password{}, err
 	}
 
+	category, err := category.Get(dbPassword.CategoryID, dbPassword.UserID)
+	if err != nil {
+		return Password{}, err
+	}
+
 	password := Password{
 		ID:          dbPassword.ID,
 		UserID:      dbPassword.UserID,
@@ -81,7 +92,7 @@ func Get(id string) (Password, error) {
 		Username:    dbPassword.Username,
 		Password:    decryptedPassword,
 		Description: dbPassword.Description,
-		Category:    dbPassword.Category,
+		Category:    category,
 	}
 
 	return password, nil
@@ -100,6 +111,11 @@ func GetByUserID(userId string) ([]Password, error) {
 			return nil, err
 		}
 
+		category, err := category.Get(dbPassword.CategoryID, userId)
+		if err != nil {
+			return nil, err
+		}
+
 		password := Password{
 			ID:          dbPassword.ID,
 			UserID:      dbPassword.UserID,
@@ -108,7 +124,7 @@ func GetByUserID(userId string) ([]Password, error) {
 			Username:    dbPassword.Username,
 			Password:    decryptedPassword,
 			Description: dbPassword.Description,
-			Category:    dbPassword.Category,
+			Category:    category,
 		}
 		passwords = append(passwords, password)
 	}
@@ -129,7 +145,7 @@ func Update(password Password) error {
 		Username:    password.Username,
 		Password:    encryptedPassword,
 		Description: password.Description,
-		Category:    password.Category,
+		CategoryID:  password.Category.ID,
 	}
 
 	err = db.PasswordsUpdate(dbPassword)

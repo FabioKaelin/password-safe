@@ -26,6 +26,7 @@ func PasswordRouter(apiGroup *gin.RouterGroup) {
 //	@Produce		json
 //	@Success		200	{array}		Password
 //	@Success		400	{object}	errorResponse
+//	@Success		401	{object}	errorResponse
 //	@Router			/passwords [get]
 func passwordGet(c *gin.Context) {
 	currentUser, err := middleware.GetCurrentUser(c)
@@ -58,6 +59,7 @@ func passwordGet(c *gin.Context) {
 //	@Param			password	body		Password	true	"Password object that needs to be created"
 //	@Success		200			{object}	Password
 //	@Success		400			{object}	errorResponse
+//	@Success		401			{object}	errorResponse
 //	@Router			/passwords [post]
 func passwordPost(c *gin.Context) {
 	var password passwords.Password
@@ -97,6 +99,7 @@ func passwordPost(c *gin.Context) {
 //	@Produce		json
 //	@Success		200	{array}		Password
 //	@Success		400	{object}	errorResponse
+//	@Success		401	{object}	errorResponse
 //	@Router			/passwords/{id} [get]
 func passwordGetByID(c *gin.Context) {
 	passwordID := c.Param("id")
@@ -140,6 +143,7 @@ func passwordGetByID(c *gin.Context) {
 //	@Param			password	body		Password	true	"Password object that needs to be updated"
 //	@Success		200			{object}	Password
 //	@Success		400			{object}	errorResponse
+//	@Success		401			{object}	errorResponse
 //	@Router			/passwords/{id} [put]
 func passwordUpdate(c *gin.Context) {
 	currentUser, err := middleware.GetCurrentUser(c)
@@ -196,6 +200,7 @@ func passwordUpdate(c *gin.Context) {
 //	@Param			id	path	string	true	"id"
 //	@Success		204
 //	@Success		400	{object}	errorResponse
+//	@Success		401	{object}	errorResponse
 //	@Router			/passwords/{id} [delete]
 func passwordDelete(c *gin.Context) {
 	currentUser, err := middleware.GetCurrentUser(c)
