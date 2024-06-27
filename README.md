@@ -33,6 +33,18 @@ Unser Auftrag war es ein Password-Safe zu erstellen. Dabei sollten wir ein Front
 | Put     | /api/passwords/{id} | Passwort aktualisieren                |
 | Delete  | /api/passwords/{id} | Passwort löschen                      |
 
+
+### Kategorien
+
+| Methode | Pfad                 | Beschreibung                           |
+| ------- | -------------------- | -------------------------------------- |
+| Get     | /api/categories      | Alle Kategorien des Benutzers abrufen  |
+| Post    | /api/categories      | Neue Kategorie erstellen               |
+| Get     | /api/categories/{id} | Bestimmte Kategorie abrufen            |
+| Put     | /api/categories/{id} | Kategorie aktualisieren                |
+| Delete  | /api/categories/{id} | Kategorie entfernen                    |
+
+
 ## Frontend
 
 Das Frontend von diesem Projekt wurde mit Next.JS gestaltet. Zwar hatte jeder Erfahrung mit react, jedoch nicht mit Next.
