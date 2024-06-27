@@ -57,6 +57,7 @@ func main() {
 
 	controllers.UserRouter(apiGroup)
 	controllers.PasswordRouter(apiGroup)
+	controllers.CategoryRouter(apiGroup)
 
 	router.Run(":8000")
 }
