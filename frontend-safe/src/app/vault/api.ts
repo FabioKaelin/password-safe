@@ -2,6 +2,7 @@ import {User, UserWithId} from "@/app/login/page";
 import {BACKENDURL} from "@/app/statics";
 import {VaultEntry} from "@/app/vault/vaultEntry";
 import Router from 'next/router';
+import {Category} from "@/app/vault/category";
 
 
 export async function getPasswordForUser(): Promise<{ vault: Promise<VaultEntry[]>, status: number }> {
@@ -127,5 +128,38 @@ export async function changeMasterPassword(user: UserWithId): Promise<{ user: Pr
     if (resp.status === 200)
         return {user: resp.json(), status: resp.status}
     return {user: Promise.resolve({id: "", email: "", password: ""}), status: resp.status}
+
+}
+
+
+export async function createNewCategory(entry: Category): Promise<{ vault: Promise<Category>, status: number }> {
+    const resp = await fetch(`${BACKENDURL}categories/`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            name: entry.category,
+        }),
+        cache: "no-cache",
+        credentials: "include",
+        mode: "cors",
+    })
+
+    if (resp.status === 200)
+        return {vault: resp.json(), status: 200}
+
+    return {
+        vault: Promise.resolve({
+            id: "",
+            url: "",
+            category: "",
+            password: "",
+            description: "",
+            username: "",
+            userid: "",
+            title: ""
+        }), status: resp.status
+    }
 
 }
