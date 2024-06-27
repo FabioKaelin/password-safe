@@ -32,12 +32,11 @@ export default function NewPasswordModal({setIsRefresh}: RefreshType) {
 
     const [entry, setEntry] = useState<VaultEntry>(defaultModal);
     const [categories, setCategories] = useState<Category[]>([])
-
     const [isOpen, setIsOpen] = useState<boolean>(false);
-    const [newCategory, setNewCategory] = useState<Category>({category: ""});
     const [showPassword, setShowPassword] = useState<boolean>(false)
     const [errorMessage, setErrorMessage] = useState<string>("")
 
+    /*
     useEffect(() => {
         const getCategories = async () => {
             const categories = await GetAllCategoriesFromVault();
@@ -45,6 +44,8 @@ export default function NewPasswordModal({setIsRefresh}: RefreshType) {
         }
         getCategories()
     }, [isOpen]);
+
+     */
 
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
@@ -172,10 +173,6 @@ export default function NewPasswordModal({setIsRefresh}: RefreshType) {
                                     })
                                 }
                             </select>
-
-                            <CreateNewCategory newCategory={newCategory} setNewCategory={setNewCategory}
-                                               categories={categories} setCategories={setCategories}
-                                               entry={entry}/>
 
                             <br/>
                             <button
