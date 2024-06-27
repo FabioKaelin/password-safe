@@ -76,6 +76,11 @@ func categoryPost(c *gin.Context) {
 
 	newCategory.UserID = currentUser.ID
 
+	if newCategory.Name == "" {
+		c.JSON(400, errorResponse{Message: "Name is required"})
+		return
+	}
+
 	category, err := category.Create(newCategory)
 	if err != nil {
 		c.JSON(400, errorResponse{Message: err.Error()})
@@ -147,6 +152,11 @@ func categoryUpdate(c *gin.Context) {
 	var updatedCategory category.Category
 	if err := c.ShouldBindJSON(&updatedCategory); err != nil {
 		c.JSON(400, errorResponse{Message: err.Error()})
+		return
+	}
+
+	if updatedCategory.Name == "" {
+		c.JSON(400, errorResponse{Message: "Name is required"})
 		return
 	}
 
