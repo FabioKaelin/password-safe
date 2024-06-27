@@ -31,7 +31,7 @@ export default function CreateCategoryModal({setIsRefresh}: RefreshType) {
                 return
             }
 
-            const resp = await createNewCategory(category);
+            const resp = await createNewCategory(category.category);
             if (resp.status === 401) {
                 router.push("/login");
             }

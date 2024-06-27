@@ -5,7 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ed8177b4-de8b-4c6a-a977-3f318be4038e" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-safe/src/app/components/modals/EditPasswordModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend-safe/src/app/components/modals/EditPasswordModal.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend-safe/src/app/components/modals/NewPasswordModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend-safe/src/app/components/modals/NewPasswordModal.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-safe/src/app/vault/api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend-safe/src/app/vault/api.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-safe/src/app/vault/category.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend-safe/src/app/vault/category.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend-safe/src/app/vault/vaultEntry.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend-safe/src/app/vault/vaultEntry.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -152,7 +157,7 @@
       <workItem from="1718279062145" duration="607000" />
       <workItem from="1718279703113" duration="2649000" />
       <workItem from="1718884220024" duration="5155000" />
-      <workItem from="1719489111424" duration="2140000" />
+      <workItem from="1719489111424" duration="9493000" />
     </task>
     <servers />
   </component>

@@ -5,6 +5,12 @@ export type VaultEntry = {
     title: string;
     url: string;
     userid: string;
-    username: string
-    category: string
+    username: string;
+    category: CategoryWithApi;
+}
+
+export type CategoryWithApi = {
+    id: string;
+    name: string;
+    userId: string
 }

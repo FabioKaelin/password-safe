@@ -1,13 +1,15 @@
 "use client"
 
 import React, {useEffect, useState} from "react";
-import {VaultEntry} from "@/app/vault/vaultEntry";
+import {VaultEntry, Category} from "@/app/vault/vaultEntry";
 import {createNewEntry} from "@/app/vault/api";
 import {useRouter} from "next/navigation";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
+/*
 import {Category, GetAllCategoriesFromVault} from "@/app/vault/category";
-import CreateNewCategory from "@/app/components/layout/CreateNewCategory";
+*/
+
 import ErrorAlert from "@/app/components/alerts/ErrorAlert";
 
 
@@ -15,9 +17,14 @@ export type RefreshType = {
     isRefresh: boolean,
     setIsRefresh: React.Dispatch<React.SetStateAction<boolean>>
 };
+const categoryModal: Category = {
+    id: "",
+    name: "",
+    userId: ""
+}
 
 const defaultModal: VaultEntry = {
-    category: "",
+    category: categoryModal,
     description: "",
     id: "",
     password: "",
@@ -27,6 +34,7 @@ const defaultModal: VaultEntry = {
     username: ""
 };
 
+
 export default function NewPasswordModal({setIsRefresh}: RefreshType) {
     const router = useRouter()
 
@@ -35,7 +43,7 @@ export default function NewPasswordModal({setIsRefresh}: RefreshType) {
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [showPassword, setShowPassword] = useState<boolean>(false)
     const [errorMessage, setErrorMessage] = useState<string>("")
-
+    const [categoryId, setCategoryId] = useState<string>("")
     /*
     useEffect(() => {
         const getCategories = async () => {
@@ -44,19 +52,22 @@ export default function NewPasswordModal({setIsRefresh}: RefreshType) {
         }
         getCategories()
     }, [isOpen]);
+*/
 
-     */
-
+    useEffect(() => {
+        const category = categories.find(x => x.id === categoryId)
+        category !== undefined && setEntry({...entry, category: category})
+    }, [categoryId]);
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
         const createEntry = async () => {
             if (entry === null)
                 setErrorMessage("Please fill in all fields")
 
-            if (entry.category == "" || entry.category == null) {
-                entry.category = ""
+            if (entry.category.id == "" || entry.category.id == null) {
+                entry.category.id = ""
             }
-            
+
             if (entry.password.length < 8) {
                 setErrorMessage("Password must be at least 8 characters long")
                 return
@@ -110,7 +121,7 @@ export default function NewPasswordModal({setIsRefresh}: RefreshType) {
                                 name="title"
                                 placeholder="Title"
                                 value={entry.title}
-                                onChange={(e) => setEntry({...entry, title: e.target.value})}
+                                onChange={(e) => setCategoryId(e.target.id)}
                                 className="px-4 py-2 input input-bordered border border-blue-500 rounded"
                             />
                             <input
@@ -163,13 +174,13 @@ export default function NewPasswordModal({setIsRefresh}: RefreshType) {
                             </span>
 
                             <select className="px-4 py-2 select select-bordered border border-blue-500 rounded"
-                                    onChange={(e) => setEntry({...entry, category: e.target.value})}>
+                                    onChange={(e) => setCategoryId(e.target.value)}>
 
                                 <option disabled selected value={""}>Select a category if you like</option>
                                 {
                                     categories.map((category) => {
-                                        return <option key={category.category}
-                                                       value={category.category}>{category.category}</option>
+                                        return <option key={category.id}
+                                                       value={category.id}>{category.id}</option>
                                     })
                                 }
                             </select>

@@ -21,7 +21,6 @@ export default function EditPasswordModal({entry, isOpen, onClose, onUpdated}: E
     const [editedEntry, setEditedEntry] = useState<VaultEntry>(entry);
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [categories, setCategories] = useState<Category[]>([]);
-    const [newCategory, setNewCategory] = useState<Category>({category: ""});
     const [errorMessage, setErrorMessage] = useState<string>("")
 
     useEffect(() => {
@@ -131,20 +130,16 @@ export default function EditPasswordModal({entry, isOpen, onClose, onUpdated}: E
                     <select className="px-4 py-2 select select-bordered border border-blue-500 rounded"
                             onChange={(e) => handleInputChange("category", e.target.value)}>
 
-                        <option disabled selected value={editedEntry.category}>{editedEntry.category}</option>
+                        <option disabled selected value={editedEntry.category.id}>{editedEntry.category.id}</option>
                         {
                             categories.map((category) => {
-                                return category.category === editedEntry.category ?
+                                return category.category === editedEntry.category.id ?
                                     null :
                                     <option key={category.category}
                                             value={category.category}>{category.category}</option>
                             })
                         }
                     </select>
-
-                    <CreateNewCategory newCategory={newCategory} setNewCategory={setNewCategory}
-                                       categories={categories} setCategories={setCategories}
-                                       entry={entry}/>
 
                     <button type="submit" className="px-4 py-2 bg-teal-400 text-black rounded hover:bg-teal-500">
                         Update

@@ -1,11 +1,16 @@
 import {User, UserWithId} from "@/app/login/page";
 import {BACKENDURL} from "@/app/statics";
-import {VaultEntry} from "@/app/vault/vaultEntry";
+import {VaultEntry, Category} from "@/app/vault/vaultEntry";
 import Router from 'next/router';
+
+/*
 import {Category} from "@/app/vault/category";
+*/
 
-
-export async function getPasswordForUser(): Promise<{ vault: Promise<VaultEntry[]>, status: number }> {
+export async function getPasswordForUser(): Promise<{
+    vault: Promise<VaultEntry[]>,
+    status: number
+}> {
     const resp = await fetch(`${BACKENDURL}passwords/`, {
         method: "GET",
         headers: {
@@ -23,7 +28,10 @@ export async function getPasswordForUser(): Promise<{ vault: Promise<VaultEntry[
 
 }
 
-export async function createNewEntry(entry: VaultEntry): Promise<{ vault: Promise<VaultEntry>, status: number }> {
+export async function createNewEntry(entry: VaultEntry): Promise<{
+    vault: Promise<VaultEntry>,
+    status: number
+}> {
     const resp = await fetch(`${BACKENDURL}passwords/`, {
         method: "POST",
         headers: {
@@ -49,7 +57,11 @@ export async function createNewEntry(entry: VaultEntry): Promise<{ vault: Promis
         vault: Promise.resolve({
             id: "",
             url: "",
-            category: "",
+            category: {
+                id: "",
+                name: "",
+                userId: ""
+            },
             password: "",
             description: "",
             username: "",
@@ -109,7 +121,10 @@ export async function editEntryAPI(id: string, entry: VaultEntry): Promise<Vault
     }
 }
 
-export async function changeMasterPassword(user: UserWithId): Promise<{ user: Promise<UserWithId>, status: number }> {
+export async function changeMasterPassword(user: UserWithId): Promise<{
+    user: Promise<UserWithId>,
+    status: number
+}> {
     const resp = await fetch(`${BACKENDURL}users/${user.id}`, {
         method: "PUT",
         headers: {
@@ -132,14 +147,17 @@ export async function changeMasterPassword(user: UserWithId): Promise<{ user: Pr
 }
 
 
-export async function createNewCategory(entry: Category): Promise<{ vault: Promise<Category>, status: number }> {
+export async function createNewCategory(entry: string): Promise<{
+    category: Promise<Category>,
+    status: number
+}> {
     const resp = await fetch(`${BACKENDURL}categories/`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            name: entry.category,
+            name: entry,
         }),
         cache: "no-cache",
         credentials: "include",
@@ -147,19 +165,34 @@ export async function createNewCategory(entry: Category): Promise<{ vault: Promi
     })
 
     if (resp.status === 200)
-        return {vault: resp.json(), status: 200}
+        return {category: resp.json(), status: 200}
 
     return {
-        vault: Promise.resolve({
+        category: Promise.resolve({
             id: "",
-            url: "",
-            category: "",
-            password: "",
-            description: "",
-            username: "",
-            userid: "",
-            title: ""
+            name: "",
+            userId: ""
         }), status: resp.status
     }
 
+}
+
+export async function getCategory(): Promise<{
+    category: Promise<Category[]>,
+    status: number
+}> {
+    const resp = await fetch(`${BACKENDURL}categories/`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        cache: "no-cache",
+        credentials: "include",
+        mode: "cors",
+    })
+
+    if (resp.status === 200)
+        return {category: resp.json(), status: resp.status}
+
+    return {category: Promise.resolve([]), status: resp.status}
 }

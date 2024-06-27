@@ -10,9 +10,9 @@ export function FilterAllCategories(entries: VaultEntry[]): Category[] {
     if (entries == null || entries.length === 0)
         return categories;
     entries.forEach((entry) => {
-        entry !== null && entry.category !== null && entry.category !== "" &&
-        categories.filter((category) => category.category === entry.category).length === 0 &&
-        categories.push({category: entry.category})
+        entry !== null && entry.category !== null && entry.category.id !== "" &&
+        categories.filter((category) => category.category === entry.category.id).length === 0 &&
+        categories.push({category: entry.category.id})
     })
 
     return categories;
