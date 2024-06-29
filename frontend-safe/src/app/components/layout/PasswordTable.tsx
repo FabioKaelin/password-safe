@@ -54,6 +54,16 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
 
     }, [isRefresh, isModalOpen]);
 
+    useEffect(() => {
+        if (categoryInput === " " || categoryInput === "" || categoryInput === null) {
+            setFilteredEntries(entries)
+            return
+        }
+        const filtered =
+            entries.filter(entry => entry.category?.name.toLowerCase().includes(categoryInput.toLowerCase()));
+        setFilteredEntries(filtered)
+    }, [categoryInput]);
+
     const getPasswordContent = (entry: VaultEntry): React.JSX.Element => {
         let visible = see.find(x => x.id === entry.id)?.visible;
         if (visible === undefined) {
@@ -79,7 +89,7 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
 
     const deleteEntry = async (id: string): Promise<void> => {
         const response = deletePassword(id);
-        
+
         response.then((value) => {
             value === 401 && router.push("/login")
             value === 204 ? setIsRefresh(true) : console.log(value);
@@ -102,7 +112,7 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
     }
 
     // TODO IMPORTANT - NPM RUN BUILdD IS FAILING
-    
+
     // TODO table fixed is not the way to go. when a password is too big it overlaps with the next column
     return (
         <div className="">
