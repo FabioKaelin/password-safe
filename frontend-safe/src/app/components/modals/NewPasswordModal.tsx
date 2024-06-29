@@ -1,8 +1,8 @@
 "use client"
 
 import React, {useEffect, useState} from "react";
-import {VaultEntry, Category} from "@/app/vault/vaultEntry";
-import {createNewEntry} from "@/app/vault/api";
+import {VaultEntry, CategoryWithApi} from "@/app/vault/vaultEntry";
+import {createNewEntry, getCategory} from "@/app/vault/api";
 import {useRouter} from "next/navigation";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
@@ -17,10 +17,10 @@ export type RefreshType = {
     isRefresh: boolean,
     setIsRefresh: React.Dispatch<React.SetStateAction<boolean>>
 };
-const categoryModal: Category = {
+const categoryModal: CategoryWithApi = {
     id: "",
     name: "",
-    userId: ""
+    userid: ""
 }
 
 const defaultModal: VaultEntry = {
@@ -39,20 +39,21 @@ export default function NewPasswordModal({setIsRefresh}: RefreshType) {
     const router = useRouter()
 
     const [entry, setEntry] = useState<VaultEntry>(defaultModal);
-    const [categories, setCategories] = useState<Category[]>([])
+    const [categories, setCategories] = useState<CategoryWithApi[]>([])
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [showPassword, setShowPassword] = useState<boolean>(false)
     const [errorMessage, setErrorMessage] = useState<string>("")
     const [categoryId, setCategoryId] = useState<string>("")
-    /*
+
     useEffect(() => {
         const getCategories = async () => {
-            const categories = await GetAllCategoriesFromVault();
-            setCategories(categories);
+            const categories = await getCategory();
+            const category = await categories.category
+            setCategories(category);
         }
         getCategories()
     }, [isOpen]);
-*/
+
 
     useEffect(() => {
         const category = categories.find(x => x.id === categoryId)
@@ -121,7 +122,7 @@ export default function NewPasswordModal({setIsRefresh}: RefreshType) {
                                 name="title"
                                 placeholder="Title"
                                 value={entry.title}
-                                onChange={(e) => setCategoryId(e.target.id)}
+                                onChange={(e) => setEntry({...entry, title: e.target.value})}
                                 className="px-4 py-2 input input-bordered border border-blue-500 rounded"
                             />
                             <input
@@ -180,7 +181,7 @@ export default function NewPasswordModal({setIsRefresh}: RefreshType) {
                                 {
                                     categories.map((category) => {
                                         return <option key={category.id}
-                                                       value={category.id}>{category.id}</option>
+                                                       value={category.id}>{category.name}</option>
                                     })
                                 }
                             </select>

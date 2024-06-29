@@ -1,12 +1,11 @@
 // code has been refactored with chatgpt
 
 import React, {useEffect, useState} from "react";
-import {VaultEntry} from "@/app/vault/vaultEntry";
-import {createNewEntry, editEntryAPI} from "@/app/vault/api";
+import {CategoryWithApi, VaultEntry} from "@/app/vault/vaultEntry";
+import {createNewEntry, editEntryAPI, getCategory} from "@/app/vault/api";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
 import {Category, GetAllCategoriesFromVault} from "@/app/vault/category";
-import CreateNewCategory from "@/app/components/layout/CreateNewCategory";
 import {retry} from "next/dist/compiled/@next/font/dist/google/retry";
 import ErrorAlert from "@/app/components/alerts/ErrorAlert";
 
@@ -20,7 +19,7 @@ type EditPasswordModalProps = {
 export default function EditPasswordModal({entry, isOpen, onClose, onUpdated}: EditPasswordModalProps) {
     const [editedEntry, setEditedEntry] = useState<VaultEntry>(entry);
     const [showPassword, setShowPassword] = useState<boolean>(false);
-    const [categories, setCategories] = useState<Category[]>([]);
+    const [categories, setCategories] = useState<CategoryWithApi[]>([]);
     const [errorMessage, setErrorMessage] = useState<string>("")
 
     useEffect(() => {
@@ -29,8 +28,9 @@ export default function EditPasswordModal({entry, isOpen, onClose, onUpdated}: E
         }
 
         const getCategories = async () => {
-            const categories = await GetAllCategoriesFromVault();
-            setCategories(categories);
+            const categories = await getCategory();
+            const category = await categories.category
+            setCategories(category);
         }
         getCategories()
     }, [isOpen, entry]); // Update bei jeder Öffnung und bei Änderung der entry-Prop
@@ -133,10 +133,10 @@ export default function EditPasswordModal({entry, isOpen, onClose, onUpdated}: E
                         <option disabled selected value={editedEntry.category.id}>{editedEntry.category.id}</option>
                         {
                             categories.map((category) => {
-                                return category.category === editedEntry.category.id ?
+                                return category.id === editedEntry.category.id ?
                                     null :
-                                    <option key={category.category}
-                                            value={category.category}>{category.category}</option>
+                                    <option key={category.id}
+                                            value={category.id}>{category.name}</option>
                             })
                         }
                     </select>

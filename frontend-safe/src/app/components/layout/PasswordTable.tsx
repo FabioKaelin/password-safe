@@ -55,12 +55,12 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
     }, [isRefresh, isModalOpen]);
 
     useEffect(() => {
-        console.log(`categoryInput:${categoryInput}asdf`)
         if (categoryInput === " " || categoryInput === "" || categoryInput === null) {
             setFilteredEntries(entries)
             return
         }
-        const filtered = entries.filter(entry => entry.category?.toLowerCase().includes(categoryInput.toLowerCase()));
+        const filtered =
+            entries.filter(entry => entry.category?.name.toLowerCase().includes(categoryInput.toLowerCase()));
         setFilteredEntries(filtered)
     }, [categoryInput]);
 
@@ -89,7 +89,7 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
 
     const deleteEntry = async (id: string): Promise<void> => {
         const response = deletePassword(id);
-        
+
         response.then((value) => {
             value === 401 && router.push("/login")
             value === 204 ? setIsRefresh(true) : console.log(value);
@@ -112,7 +112,7 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
     }
 
     // TODO IMPORTANT - NPM RUN BUILdD IS FAILING
-    
+
     // TODO table fixed is not the way to go. when a password is too big it overlaps with the next column
     return (
         <div className="">
@@ -167,7 +167,7 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
                                     </div>
 
                                 </td>
-                                <td>{entry.category === "" || entry.category === null ? "No category set" : entry.category}</td>
+                                <td>{entry.category.name}</td>
                                 <th>
                                     <button className="btn btn-ghost btn-xs"
                                             onClick={() => handleDelete(entry.id)}>
