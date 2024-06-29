@@ -1,7 +1,8 @@
 import {User, UserWithId} from "@/app/login/page";
 import {BACKENDURL} from "@/app/statics";
-import {VaultEntry, Category} from "@/app/vault/vaultEntry";
+import {CategoryWithApi, VaultEntry} from "@/app/vault/vaultEntry";
 import Router from 'next/router';
+import {Category} from "@/app/vault/category";
 
 /*
 import {Category} from "@/app/vault/category";
@@ -148,7 +149,7 @@ export async function changeMasterPassword(user: UserWithId): Promise<{
 
 
 export async function createNewCategory(entry: string): Promise<{
-    category: Promise<Category>,
+    category: Promise<CategoryWithApi>,
     status: number
 }> {
     const resp = await fetch(`${BACKENDURL}categories/`, {
@@ -178,7 +179,7 @@ export async function createNewCategory(entry: string): Promise<{
 }
 
 export async function getCategory(): Promise<{
-    category: Promise<Category[]>,
+    category: Promise<CategoryWithApi[]>,
     status: number
 }> {
     const resp = await fetch(`${BACKENDURL}categories/`, {
