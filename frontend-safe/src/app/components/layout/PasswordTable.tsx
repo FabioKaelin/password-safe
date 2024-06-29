@@ -54,16 +54,6 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
 
     }, [isRefresh, isModalOpen]);
 
-    useEffect(() => {
-        console.log(`categoryInput:${categoryInput}asdf`)
-        if (categoryInput === " " || categoryInput === "" || categoryInput === null) {
-            setFilteredEntries(entries)
-            return
-        }
-        const filtered = entries.filter(entry => entry.category?.toLowerCase().includes(categoryInput.toLowerCase()));
-        setFilteredEntries(filtered)
-    }, [categoryInput]);
-
     const getPasswordContent = (entry: VaultEntry): React.JSX.Element => {
         let visible = see.find(x => x.id === entry.id)?.visible;
         if (visible === undefined) {
@@ -167,7 +157,7 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
                                     </div>
 
                                 </td>
-                                <td>{entry.category === "" || entry.category === null ? "No category set" : entry.category}</td>
+                                <td>{entry.category.name}</td>
                                 <th>
                                     <button className="btn btn-ghost btn-xs"
                                             onClick={() => handleDelete(entry.id)}>

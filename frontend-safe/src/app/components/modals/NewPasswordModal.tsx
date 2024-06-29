@@ -20,7 +20,7 @@ export type RefreshType = {
 const categoryModal: CategoryWithApi = {
     id: "",
     name: "",
-    userId: ""
+    userid: ""
 }
 
 const defaultModal: VaultEntry = {

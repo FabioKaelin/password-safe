@@ -61,7 +61,7 @@ export async function createNewEntry(entry: VaultEntry): Promise<{
             category: {
                 id: "",
                 name: "",
-                userId: ""
+                userid: ""
             },
             password: "",
             description: "",
@@ -172,7 +172,7 @@ export async function createNewCategory(entry: string): Promise<{
         category: Promise.resolve({
             id: "",
             name: "",
-            userId: ""
+            userid: ""
         }), status: resp.status
     }
 

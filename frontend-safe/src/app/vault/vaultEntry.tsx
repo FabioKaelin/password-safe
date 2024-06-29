@@ -12,5 +12,5 @@ export type VaultEntry = {
 export type CategoryWithApi = {
     id: string;
     name: string;
-    userId: string
+    userid: string;
 }
