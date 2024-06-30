@@ -14,7 +14,7 @@ export function sortEntries({sort, toBeSorted, setSort, setFilteredEntries, filt
 
     const sortedEntries = filteredEntries.sort((a, b) => {
         return a[key] > b[key] ? (isASC ? 1 : -1)
-                : a[key] < b[key] ? (isASC ? -1 : 1)
+            : a[key] < b[key] ? (isASC ? -1 : 1)
                 : 0;
     })
     setFilteredEntries([...sortedEntries])

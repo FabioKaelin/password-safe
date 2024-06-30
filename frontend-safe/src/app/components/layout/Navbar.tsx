@@ -31,7 +31,7 @@ const Navbar = () => {
         setUser({id: "", email: "", password: ""})
         router.push("/login")
     }
-    
+
     return (
         <>
             <div className="w-full h-20 bg-teal-700 top-0 text-white">

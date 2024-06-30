@@ -1,8 +1,7 @@
-import {User, UserWithId} from "@/app/login/page";
+import {UserWithId} from "@/app/login/page";
 import {BACKENDURL} from "@/app/statics";
 import {CategoryWithApi, VaultEntry} from "@/app/vault/vaultEntry";
 import Router from 'next/router';
-import {Category} from "@/app/vault/category";
 
 /*
 import {Category} from "@/app/vault/category";

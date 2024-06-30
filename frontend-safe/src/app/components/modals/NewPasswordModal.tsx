@@ -1,7 +1,7 @@
 "use client"
 
 import React, {useEffect, useState} from "react";
-import {VaultEntry, CategoryWithApi} from "@/app/vault/vaultEntry";
+import {CategoryWithApi, VaultEntry} from "@/app/vault/vaultEntry";
 import {createNewEntry, getCategory} from "@/app/vault/api";
 import {useRouter} from "next/navigation";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -9,8 +9,6 @@ import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
 /*
 import {Category, GetAllCategoriesFromVault} from "@/app/vault/category";
 */
-
-import ErrorAlert from "@/app/components/alerts/ErrorAlert";
 
 
 export type RefreshType = {
@@ -50,7 +48,7 @@ export default function NewPasswordModal({setIsRefresh, setErrorMessage}: Refres
             const categories = await getCategory();
             const category = await categories.category
             console.log(category)
-            if (category === null || category.length === 0 || category === undefined){
+            if (category === null || category.length === 0 || category === undefined) {
                 setIsOpen(false);
                 setErrorMessage("Please create a category first")
                 return

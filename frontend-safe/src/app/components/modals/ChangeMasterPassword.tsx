@@ -1,10 +1,8 @@
 "use client"
 
 import React, {useEffect, useState} from "react";
-import {VaultEntry} from "@/app/vault/vaultEntry";
-import {changeMasterPassword, createNewEntry} from "@/app/vault/api";
+import {changeMasterPassword} from "@/app/vault/api";
 import {useRouter} from "next/navigation";
-import Router from "next/router";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
 import {UserWithId} from "@/app/login/page";
