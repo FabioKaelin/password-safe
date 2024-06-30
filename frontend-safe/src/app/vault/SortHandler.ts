@@ -6,10 +6,9 @@ export type SortHandlerProps = {
     setSort: React.Dispatch<React.SetStateAction<{ [key: string]: boolean }>>;
     setFilteredEntries: React.Dispatch<React.SetStateAction<VaultEntry[]>>;
     filteredEntries: VaultEntry[];
-    setIsRefresh: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export function sortEntries({sort, toBeSorted, setSort, setFilteredEntries, filteredEntries, setIsRefresh}: SortHandlerProps) {
+export function sortEntries({sort, toBeSorted, setSort, setFilteredEntries, filteredEntries}: SortHandlerProps) {
     const key = toBeSorted as keyof VaultEntry
     const isASC = sort[toBeSorted]
 
@@ -20,5 +19,4 @@ export function sortEntries({sort, toBeSorted, setSort, setFilteredEntries, filt
     })
     setFilteredEntries([...sortedEntries])
     setSort({...sort, [toBeSorted]: !isASC})
-    setIsRefresh(true)
 }
