@@ -1,6 +1,8 @@
 type ErrorAlertProps = {
     message: string;
 };
+
+// TODO x should remove the modal
 export default function ErrorAlert({message}: ErrorAlertProps) {
     return (
         <div role="alert" className="alert alert-error">

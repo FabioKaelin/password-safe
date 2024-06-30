@@ -16,6 +16,7 @@ import ErrorAlert from "@/app/components/alerts/ErrorAlert";
 export type RefreshType = {
     isRefresh: boolean,
     setIsRefresh: React.Dispatch<React.SetStateAction<boolean>>
+    setErrorMessage: React.Dispatch<React.SetStateAction<string>>
 };
 const categoryModal: CategoryWithApi = {
     id: "",
@@ -35,20 +36,25 @@ const defaultModal: VaultEntry = {
 };
 
 
-export default function NewPasswordModal({setIsRefresh}: RefreshType) {
+export default function NewPasswordModal({setIsRefresh, setErrorMessage}: RefreshType) {
     const router = useRouter()
 
     const [entry, setEntry] = useState<VaultEntry>(defaultModal);
     const [categories, setCategories] = useState<CategoryWithApi[]>([])
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [showPassword, setShowPassword] = useState<boolean>(false)
-    const [errorMessage, setErrorMessage] = useState<string>("")
     const [categoryId, setCategoryId] = useState<string>("")
 
     useEffect(() => {
         const getCategories = async () => {
             const categories = await getCategory();
             const category = await categories.category
+            console.log(category)
+            if (category === null || category.length === 0 || category === undefined){
+                setIsOpen(false);
+                setErrorMessage("Please create a category first")
+                return
+            }
             setCategories(category);
         }
         getCategories()
@@ -110,11 +116,6 @@ export default function NewPasswordModal({setIsRefresh}: RefreshType) {
                         >
                             &times;
                         </button>
-                        {
-                            errorMessage != "" && (
-                                <ErrorAlert message={errorMessage}/>
-                            )
-                        }
                         <h2 className="text-2xl mb-4 font-bold text-white">New Password Entry</h2>
 
                         <form onSubmit={handleSubmit} className="grid gap-4">
