@@ -3,12 +3,13 @@
 import React, {useEffect, useState} from "react";
 import {VaultEntry} from "@/app/vault/vaultEntry";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
+import {faEye, faEyeSlash, faSort} from "@fortawesome/free-solid-svg-icons";
 import {deletePassword, getPasswordForUser, editEntryAPI} from "@/app/vault/api";
 import {RefreshType} from "@/app/components/modals/NewPasswordModal";
 import DeleteConfirmation, {DeleteConfirmationProps} from "@/app/components/modals/DeleteConfirmation";
 import EditPasswordModal from "@/app/components/modals/EditPasswordModal";
 import {useRouter} from "next/navigation";
+import {sortEntries} from "@/app/vault/SortHandler";
 
 export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
 
@@ -20,8 +21,20 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
     const [editModalOpen, setEditModalOpen] = useState(false);
     const [currentEditEntry, setCurrentEditEntry] = useState<VaultEntry | null>(null);
     const [categoryInput, setCategoryInput] = useState<string>("");
+    const [sortOrder, setSortOrder] = useState<{ [key: string]: boolean }>({});
 
     const router = useRouter()
+
+    const handleSort = (key: string) => {
+        setSortOrder({...sortOrder, [key]: !sortOrder[key]})
+        sortEntries({
+            sort: sortOrder,
+            toBeSorted: key,
+            setSort: setSortOrder,
+            setFilteredEntries: setFilteredEntries,
+            filteredEntries: filteredEntries,
+        })
+    }
 
 
     useEffect(() => {
@@ -134,10 +147,14 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
             <table className="table md:table-fixed mx-20">
                 <thead>
                 <tr>
-                    <th>Title</th>
-                    <th>Description</th>
+                    <th>Title <button onClick={() => handleSort("title")}>
+                        <FontAwesomeIcon icon={faSort}/></button></th>
+
+                    <th>Description <button onClick={() => handleSort("description")}>
+                        <FontAwesomeIcon icon={faSort}/></button></th>
                     <th>Url</th>
-                    <th>Username</th>
+                    <th>Username <button onClick={() => handleSort("username")}>
+                        <FontAwesomeIcon icon={faSort}/></button></th>
                     <th>Password</th>
                     <th>Category</th>
                     <th>Delete</th>
