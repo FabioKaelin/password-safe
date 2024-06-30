@@ -139,7 +139,7 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
     // TODO table fixed is not the way to go. when a password is too big it overlaps with the next column
     return (
         <div className="">
-            <div className={"flex items-center justify-center"}>
+            <div className={"flex items-center justify-center gap-x-5"}>
                 <div>
                     <label className="label">Filter for a category:</label>
                     <input
@@ -149,6 +149,9 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
                         onChange={(e) => setCategoryInput(e.target.value)}
                         className="px-4 py-2 mb-3 input input-bordered border border-blue-500 rounded"
                     />
+                </div>
+                <div>
+                    <label className="label">Filter for everything:</label>
                     <input
                         name="search"
                         placeholder="Search with a query"
@@ -157,7 +160,6 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
                         className="px-4 py-2 mb-3 input input-bordered border border-blue-500 rounded"
                     />
                 </div>
-
             </div>
 
 
