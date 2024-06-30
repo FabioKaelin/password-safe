@@ -1,6 +1,7 @@
 package passwords
 
 import (
+	"github.com/davecgh/go-spew/spew"
 	"github.com/fabiokaelin/password-safe/pkg/category"
 	"github.com/fabiokaelin/password-safe/pkg/db"
 )
@@ -111,9 +112,15 @@ func GetByUserID(userId string) ([]Password, error) {
 			return nil, err
 		}
 
-		category, err := category.Get(dbPassword.CategoryID, userId)
-		if err != nil {
-			return nil, err
+		spew.Dump(dbPassword)
+
+		categoryObj := category.Category{}
+
+		if dbPassword.CategoryID != "" {
+			categoryObj, err = category.Get(dbPassword.CategoryID, userId)
+			if err != nil {
+				return nil, err
+			}
 		}
 
 		password := Password{
@@ -124,7 +131,7 @@ func GetByUserID(userId string) ([]Password, error) {
 			Username:    dbPassword.Username,
 			Password:    decryptedPassword,
 			Description: dbPassword.Description,
-			Category:    category,
+			Category:    categoryObj,
 		}
 		passwords = append(passwords, password)
 	}

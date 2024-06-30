@@ -6,7 +6,6 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/davecgh/go-spew/spew"
 	"github.com/fabiokaelin/password-safe/config"
 	"github.com/fabiokaelin/password-safe/pkg/db"
 	token_pkg "github.com/fabiokaelin/password-safe/pkg/token"
@@ -58,8 +57,6 @@ func SetUserToContext() gin.HandlerFunc {
 			rows.Scan(&user.ID, &user.Email, &user.Password)
 			break
 		}
-
-		spew.Dump(user.FilteredUser())
 
 		ctx.Set("currentUser", user)
 		ctx.Next()

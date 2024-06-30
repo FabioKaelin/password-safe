@@ -3,7 +3,6 @@ package controllers
 import (
 	"net/http"
 
-	"github.com/davecgh/go-spew/spew"
 	"github.com/fabiokaelin/password-safe/pkg/middleware"
 	"github.com/fabiokaelin/password-safe/pkg/users"
 	"github.com/gin-gonic/gin"
@@ -156,7 +155,6 @@ func userCheckLogin(c *gin.Context) {
 		return
 	}
 	filteredUser := currentUser.FilteredUser()
-	spew.Dump()
 	c.JSON(200, filteredUser)
 }
 
