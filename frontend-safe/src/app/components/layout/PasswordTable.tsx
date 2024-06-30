@@ -231,7 +231,7 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
                     isOpen={editModalOpen}
                     onClose={() => setEditModalOpen(false)}
                     onUpdated={() => setIsRefresh(true)}
-                />
+                    setIsOpen={setEditModalOpen}/>
             )}
         </div>
     );
