@@ -20,3 +20,11 @@ export function sortEntries({sort, toBeSorted, setSort, setFilteredEntries, filt
     setFilteredEntries([...sortedEntries])
     setSort({...sort, [toBeSorted]: !isASC})
 }
+
+export const createFilterFunction = (searchInput : string) => (entry : VaultEntry) => {
+    return entry.title.toLowerCase().includes(searchInput.toLowerCase())
+        || entry.description.toLowerCase().includes(searchInput.toLowerCase())
+        || entry.url.toLowerCase().includes(searchInput.toLowerCase())
+        || entry.username.toLowerCase().includes(searchInput.toLowerCase())
+        || entry.category.name.toLowerCase().includes(searchInput.toLowerCase())
+};
