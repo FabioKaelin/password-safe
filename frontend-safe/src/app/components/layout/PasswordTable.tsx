@@ -9,6 +9,7 @@ import {RefreshType} from "@/app/components/modals/NewPasswordModal";
 import DeleteConfirmation, {DeleteConfirmationProps} from "@/app/components/modals/DeleteConfirmation";
 import EditPasswordModal from "@/app/components/modals/EditPasswordModal";
 import {useRouter} from "next/navigation";
+import {sortEntries} from "@/app/vault/SortHandler";
 
 export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
 
@@ -20,8 +21,21 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
     const [editModalOpen, setEditModalOpen] = useState(false);
     const [currentEditEntry, setCurrentEditEntry] = useState<VaultEntry | null>(null);
     const [categoryInput, setCategoryInput] = useState<string>("");
+    const [sortOrder, setSortOrder] = useState<{ [key: string]: boolean }>({});
 
     const router = useRouter()
+
+    const handleSort = (key: string) => {
+        setSortOrder({...sortOrder, [key]: !sortOrder[key]})
+        sortEntries({
+            sort: sortOrder,
+            toBeSorted: key,
+            setSort: setSortOrder,
+            setFilteredEntries: setFilteredEntries,
+            filteredEntries: filteredEntries,
+            setIsRefresh: setIsRefresh
+        })
+    }
 
 
     useEffect(() => {
