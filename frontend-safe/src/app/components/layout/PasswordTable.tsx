@@ -1,10 +1,10 @@
 "use client"
 
 import React, {useEffect, useState} from "react";
-import {VaultEntry} from "@/app/vault/vaultEntry";
+import {CategoryWithApi, VaultEntry} from "@/app/vault/vaultEntry";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEye, faEyeSlash, faSort} from "@fortawesome/free-solid-svg-icons";
-import {deletePassword, getPasswordForUser} from "@/app/vault/api";
+import {deletePassword, getCategory, getPasswordForUser} from "@/app/vault/api";
 import {RefreshType} from "@/app/components/modals/NewPasswordModal";
 import DeleteConfirmation, {DeleteConfirmationProps} from "@/app/components/modals/DeleteConfirmation";
 import EditPasswordModal from "@/app/components/modals/EditPasswordModal";
@@ -20,7 +20,7 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
     const [toBeDeleted, setToBeDeleted] = useState<DeleteConfirmationProps>()
     const [editModalOpen, setEditModalOpen] = useState(false);
     const [currentEditEntry, setCurrentEditEntry] = useState<VaultEntry | null>(null);
-    const [categoryInput, setCategoryInput] = useState<string>("");
+    const [categories, setCategories] = useState<CategoryWithApi[]>([]);
     const [sortOrder, setSortOrder] = useState<{ [key: string]: boolean }>({});
     const [searchInput, setSearchInput] = useState<string>("");
 
@@ -70,22 +70,25 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
             setEntries(entriesOnly)
             setFilteredEntries(entriesOnly)
         }
+        const handleCategories = async () => {
+            const resp = await getCategory();
+            if (resp.status === 401) {
+                router.push("/login");
+            }
+            const categories = await resp.category
+            setCategories(categories);
+        }
         if (isRefresh || !isModalOpen) {
             handlePassword();
+            handleCategories();
             setIsRefresh(false);
         }
 
     }, [isRefresh, isModalOpen]);
 
-    useEffect(() => {
-        if (categoryInput === " " || categoryInput === "" || categoryInput === null) {
-            setFilteredEntries(entries)
-            return
-        }
-        const filtered =
-            entries.filter(entry => entry.category?.name.toLowerCase().includes(categoryInput.toLowerCase()));
-        setFilteredEntries(filtered)
-    }, [categoryInput]);
+    const handleCategoryChange = (category: string) => {
+        setFilteredEntries(entries.filter(entry => entry.category?.name === category));
+    }
 
     const getPasswordContent = (entry: VaultEntry): React.JSX.Element => {
         let visible = see.find(x => x.id === entry.id)?.visible;
@@ -142,13 +145,15 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
             <div className={"flex items-center justify-center gap-x-5"}>
                 <div>
                     <label className="label">Filter for a category:</label>
-                    <input
+                    <select
                         name="category"
-                        placeholder="Filter for a category"
-                        value={categoryInput}
-                        onChange={(e) => setCategoryInput(e.target.value)}
-                        className="px-4 py-2 mb-3 input input-bordered border border-blue-500 rounded"
-                    />
+                        onChange={(e) => handleCategoryChange(e.target.value)}
+                        className="px-4 py-2 mb-3 input input-bordered border border-blue-500 rounded">
+                        <option value={""}>All</option>
+                        {categories.map(category => {
+                            return <option key={category.id} value={category.name}>{category.name}</option>
+                        })}
+                    </select>
                 </div>
                 <div>
                     <label className="label">Filter for everything:</label>
