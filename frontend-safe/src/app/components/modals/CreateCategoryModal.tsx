@@ -1,13 +1,9 @@
 "use client"
 
-import React, {useEffect, useState} from "react";
-import {VaultEntry} from "@/app/vault/vaultEntry";
-import {createNewCategory, createNewEntry} from "@/app/vault/api";
+import React, {useState} from "react";
+import {createNewCategory} from "@/app/vault/api";
 import {useRouter} from "next/navigation";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
-import {Category, GetAllCategoriesFromVault} from "@/app/vault/category";
-import CreateNewCategory from "@/app/components/layout/CreateNewCategory";
+import {Category} from "@/app/vault/category";
 import ErrorAlert from "@/app/components/alerts/ErrorAlert";
 
 

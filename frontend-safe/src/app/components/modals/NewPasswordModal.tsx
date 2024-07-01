@@ -1,21 +1,20 @@
 "use client"
 
 import React, {useEffect, useState} from "react";
-import {VaultEntry, CategoryWithApi} from "@/app/vault/vaultEntry";
+import {CategoryWithApi, VaultEntry} from "@/app/vault/vaultEntry";
 import {createNewEntry, getCategory} from "@/app/vault/api";
 import {useRouter} from "next/navigation";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
+import {faArrowsRotate, faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
 /*
 import {Category, GetAllCategoriesFromVault} from "@/app/vault/category";
 */
-
-import ErrorAlert from "@/app/components/alerts/ErrorAlert";
 
 
 export type RefreshType = {
     isRefresh: boolean,
     setIsRefresh: React.Dispatch<React.SetStateAction<boolean>>
+    setErrorMessage: React.Dispatch<React.SetStateAction<string>>
 };
 const categoryModal: CategoryWithApi = {
     id: "",
@@ -35,20 +34,25 @@ const defaultModal: VaultEntry = {
 };
 
 
-export default function NewPasswordModal({setIsRefresh}: RefreshType) {
+export default function NewPasswordModal({setIsRefresh, setErrorMessage}: RefreshType) {
     const router = useRouter()
 
     const [entry, setEntry] = useState<VaultEntry>(defaultModal);
     const [categories, setCategories] = useState<CategoryWithApi[]>([])
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [showPassword, setShowPassword] = useState<boolean>(false)
-    const [errorMessage, setErrorMessage] = useState<string>("")
     const [categoryId, setCategoryId] = useState<string>("")
 
     useEffect(() => {
         const getCategories = async () => {
             const categories = await getCategory();
             const category = await categories.category
+            console.log(category)
+            if (category === null || category.length === 0 || category === undefined) {
+                setIsOpen(false);
+                setErrorMessage("Please create a category first")
+                return
+            }
             setCategories(category);
         }
         getCategories()
@@ -89,6 +93,12 @@ export default function NewPasswordModal({setIsRefresh}: RefreshType) {
         createEntry()
     };
 
+    function generatePassword(charset: string, length: number): string {
+        if (length <= 0) return '';
+        const randomChar = charset[Math.floor(Math.random() * charset.length)];
+        return randomChar + generatePassword(charset, length - 1);
+    }
+
     return (
         <>
             <button
@@ -110,11 +120,6 @@ export default function NewPasswordModal({setIsRefresh}: RefreshType) {
                         >
                             &times;
                         </button>
-                        {
-                            errorMessage != "" && (
-                                <ErrorAlert message={errorMessage}/>
-                            )
-                        }
                         <h2 className="text-2xl mb-4 font-bold text-white">New Password Entry</h2>
 
                         <form onSubmit={handleSubmit} className="grid gap-4">
@@ -173,6 +178,17 @@ export default function NewPasswordModal({setIsRefresh}: RefreshType) {
                                   )}
                                </button>
                             </span>
+                            <button type="button" onClick={() => {
+                                const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+";
+                                const length = 16;
+                                let password = generatePassword(charset, length);
+                                setEntry({...entry, password: password})
+                                navigator.clipboard.writeText(password)
+
+                            }}
+                                    className={"px-4 py-2 border border-blue-500 rounded mx-1 w-full"}>
+                                <FontAwesomeIcon icon={faArrowsRotate}/>
+                            </button>
 
                             <select className="px-4 py-2 select select-bordered border border-blue-500 rounded"
                                     onChange={(e) => setCategoryId(e.target.value)}>

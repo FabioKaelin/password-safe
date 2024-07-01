@@ -1,11 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import {useRouter} from "next/navigation";
 import Link from "next/link";
-import Navbar from "@/app/components/layout/Navbar";
 import Header from "@/app/components/layout/Header";
-import React, {useEffect} from "react";
+import React from "react";
 
 export default function Home() {
 

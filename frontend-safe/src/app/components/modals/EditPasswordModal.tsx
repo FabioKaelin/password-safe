@@ -2,25 +2,31 @@
 
 import React, {useEffect, useState} from "react";
 import {CategoryWithApi, VaultEntry} from "@/app/vault/vaultEntry";
-import {createNewEntry, editEntryAPI, getCategory} from "@/app/vault/api";
+import {editEntryAPI, getCategory} from "@/app/vault/api";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
-import {Category, GetAllCategoriesFromVault} from "@/app/vault/category";
-import {retry} from "next/dist/compiled/@next/font/dist/google/retry";
 import ErrorAlert from "@/app/components/alerts/ErrorAlert";
 
 type EditPasswordModalProps = {
     entry: VaultEntry;
     isOpen: boolean;
+    setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
     onClose: () => void;
     onUpdated: () => void;
 };
 
-export default function EditPasswordModal({entry, isOpen, onClose, onUpdated}: EditPasswordModalProps) {
+const defaultCategories: CategoryWithApi = {
+    id: "",
+    name: "",
+    userid: ""
+}
+
+export default function EditPasswordModal({entry, isOpen, onClose, onUpdated, setIsOpen}: EditPasswordModalProps) {
     const [editedEntry, setEditedEntry] = useState<VaultEntry>(entry);
     const [showPassword, setShowPassword] = useState<boolean>(false);
-    const [categories, setCategories] = useState<CategoryWithApi[]>([]);
+    const [categories, setCategories] = useState<CategoryWithApi[]>([defaultCategories]);
     const [errorMessage, setErrorMessage] = useState<string>("")
+    const [categoryId, setCategoryId] = useState<string>("")
 
     useEffect(() => {
         if (isOpen) {
@@ -30,11 +36,19 @@ export default function EditPasswordModal({entry, isOpen, onClose, onUpdated}: E
         const getCategories = async () => {
             const categories = await getCategory();
             const category = await categories.category
+            if (category === null || category.length === 0 || category === undefined) {
+                setIsOpen(false);
+                setErrorMessage("Please create a category first")
+                return
+            }
             setCategories(category);
         }
         getCategories()
     }, [isOpen, entry]); // Update bei jeder Öffnung und bei Änderung der entry-Prop
-
+    useEffect(() => {
+        const category = categories.find(x => x.id === categoryId)
+        category !== undefined && setEditedEntry({...entry, category: category})
+    }, [categoryId]);
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
         if (!editedEntry.id) {
@@ -47,7 +61,7 @@ export default function EditPasswordModal({entry, isOpen, onClose, onUpdated}: E
                 setErrorMessage("Password must be at least 8 characters long")
                 return
             }
-            
+
             if (editedEntry.password != "" && editedEntry.url != "" && editedEntry.username != "" && editedEntry.title != "" && editedEntry.description != "") {
                 const response = await editEntryAPI(editedEntry.id, editedEntry);
                 console.log("Update response:", response);
@@ -128,9 +142,9 @@ export default function EditPasswordModal({entry, isOpen, onClose, onUpdated}: E
                     </div>
 
                     <select className="px-4 py-2 select select-bordered border border-blue-500 rounded"
-                            onChange={(e) => handleInputChange("category", e.target.value)}>
+                            onChange={(e) => setCategoryId(e.target.value)}>
 
-                        <option disabled selected value={editedEntry.category.id}>{editedEntry.category.id}</option>
+                        <option selected value={editedEntry.category.id}>{editedEntry.category.name}</option>
                         {
                             categories.map((category) => {
                                 return category.id === editedEntry.category.id ?
