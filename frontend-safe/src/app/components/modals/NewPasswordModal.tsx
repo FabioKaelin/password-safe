@@ -5,7 +5,7 @@ import {CategoryWithApi, VaultEntry} from "@/app/vault/vaultEntry";
 import {createNewEntry, getCategory} from "@/app/vault/api";
 import {useRouter} from "next/navigation";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
+import {faArrowsRotate, faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
 /*
 import {Category, GetAllCategoriesFromVault} from "@/app/vault/category";
 */
@@ -93,6 +93,12 @@ export default function NewPasswordModal({setIsRefresh, setErrorMessage}: Refres
         createEntry()
     };
 
+    function generatePassword(charset: string, length: number): string {
+        if (length <= 0) return '';
+        const randomChar = charset[Math.floor(Math.random() * charset.length)];
+        return randomChar + generatePassword(charset, length - 1);
+    }
+
     return (
         <>
             <button
@@ -171,6 +177,15 @@ export default function NewPasswordModal({setIsRefresh, setErrorMessage}: Refres
                                       </>
                                   )}
                                </button>
+                                <button type="button" onClick={() => {
+                                    const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+";
+                                    const length = 16;
+                                    setEntry({...entry, password: generatePassword(charset, length)})
+
+                                }}
+                                        className={"px-4 py-2 border border-blue-500 rounded h-full mx-1 w-1/6"}>
+                                    <FontAwesomeIcon icon={faArrowsRotate}/>
+                                </button>
                             </span>
 
                             <select className="px-4 py-2 select select-bordered border border-blue-500 rounded"
