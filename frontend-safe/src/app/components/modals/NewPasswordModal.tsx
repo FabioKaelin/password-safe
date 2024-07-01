@@ -181,7 +181,9 @@ export default function NewPasswordModal({setIsRefresh, setErrorMessage}: Refres
                             <button type="button" onClick={() => {
                                 const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+";
                                 const length = 16;
-                                setEntry({...entry, password: generatePassword(charset, length)})
+                                let password = generatePassword(charset, length);
+                                setEntry({...entry, password: password})
+                                navigator.clipboard.writeText(password)
 
                             }}
                                     className={"px-4 py-2 border border-blue-500 rounded mx-1 w-full"}>
