@@ -235,6 +235,14 @@ const docTemplate = `{
                     "passwords"
                 ],
                 "summary": "Get all passwords",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",

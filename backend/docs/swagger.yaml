@@ -191,6 +191,11 @@ paths:
   /passwords:
     get:
       description: Get all passwords of the user
+      parameters:
+      - description: page
+        in: query
+        name: page
+        type: string
       produces:
       - application/json
       responses:

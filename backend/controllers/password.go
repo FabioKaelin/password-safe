@@ -1,7 +1,10 @@
 package controllers
 
 import (
+	"strconv"
+
 	"github.com/fabiokaelin/password-safe/pkg/middleware"
+	"github.com/fabiokaelin/password-safe/pkg/page"
 	"github.com/fabiokaelin/password-safe/pkg/passwords"
 	"github.com/gin-gonic/gin"
 )
@@ -24,9 +27,10 @@ func PasswordRouter(apiGroup *gin.RouterGroup) {
 //	@Description	Get all passwords of the user
 //	@Tags			passwords
 //	@Produce		json
-//	@Success		200	{array}		Password
-//	@Success		400	{object}	errorResponse
-//	@Success		401	{object}	errorResponse
+//	@Success		200		{array}		Password
+//	@Param			page	query		string	false	"page"
+//	@Success		400		{object}	errorResponse
+//	@Success		401		{object}	errorResponse
 //	@Router			/passwords [get]
 func passwordGet(c *gin.Context) {
 	currentUser, err := middleware.GetCurrentUser(c)
@@ -46,7 +50,19 @@ func passwordGet(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, passwordsOfUser)
+	pageNr := c.Query("page")
+	if pageNr == "" {
+		c.JSON(200, passwordsOfUser)
+		return
+	} else {
+		pageNrInt, err := strconv.Atoi(pageNr)
+		if err != nil {
+			c.JSON(400, errorResponse{Message: err.Error()})
+			return
+		}
+		c.JSON(200, page.GetPage(passwordsOfUser, pageNrInt))
+		return
+	}
 }
 
 // passwordPost             godoc
