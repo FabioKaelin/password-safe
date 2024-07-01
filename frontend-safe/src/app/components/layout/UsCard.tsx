@@ -3,7 +3,6 @@
 
 import Link from "next/link";
 import React from "react";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import LinkedInIcon from "@/app/components/Icons/LinkedInIcon";
 import Image from "next/image";
 
@@ -21,7 +20,7 @@ export default function UsCard({title, jobDescription, imageUrl, linkedIn, compa
     return (
         <div className="card w-96 bg-base-100 shadow-xl my-10">
             <figure className="relative h-0" style={{paddingBottom: '100%'}}>
-                <Image src={imageUrl} alt="Profile picture" layout="fill" objectFit="cover" />
+                <Image src={imageUrl} alt="Profile picture" layout="fill" objectFit="cover"/>
             </figure>
             <div className="card-body">
                 <h2 className="card-title">{title}</h2>

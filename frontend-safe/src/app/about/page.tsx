@@ -2,7 +2,6 @@
 
 import Header from "@/app/components/layout/Header";
 import UsCard from "@/app/components/layout/UsCard";
-import {getPasswordForUser} from "@/app/vault/api";
 
 export default function Page() {
     return (
@@ -42,7 +41,8 @@ export default function Page() {
                         roleInPasswordSafe={"Frontend Developer"}/>
                 <UsCard title={"Lukas Winterleitner"} jobDescription={"Developer Apprentice"}
                         imageUrl={"https://media.licdn.com/dms/image/D4E03AQHvpV3WnqSORg/profile-displayphoto-shrink_800_800/0/1712923732042?e=1723680000&v=beta&t=pMTjwFUzRR0RJ5jtAxjOg2IsvDDOoGX5QNiaNhFZ3UU"}
-                        linkedIn={"https://www.linkedin.com/in/lukas-winterleitner-035601303/"} company={"NxtLvl Development GmbH"}
+                        linkedIn={"https://www.linkedin.com/in/lukas-winterleitner-035601303/"}
+                        company={"NxtLvl Development GmbH"}
                         roleInPasswordSafe={"Frontend Developer"}/>
             </div>
         </>

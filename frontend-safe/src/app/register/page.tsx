@@ -7,7 +7,6 @@ import React, {useState} from "react";
 import {RegisterUser} from "./api";
 import {LogInToVault} from "../login/api";
 import ErrorAlert from "@/app/components/alerts/ErrorAlert";
-import Link from "next/link";
 
 export default function Register() {
     const [user, setUser] = useState<User>({email: "", password: ""});
@@ -27,7 +26,7 @@ export default function Register() {
                 setErrorMessage("Password must be at least 8 characters long");
                 return;
             }
-            
+
             const resp = await RegisterUser(user);
 
             if (resp.status === 201) {

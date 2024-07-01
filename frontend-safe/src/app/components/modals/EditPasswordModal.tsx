@@ -2,13 +2,10 @@
 
 import React, {useEffect, useState} from "react";
 import {CategoryWithApi, VaultEntry} from "@/app/vault/vaultEntry";
-import {createNewEntry, editEntryAPI, getCategory} from "@/app/vault/api";
+import {editEntryAPI, getCategory} from "@/app/vault/api";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
-import {Category, GetAllCategoriesFromVault} from "@/app/vault/category";
-import {retry} from "next/dist/compiled/@next/font/dist/google/retry";
 import ErrorAlert from "@/app/components/alerts/ErrorAlert";
-import * as zlib from "zlib";
 
 type EditPasswordModalProps = {
     entry: VaultEntry;
@@ -39,7 +36,7 @@ export default function EditPasswordModal({entry, isOpen, onClose, onUpdated, se
         const getCategories = async () => {
             const categories = await getCategory();
             const category = await categories.category
-            if (category === null || category.length === 0 || category === undefined){
+            if (category === null || category.length === 0 || category === undefined) {
                 setIsOpen(false);
                 setErrorMessage("Please create a category first")
                 return
