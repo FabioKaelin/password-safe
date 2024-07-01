@@ -177,16 +177,16 @@ export default function NewPasswordModal({setIsRefresh, setErrorMessage}: Refres
                                       </>
                                   )}
                                </button>
-                                <button type="button" onClick={() => {
-                                    const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+";
-                                    const length = 16;
-                                    setEntry({...entry, password: generatePassword(charset, length)})
-
-                                }}
-                                        className={"px-4 py-2 border border-blue-500 rounded h-full mx-1 w-1/6"}>
-                                    <FontAwesomeIcon icon={faArrowsRotate}/>
-                                </button>
                             </span>
+                            <button type="button" onClick={() => {
+                                const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+";
+                                const length = 16;
+                                setEntry({...entry, password: generatePassword(charset, length)})
+
+                            }}
+                                    className={"px-4 py-2 border border-blue-500 rounded mx-1 w-full"}>
+                                <FontAwesomeIcon icon={faArrowsRotate}/>
+                            </button>
 
                             <select className="px-4 py-2 select select-bordered border border-blue-500 rounded"
                                     onChange={(e) => setCategoryId(e.target.value)}>
