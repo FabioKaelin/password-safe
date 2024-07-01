@@ -87,6 +87,10 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
     }, [isRefresh, isModalOpen]);
 
     const handleCategoryChange = (category: string) => {
+        if (category === "") {
+            setFilteredEntries(entries);
+            return;
+        }
         setFilteredEntries(entries.filter(entry => entry.category?.name === category));
     }
 
@@ -148,7 +152,7 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
                     <select
                         name="category"
                         onChange={(e) => handleCategoryChange(e.target.value)}
-                        className="px-4 py-2 mb-3 input input-bordered border border-blue-500 rounded">
+                        className="px-4 py-2 mb-3 w-full input input-bordered border border-blue-500 rounded">
                         <option value={""}>All</option>
                         {categories.map(category => {
                             return <option key={category.id} value={category.name}>{category.name}</option>
