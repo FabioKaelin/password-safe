@@ -1,6 +1,5 @@
 # <center><div style='display: flex; text-align: right; justify-content: center;'><span><img src="https://github.com/FabioKaelin/password-safe/assets/61542805/78085ec4-5b83-4b79-ae18-0206f1bdaf6e" width="100"/> RoboGuard (Password-safe)</span></div></center>
 
-
 ## Project Team
 
 1. Lukas Winterleitner (NxtLvl Development GmbH)
@@ -33,7 +32,6 @@ Unser Auftrag war es ein Password-Safe zu erstellen. Dabei sollten wir ein Front
 | Put     | /api/passwords/{id} | Passwort aktualisieren                |
 | Delete  | /api/passwords/{id} | Passwort löschen                      |
 
-
 ### Kategorien
 
 | Methode | Pfad                 | Beschreibung                           |
@@ -43,7 +41,6 @@ Unser Auftrag war es ein Password-Safe zu erstellen. Dabei sollten wir ein Front
 | Get     | /api/categories/{id} | Bestimmte Kategorie abrufen            |
 | Put     | /api/categories/{id} | Kategorie aktualisieren                |
 | Delete  | /api/categories/{id} | Kategorie entfernen                    |
-
 
 ## Frontend
 
@@ -109,3 +106,77 @@ Alles in allem hat die Entwicklung dieses Projektes sehr viel Spass gemacht und 
 ### Shansai
 
 Allgemein ein gelungenes Projekt. Ich musste die Frontend Aufgaben übernehen, als einer der Frontend nicht so gerne hat, war das eine Challenge gewesen, jedoch war es doch letztendlich recht interessant und hat spass gemacht. Es kam zu interessanten Problemen, die auch grübeln gefordet haben. Das war auch recht lustig. Alles was positive Seiten hat, hat auch negative Seiten. In diesem Projekt kam es leider vor, dass wir gewisse Features vergessen / nicht fertig implementieren und das führte zu ein paar schlaflosen Nächten. Die Nächte haben sich gelohnt und die Features sind nun da. Fabio hat die Swagger Dokumentation erstelle, welche recht nützlich war für die Verbindung zwischen Frontend und Backend. Die Zusammenarbeit mit Lukas im Frontend war recht gut. Wir konnten beide voneinander lernen und haben auch zusammen "Coding Sessions" gemacht. Ebenfalls konnten wir viele Probleme dank künstlicher Intelligenz und StackOverflow lösen. Dabei war mir wichtig, dass ich eine gute Balance zwischen Künstlicher Intelligenz, Googlen und nachfragen bei Frontend Entwicklern in der Firma finde.
+
+# Modul 183
+
+## Nutzung von Functional programming in diesem Projekt
+
+## High Order Functions
+
+Die Nutzung von High order Functions in diesem Projekt ist sehr fortgeschritten. Beispielsweise wird in der Datei: `CategoriesTable.tsx` ein useEFfect gebraucht, welches einen Filter anwendet. Dieser Filter ist eine High Order Function.
+
+Zeile 29 - 31:
+Dabei wird ein Filter angwendet.
+
+```typescript
+    useEffect(() => {
+        const categoryFilter = (searchInput: string) => (entry: Category) => entry.name.toLowerCase().includes(searchInput.toLowerCase());
+        const res = filteredEntries !== null && filteredEntries.filter(categoryFilter(searchInput));
+        setFilteredCategories(res);
+    }, [searchInput, filteredEntries]);
+```
+
+Die Definition des Filter befindet sich in der Datei: `FilteringHandler.ts` und sieht wie folgt aus:
+Davon werden mehrere Filter verwendet in verschiedenen Dateien, wie zum Beispiel auch in: `PasswordTable.tsx` und `CategoriesTable.tsx`
+
+```typescript
+export const categoryFilter = (searchInput: string) => (entry: Category) => entry.name.toLowerCase().includes(searchInput.toLowerCase());
+```
+
+## Immutable values (kind of)
+
+### Immutable values - Beispiel 1
+
+In diesem Projekt wurden auch immutable values verwendet. Beispielsweise in der Datei: `PasswordTable.tsx` wird ein neues Array erstellt, welches die alten Werte beinhaltet und dann wird ein neuer Wert hinzugefügt.
+
+Dabei wird ein neues Array erstellt und ein neuer Wert hinzugefügt.
+
+```typescript
+    const newEntries = [...filteredEntries, newEntry];
+    setFilteredEntries(newEntries);
+```
+
+Weiter wird es wie folgt bearbeitet:
+
+```typescript
+    useEffect(() => {
+        if (searchInput === " " || searchInput === "" || searchInput === null) {
+            setFilteredEntries(entries)
+            return
+        }
+        // Higher Function method
+        const res = filteredEntries.filter(vaultFilter(searchInput));
+        
+        setFilteredEntries(res)
+    }, [searchInput]);
+```
+
+### Immutable values - Beispiel 2
+
+Ein weiteres Beispiel für die Verwendung von immutable values ist in der Datei: `Sorthandler.tsx` zu finden. Dabei wird ein neues Array erstellt (eine Kopie) und die Werte sortiert.
+
+```typescript
+export function sortVaultEntries({sort, toBeSorted, setSort, setFilteredEntries, filteredEntries}: SortHandlerProps) {
+    const key = toBeSorted as keyof VaultEntry
+    const isASC = sort[toBeSorted]
+
+    const sortedEntries = [...filteredEntries].sort((a, b) => {
+        return a[key] > b[key] ? (isASC ? 1 : -1)
+            : a[key] < b[key] ? (isASC ? -1 : 1)
+                : 0;
+    })
+
+    setFilteredEntries(sortedEntries)
+    setSort({...sort, [toBeSorted]: !isASC})
+}
+```
