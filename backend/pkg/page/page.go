@@ -13,7 +13,7 @@ type Page struct {
 }
 
 func GetPage(passwordsList []passwords.Password, page int) Page {
-	passwordPerPage := 2
+	passwordPerPage := 10
 	start := (page - 1) * passwordPerPage
 	end := page * passwordPerPage
 
