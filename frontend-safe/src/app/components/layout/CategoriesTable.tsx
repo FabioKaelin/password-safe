@@ -1,14 +1,11 @@
 "use client"
 
 import React, {useEffect, useState} from "react";
-import {CategoryWithApi, VaultEntry} from "@/app/vault/vaultEntry";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faSort} from "@fortawesome/free-solid-svg-icons";
+import {CategoryWithApi} from "@/app/vault/vaultEntry";
 import {RefreshType} from "@/app/components/modals/NewPasswordModal";
 import DeleteConfirmation, {DeleteConfirmationProps} from "@/app/components/modals/DeleteConfirmation";
-import EditPasswordModal from "@/app/components/modals/EditPasswordModal";
 import {useRouter} from "next/navigation";
-import {categoryFilter, sortVaultEntries} from "@/app/vault/FilteringHandler";
+import {categoryFilter} from "@/app/vault/FilteringHandler";
 import {deleteCategories, getCategories} from "@/app/category/api";
 import EditCategoryModal from "@/app/components/modals/EditCategoryModal";
 
@@ -29,8 +26,8 @@ export default function CategoriesTable({isRefresh, setIsRefresh}: RefreshType) 
             setFilteredEntries(categories)
             return
         }
-        const res = filteredEntries.filter(categoryFilter(searchInput));
-        setFilteredEntries(res)
+        const res = filteredEntries !== null && filteredEntries.filter(categoryFilter(searchInput));
+        res == null && setFilteredEntries(res)
     }, [searchInput]);
 
     useEffect(() => {
