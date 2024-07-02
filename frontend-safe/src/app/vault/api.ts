@@ -177,22 +177,3 @@ export async function createNewCategory(entry: string): Promise<{
 
 }
 
-export async function getCategory(): Promise<{
-    category: Promise<CategoryWithApi[]>,
-    status: number
-}> {
-    const resp = await fetch(`${BACKENDURL}categories/`, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        cache: "no-cache",
-        credentials: "include",
-        mode: "cors",
-    })
-
-    if (resp.status === 200)
-        return {category: resp.json(), status: resp.status}
-
-    return {category: Promise.resolve([]), status: resp.status}
-}

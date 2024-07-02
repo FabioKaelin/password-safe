@@ -4,12 +4,13 @@ import React, {useEffect, useState} from "react";
 import {CategoryWithApi, VaultEntry} from "@/app/vault/vaultEntry";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEye, faEyeSlash, faSort} from "@fortawesome/free-solid-svg-icons";
-import {deletePassword, getCategory, getPasswordForUser} from "@/app/vault/api";
+import {deletePassword, getPasswordForUser} from "@/app/vault/api";
 import {RefreshType} from "@/app/components/modals/NewPasswordModal";
 import DeleteConfirmation, {DeleteConfirmationProps} from "@/app/components/modals/DeleteConfirmation";
 import EditPasswordModal from "@/app/components/modals/EditPasswordModal";
 import {useRouter} from "next/navigation";
-import {createFilterFunction, sortEntries} from "@/app/vault/FilteringHandler";
+import {vaultFilter, sortVaultEntries} from "@/app/vault/FilteringHandler";
+import {getCategories} from "@/app/category/api";
 
 export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
 
@@ -28,7 +29,7 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
 
     const handleSort = (key: string) => {
         setSortOrder({...sortOrder, [key]: !sortOrder[key]})
-        sortEntries({
+        sortVaultEntries({
             sort: sortOrder,
             toBeSorted: key,
             setSort: setSortOrder,
@@ -43,7 +44,7 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
             return
         }
         // Higher Function method
-        const res = filteredEntries.filter(createFilterFunction(searchInput));
+        const res = filteredEntries.filter(vaultFilter(searchInput));
         setFilteredEntries(res)
     }, [searchInput]);
 
@@ -71,7 +72,7 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
             setFilteredEntries(entriesOnly)
         }
         const handleCategories = async () => {
-            const resp = await getCategory();
+            const resp = await getCategories();
             if (resp.status === 401) {
                 router.push("/login");
             }
