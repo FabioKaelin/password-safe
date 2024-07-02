@@ -42,6 +42,7 @@ export default function CategoriesTable({isRefresh, setIsRefresh}: RefreshType) 
             }
             const categories = await resp.category
             setCategories(categories);
+            setFilteredEntries(categories)
         }
         if (isRefresh || !isModalOpen) {
             handleCategories();

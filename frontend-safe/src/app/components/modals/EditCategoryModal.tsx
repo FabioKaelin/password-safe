@@ -3,6 +3,7 @@
 import React, {useEffect, useState} from "react";
 import {CategoryWithApi} from "@/app/vault/vaultEntry";
 import ErrorAlert from "@/app/components/alerts/ErrorAlert";
+import {editCategory} from "@/app/category/api";
 
 type EditPasswordModalProps = {
     entry: CategoryWithApi;
@@ -19,26 +20,25 @@ const defaultCategories: CategoryWithApi = {
 }
 
 export default function EditCategoryModal({entry, isOpen, onClose, onUpdated, setIsOpen}: EditPasswordModalProps) {
-    const [editedEntry, setEditedEntry] = useState<CategoryWithApi>(entry);
-    const [showPassword, setShowPassword] = useState<boolean>(false);
+    const [editedCategories, setEditedCategories] = useState<CategoryWithApi>(entry);
     const [errorMessage, setErrorMessage] = useState<string>("")
 
     useEffect(() => {
         if (isOpen) {
-            setEditedEntry(entry);
+            setEditedCategories(entry);
         }
     }, [isOpen, entry]);
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
-        if (!editedEntry.id) {
+        if (!editedCategories.id) {
             console.error("No ID provided for the entry to update.");
             return;
         }
 
         try {
-            if (editedEntry.id != "" && editedEntry.name != "" && editedEntry.userid != "") {
-                const response = await editCategoriesById(editedEntry.id, editedEntry);
+            if (editedCategories.id != "" && editedCategories.name != "" && editedCategories.userid != "") {
+                const response = await editCategory(editedCategories);
                 console.log("Update response:", response);
                 onUpdated();
                 onClose();
@@ -53,7 +53,7 @@ export default function EditCategoryModal({entry, isOpen, onClose, onUpdated, se
 
 
     const handleInputChange = (name: keyof CategoryWithApi, value: string) => {
-        setEditedEntry(prev => ({...prev, [name]: value}));
+        setEditedCategories(prev => ({...prev, [name]: value}));
     };
 
     return isOpen ? (
@@ -70,12 +70,12 @@ export default function EditCategoryModal({entry, isOpen, onClose, onUpdated, se
                         <ErrorAlert message={errorMessage}/>
                     )
                 }
-                <h2 className="text-2xl mb-4 font-bold text-white">Edit Password Entry</h2>
+                <h2 className="text-2xl mb-4 font-bold text-white">Edit Category</h2>
                 <form onSubmit={handleSubmit} className="grid gap-4">
                     <input
                         name="username"
                         placeholder="Username"
-                        value={editedEntry.name}
+                        value={editedCategories.name}
                         onChange={(e) => handleInputChange("name", e.target.value)}
                         className="px-4 py-2 input input-bordered border border-blue-500 rounded"
                     />
