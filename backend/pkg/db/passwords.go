@@ -71,3 +71,11 @@ func PasswordsDelete(id string) error {
 	}
 	return nil
 }
+
+func PasswordsDeleteByCategoryID(categoryId string, userId string) error {
+	_, err := dbConn.Exec("DELETE FROM passwords WHERE categoryidfk = ? AND useridfk = ?", categoryId, userId)
+	if err != nil {
+		return err
+	}
+	return nil
+}

@@ -2,10 +2,11 @@
 
 import React, {useEffect, useState} from "react";
 import {CategoryWithApi, VaultEntry} from "@/app/vault/vaultEntry";
-import {editEntryAPI, getCategory} from "@/app/vault/api";
+import {editEntryAPI} from "@/app/vault/api";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
 import ErrorAlert from "@/app/components/alerts/ErrorAlert";
+import {getCategories as getCategory} from "@/app/category/api";
 
 type EditPasswordModalProps = {
     entry: VaultEntry;

@@ -85,7 +85,12 @@ func Update(category Category, userID string) error {
 
 // Delete deletes a category by its ID
 func Delete(id string, userID string) error {
-	err := db.CategoriesDelete(id, userID)
+	err := db.PasswordsDeleteByCategoryID(id, userID)
+	if err != nil {
+		return err
+	}
+
+	err = db.CategoriesDelete(id, userID)
 	if err != nil {
 		return err
 	}

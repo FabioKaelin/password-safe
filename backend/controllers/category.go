@@ -200,5 +200,5 @@ func categoryDelete(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, "Category deleted")
+	c.JSON(204, "Category deleted")
 }

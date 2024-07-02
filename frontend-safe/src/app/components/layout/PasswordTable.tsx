@@ -4,12 +4,13 @@ import React, {useEffect, useState} from "react";
 import {CategoryWithApi, VaultEntry} from "@/app/vault/vaultEntry";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEye, faEyeSlash, faSort} from "@fortawesome/free-solid-svg-icons";
-import {deletePassword, getCategory, getPasswordForUser} from "@/app/vault/api";
+import {deletePassword, getPasswordForUser} from "@/app/vault/api";
 import {RefreshType} from "@/app/components/modals/NewPasswordModal";
 import DeleteConfirmation, {DeleteConfirmationProps} from "@/app/components/modals/DeleteConfirmation";
 import EditPasswordModal from "@/app/components/modals/EditPasswordModal";
 import {useRouter} from "next/navigation";
-import {createFilterFunction, sortEntries} from "@/app/vault/FilteringHandler";
+import {sortVaultEntries, vaultFilter} from "@/app/vault/FilteringHandler";
+import {getCategories} from "@/app/category/api";
 
 export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
 
@@ -28,7 +29,7 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
 
     const handleSort = (key: string) => {
         setSortOrder({...sortOrder, [key]: !sortOrder[key]})
-        sortEntries({
+        sortVaultEntries({
             sort: sortOrder,
             toBeSorted: key,
             setSort: setSortOrder,
@@ -43,7 +44,7 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
             return
         }
         // Higher Function method
-        const res = filteredEntries.filter(createFilterFunction(searchInput));
+        const res = filteredEntries.filter(vaultFilter(searchInput));
         setFilteredEntries(res)
     }, [searchInput]);
 
@@ -71,7 +72,7 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
             setFilteredEntries(entriesOnly)
         }
         const handleCategories = async () => {
-            const resp = await getCategory();
+            const resp = await getCategories();
             if (resp.status === 401) {
                 router.push("/login");
             }
@@ -91,7 +92,7 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
             setFilteredEntries(entries);
             return;
         }
-        setFilteredEntries(entries.filter(entry => entry.category?.name === category));
+        setFilteredEntries(entries.filter(entry => entry.category?.name === categories.find(x => x.id === category)?.name));
     }
 
     const getPasswordContent = (entry: VaultEntry): React.JSX.Element => {
@@ -154,8 +155,8 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
                         onChange={(e) => handleCategoryChange(e.target.value)}
                         className="px-4 py-2 mb-3 w-[214px] select select-bordered border border-blue-500 rounded">
                         <option value={""}>All</option>
-                        {categories.map(category => {
-                            return <option key={category.id} value={category.name}>{category.name}</option>
+                        {categories !== null && categories.map(category => {
+                            return <option key={category.id} value={category.id}>{category.name}</option>
                         })}
                     </select>
                 </div>
