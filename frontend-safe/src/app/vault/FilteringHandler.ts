@@ -12,13 +12,12 @@ export function sortVaultEntries({sort, toBeSorted, setSort, setFilteredEntries,
     const key = toBeSorted as keyof VaultEntry
     const isASC = sort[toBeSorted]
 
-    const sortedEntries = [...filteredEntries].sort((a, b) => {
+    const sortedEntries = filteredEntries.sort((a, b) => {
         return a[key] > b[key] ? (isASC ? 1 : -1)
             : a[key] < b[key] ? (isASC ? -1 : 1)
                 : 0;
     })
-
-    setFilteredEntries(sortedEntries)
+    setFilteredEntries([...sortedEntries])
     setSort({...sort, [toBeSorted]: !isASC})
 }
 
