@@ -1,6 +1,5 @@
 # <center><div style='display: flex; text-align: right; justify-content: center;'><span><img src="https://github.com/FabioKaelin/password-safe/assets/61542805/78085ec4-5b83-4b79-ae18-0206f1bdaf6e" width="100"/> RoboGuard (Password-safe)</span></div></center>
 
-
 ## Project Team
 
 1. Lukas Winterleitner (NxtLvl Development GmbH)
@@ -33,7 +32,6 @@ Unser Auftrag war es ein Password-Safe zu erstellen. Dabei sollten wir ein Front
 | Put     | /api/passwords/{id} | Passwort aktualisieren                |
 | Delete  | /api/passwords/{id} | Passwort löschen                      |
 
-
 ### Kategorien
 
 | Methode | Pfad                 | Beschreibung                           |
@@ -43,7 +41,6 @@ Unser Auftrag war es ein Password-Safe zu erstellen. Dabei sollten wir ein Front
 | Get     | /api/categories/{id} | Bestimmte Kategorie abrufen            |
 | Put     | /api/categories/{id} | Kategorie aktualisieren                |
 | Delete  | /api/categories/{id} | Kategorie entfernen                    |
-
 
 ## Frontend
 
