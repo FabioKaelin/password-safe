@@ -51,23 +51,3 @@ Weiter wird es wie folgt bearbeitet:
         setFilteredEntries(res)
     }, [searchInput]);
 ```
-
-### Immutable values - Beispiel 2
-
-Ein weiteres Beispiel für die Verwendung von immutable values ist in der Datei: `Sorthandler.tsx` zu finden. Dabei wird ein neues Array erstellt (eine Kopie) und die Werte sortiert.
-
-```typescript
-export function sortVaultEntries({sort, toBeSorted, setSort, setFilteredEntries, filteredEntries}: SortHandlerProps) {
-    const key = toBeSorted as keyof VaultEntry
-    const isASC = sort[toBeSorted]
-
-    const sortedEntries = [...filteredEntries].sort((a, b) => {
-        return a[key] > b[key] ? (isASC ? 1 : -1)
-            : a[key] < b[key] ? (isASC ? -1 : 1)
-                : 0;
-    })
-
-    setFilteredEntries(sortedEntries)
-    setSort({...sort, [toBeSorted]: !isASC})
-}
-```
