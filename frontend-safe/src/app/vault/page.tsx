@@ -28,7 +28,9 @@ export default function Page() {
                 <ChangeMasterPassword isRefresh={isRefresh} setIsRefresh={setIsRefresh}/>
                 <NewPasswordModal isRefresh={isRefresh} setIsRefresh={setIsRefresh} setErrorMessage={setErrorMessage}/>
                 <Link href={"/category"} passHref
-                      className={"px-4 py-2 bg-teal-400 text-black rounded hover:bg-teal-500 mx-5"}>Go to categories</Link>
+                      className={"px-4 py-2 bg-teal-400 text-black rounded hover:bg-teal-500 mx-5"}>
+                    Go to categories
+                </Link>
             </div>
 
             <div className={"flex justify-center items-center"}>
