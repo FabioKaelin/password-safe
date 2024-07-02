@@ -55,14 +55,14 @@ export default function CategoriesTable({isRefresh, setIsRefresh}: RefreshType) 
         setToBeDeleted({
             title: "Are you sure?",
             text: "Do you really want to delete this category?",
-            handleDelete: () => deleteEntry(id),
+            handleDelete: () => deleteCategory(id),
             isModalOpen: setIsModalOpen,
             id: id
         });
         setIsModalOpen(true);
     };
 
-    const deleteEntry = async (id: string): Promise<void> => {
+    const deleteCategory = async (id: string): Promise<void> => {
         const response = deleteCategories(id);
 
         response.then((value) => {
@@ -103,6 +103,7 @@ export default function CategoriesTable({isRefresh, setIsRefresh}: RefreshType) 
                 </thead>
                 <tbody>
                 {
+                    filteredEntries !== null &&
                     filteredEntries.map(entry => {
                         return (
                             <tr key={entry.id}>
@@ -139,7 +140,7 @@ export default function CategoriesTable({isRefresh, setIsRefresh}: RefreshType) 
                 isModalOpen && (
                     <DeleteConfirmation title={toBeDeleted?.title || ""}
                                         text={toBeDeleted?.text || ""}
-                                        handleDelete={() => deleteEntry(toBeDeleted!.id)}
+                                        handleDelete={() => deleteCategory(toBeDeleted!.id)}
                                         isModalOpen={setIsModalOpen} id={toBeDeleted!.id}/>
                 )
             }
