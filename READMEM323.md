@@ -4,7 +4,7 @@
 
 ### High Order Functions
 
-Die Nutzung von High order Functions in diesem Projekt ist sehr fortgeschritten. Beispielsweise wird in der Datei: `CategoriesTable.tsx` ein useEFfect gebraucht, welches einen Filter anwendet. Dieser Filter ist eine High Order Function.
+Die Nutzung von High order Functions in diesem Projekt ist sehr fortgeschritten. Beispielsweise wird in der Datei: `CategoriesTable.tsx` ein useEFfect gebraucht, welcher einen Filter anwendet. Dieser Filter ist eine High Order Function.
 
 Zeile 29 - 31:
 Dabei wird ein Filter angwendet.
@@ -70,7 +70,7 @@ func PasswordRouter(apiGroup *gin.RouterGroup) {
 }
 ```
 
-Dies ist die Funktion/Handler die an Gin (API-Framework) wird.
+Dies ist die Funktion/Handler die an Gin (API-Framework) übergeben $wird.
 
 ```go
 // passwordGet             godoc
