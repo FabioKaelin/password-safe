@@ -20,4 +20,8 @@ Ich habe zusammen mit Shansai die Logik zur Erstellung von Kategorien umstruktur
 
 ## Reflexion 04.07.2026
 
-Heute haben wir noch die restlichen Schritten zur Fertigstellung des Projekts besprochen und dementsprechend auch umgesetzt. Einer dieser Punkte war die implementierung der Pagination Logik im Frontend. 
+Heute haben wir noch die restlichen Schritten zur Fertigstellung des Projekts besprochen und dementsprechend auch umgesetzt. Einer dieser Punkte war die implementierung der Pagination Logik im Frontend.
+
+## Reflexion Funktionale Programmierung
+
+Das Go Framework Gin hat die Definierung der Endpoints mit First Class Citizen ermöglicht. Dies hat uns ermöglicht, die Handler für die Endpoints zu übergeben. Die Higher Order Functions haben uns ermöglicht, die Filterfunktionen zu definieren und diese dann in den useEffect Hooks zu verwenden.
