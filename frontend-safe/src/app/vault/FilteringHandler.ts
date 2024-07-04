@@ -1,4 +1,4 @@
-import {CategoryWithApi, VaultEntry} from "@/app/vault/vaultEntry";
+import {CategoryWithApi, PagingProps, VaultEntry} from "@/app/vault/vaultEntry";
 
 export type SortHandlerProps = {
     toBeSorted: string;
@@ -32,3 +32,22 @@ export const vaultFilter = (searchInput : string) => (entry : VaultEntry) => {
 export const categoryFilter = (searchInput : string) => (entry : CategoryWithApi) => {
     return entry.name.toLowerCase().includes(searchInput.toLowerCase())
 };
+
+
+
+
+export function paginateEntries({ entries, currentPage, setPage }: PagingProps): VaultEntry[] {
+    const entriesPerPage = 10;
+    const start = (currentPage - 1) * entriesPerPage;
+    const end = currentPage * entriesPerPage;
+
+    if (start >= entries.length) {
+        setPage(Math.max(1, Math.ceil(entries.length / entriesPerPage)));
+        return entries.slice(0, entriesPerPage);
+    }
+
+    return entries.slice(start, end);
+}
+
+
+

@@ -14,3 +14,9 @@ export type CategoryWithApi = {
     name: string;
     userid: string;
 }
+
+export type PagingProps = {
+    entries: VaultEntry[];
+    currentPage: number;
+    setPage: React.Dispatch<React.SetStateAction<number>>;
+};

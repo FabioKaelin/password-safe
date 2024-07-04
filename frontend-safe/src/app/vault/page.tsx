@@ -8,6 +8,7 @@ import ChangeMasterPassword from "@/app/components/modals/ChangeMasterPassword";
 import ErrorAlert from "@/app/components/alerts/ErrorAlert";
 import Link from "next/link";
 
+
 export default function Page() {
     const [isRefresh, setIsRefresh] = useState<boolean>(true)
     const [errorMessage, setErrorMessage] = useState<string>("")
