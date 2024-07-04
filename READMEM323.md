@@ -2,7 +2,7 @@
 
 ## Nutzung von Functional programming in diesem Projekt
 
-## High Order Functions
+### High Order Functions
 
 Die Nutzung von High order Functions in diesem Projekt ist sehr fortgeschritten. Beispielsweise wird in der Datei: `CategoriesTable.tsx` ein useEFfect gebraucht, welches einen Filter anwendet. Dieser Filter ist eine High Order Function.
 
@@ -24,9 +24,9 @@ Davon werden mehrere Filter verwendet in verschiedenen Dateien, wie zum Beispiel
 export const categoryFilter = (searchInput: string) => (entry: Category) => entry.name.toLowerCase().includes(searchInput.toLowerCase());
 ```
 
-## Immutable values (kind of)
+### Immutable values (kind of)
 
-### Immutable values - Beispiel 1
+#### Immutable values - Beispiel 1
 
 In diesem Projekt wurden auch immutable values verwendet. Beispielsweise in der Datei: `PasswordTable.tsx` wird ein neues Array erstellt, welches die alten Werte beinhaltet und dann wird ein neuer Wert hinzugefügt.
 
@@ -47,7 +47,73 @@ Weiter wird es wie folgt bearbeitet:
         }
         // Higher Function method
         const res = filteredEntries.filter(vaultFilter(searchInput));
-        
+
         setFilteredEntries(res)
     }, [searchInput]);
+```
+
+### First Class Citizen
+
+Dieser Backend-Code ist für das Routing verantworlich und übergibt die Handler für die Endpoints.
+
+```go
+func PasswordRouter(apiGroup *gin.RouterGroup) {
+    passwordGroup := apiGroup.Group("/passwords")
+    passwordGroup.Use(middleware.SetUserToContext())
+    {
+        passwordGroup.GET("/", passwordGet)
+        passwordGroup.POST("/", passwordPost)
+        passwordGroup.GET("/:id", passwordGetByID)
+        passwordGroup.PUT("/:id", passwordUpdate)
+        passwordGroup.DELETE("/:id", passwordDelete)
+    }
+}
+```
+
+Dies ist die Funktion/Handler die an Gin (API-Framework) wird.
+
+```go
+// passwordGet             godoc
+//
+// @Summary        Get all passwords
+// @Description    Get all passwords of the user
+// @Tags           passwords
+// @Produce        json
+// @Success        200     {array}     Password
+// @Param          page    query       string    false    "page"
+// @Success        400     {object}    errorResponse
+// @Success        401     {object}    errorResponse
+// @Router         /passwords [get]
+func passwordGet(c *gin.Context) {
+    currentUser, err := middleware.GetCurrentUser(c)
+    if err != nil {
+        c.JSON(400, errorResponse{Message: err.Error()})
+        return
+    }
+
+    passwordsOfUser, err := passwords.GetByUserID(currentUser.ID)
+
+    if err != nil {
+        if err.Error() == "sql: no rows in result set" {
+            c.JSON(200, []passwords.Password{})
+            return
+        }
+        c.JSON(400, errorResponse{Message: err.Error()})
+        return
+    }
+
+    pageNr := c.Query("page")
+    if pageNr == "" {
+        c.JSON(200, passwordsOfUser)
+        return
+    } else {
+        pageNrInt, err := strconv.Atoi(pageNr)
+        if err != nil {
+            c.JSON(400, errorResponse{Message: err.Error()})
+            return
+        }
+        c.JSON(200, page.GetPage(passwordsOfUser, pageNrInt))
+        return
+    }
+}
 ```
