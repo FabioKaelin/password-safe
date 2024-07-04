@@ -1,7 +1,7 @@
 // code has been refactored with chatgpt
 
 import React, {useEffect, useState} from "react";
-import {CategoryWithApi, VaultEntry} from "@/app/vault/vaultEntry";
+import {CategoryWithApi, Passwords, VaultEntry} from "@/app/vault/vaultEntry";
 import {editEntryAPI} from "@/app/vault/api";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
@@ -9,7 +9,7 @@ import ErrorAlert from "@/app/components/alerts/ErrorAlert";
 import {getCategories as getCategory} from "@/app/category/api";
 
 type EditPasswordModalProps = {
-    entry: VaultEntry;
+    entry: Passwords;
     isOpen: boolean;
     setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
     onClose: () => void;
@@ -23,7 +23,7 @@ const defaultCategories: CategoryWithApi = {
 }
 
 export default function EditPasswordModal({entry, isOpen, onClose, onUpdated, setIsOpen}: EditPasswordModalProps) {
-    const [editedEntry, setEditedEntry] = useState<VaultEntry>(entry);
+    const [editedEntry, setEditedEntry] = useState<Passwords>(entry);
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [categories, setCategories] = useState<CategoryWithApi[]>([defaultCategories]);
     const [errorMessage, setErrorMessage] = useState<string>("")
@@ -78,7 +78,7 @@ export default function EditPasswordModal({entry, isOpen, onClose, onUpdated, se
     };
 
 
-    const handleInputChange = (name: keyof VaultEntry, value: string) => {
+    const handleInputChange = (name: keyof Passwords, value: string) => {
         setEditedEntry(prev => ({...prev, [name]: value}));
     };
 

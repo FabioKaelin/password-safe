@@ -1,4 +1,10 @@
 export type VaultEntry = {
+    total: number;
+    page: number;
+    passwords: Passwords[];
+}
+
+export type Passwords = {
     id: string;
     description: string;
     password: string;

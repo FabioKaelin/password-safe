@@ -1,7 +1,7 @@
 "use client"
 
 import React, {useEffect, useState} from "react";
-import {CategoryWithApi, VaultEntry} from "@/app/vault/vaultEntry";
+import {CategoryWithApi, Passwords} from "@/app/vault/vaultEntry";
 import {createNewEntry} from "@/app/vault/api";
 import {useRouter} from "next/navigation";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -23,7 +23,7 @@ const categoryModal: CategoryWithApi = {
     userid: ""
 }
 
-const defaultModal: VaultEntry = {
+const defaultModal: Passwords = {
     category: categoryModal,
     description: "",
     id: "",
@@ -38,7 +38,7 @@ const defaultModal: VaultEntry = {
 export default function NewPasswordModal({setIsRefresh, setErrorMessage}: RefreshType) {
     const router = useRouter()
 
-    const [entry, setEntry] = useState<VaultEntry>(defaultModal);
+    const [entry, setEntry] = useState<Passwords>(defaultModal);
     const [categories, setCategories] = useState<CategoryWithApi[]>([])
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [showPassword, setShowPassword] = useState<boolean>(false)
