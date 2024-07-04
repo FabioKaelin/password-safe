@@ -17,3 +17,7 @@ Ich habe heute Lukas geholfen, um unsere neue Logik von Kategorien zu implementi
 ### Lukas
 
 Ich habe zusammen mit Shansai die Logik zur Erstellung von Kategorien umstrukturiert und zusätzlich noch die Logik zur Speicherung der Kategorien in der Datenbank. Es gab manchmal kleinere Probleme und Komplikationen aber diese konnte ich dank Shansai schnell fixen.
+
+## Reflexion 04.07.2026
+
+Heute haben wir noch die restlichen Schritten zur Fertigstellung des Projekts besprochen und dementsprechend auch umgesetzt. Einer dieser Punkte war die implementierung der Pagination Logik im Frontend. 
