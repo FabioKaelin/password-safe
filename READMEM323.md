@@ -2,7 +2,7 @@
 
 ## Nutzung von Functional programming in diesem Projekt
 
-### High Order Functions
+### High Order Functions (Kompetenz C3F)
 
 Die Nutzung von High order Functions in diesem Projekt ist sehr fortgeschritten. Beispielsweise wird in der Datei: `CategoriesTable.tsx` ein useEFfect gebraucht, welcher einen Filter anwendet. Dieser Filter ist eine High Order Function.
 
@@ -26,7 +26,7 @@ export const categoryFilter = (searchInput: string) => (entry: Category) => entr
 
 ### Immutable values (kind of)
 
-#### Immutable values - Beispiel 1
+#### Immutable values - Beispiel 1 (Kompetenz AF1)
 
 In diesem Projekt wurden auch immutable values verwendet. Beispielsweise in der Datei: `PasswordTable.tsx` wird ein neues Array erstellt, welches die alten Werte beinhaltet und dann wird ein neuer Wert hinzugefügt.
 
@@ -52,7 +52,7 @@ Weiter wird es wie folgt bearbeitet:
     }, [searchInput]);
 ```
 
-### First Class Citizen
+### First Class Citizen (Kompetenz C2F)
 
 Dieser Backend-Code ist für das Routing verantworlich und übergibt die Handler für die Endpoints.
 
