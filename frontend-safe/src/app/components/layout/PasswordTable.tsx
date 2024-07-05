@@ -11,6 +11,7 @@ import EditPasswordModal from "@/app/components/modals/EditPasswordModal";
 import {useRouter} from "next/navigation";
 import {sortVaultEntries, vaultFilter} from "@/app/vault/FilteringHandler";
 import {getCategories} from "@/app/category/api";
+import Paging from "@/app/components/layout/Paging";
 
 export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
 
@@ -247,6 +248,7 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
                 </tfoot>
             </table>
 
+            <Paging setPage={setCurrentPage} currentPage={entries.page} setEntries={setEntries} totalPages={entries.total}/>
 
             {
                 isModalOpen && (
