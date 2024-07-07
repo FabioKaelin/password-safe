@@ -248,7 +248,7 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
                 </tfoot>
             </table>
 
-            <Paging setPage={setCurrentPage} currentPage={entries.page} setEntries={setEntries} totalPages={entries.total}/>
+            <Paging setPage={setCurrentPage} currentPage={currentPage} setEntries={setFilteredEntries} totalPages={entries.total}/>
 
             {
                 isModalOpen && (

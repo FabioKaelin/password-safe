@@ -13,6 +13,7 @@ export default function Paging({currentPage, totalPages, setEntries, setPage}: P
         const res = await getPasswordForUser(page)
         await res.vault.then((data) => {
             setEntries(data)
+            setPage(page)
         })
     }
 
@@ -21,7 +22,6 @@ export default function Paging({currentPage, totalPages, setEntries, setPage}: P
             <button
                 onClick={() => {
                     if (currentPage === 1) return;
-                    setPage(currentPage - 1)
                     handlePageChange(currentPage - 1)
                 }}
                 className={"px-4 py-2 bg-teal-400 text-black rounded hover:bg-teal-500 mx-5"}>
@@ -31,7 +31,6 @@ export default function Paging({currentPage, totalPages, setEntries, setPage}: P
             <button
                 onClick={() => {
                     if (currentPage == totalPages) return;
-                    setPage(currentPage + 1)
                     handlePageChange(currentPage + 1)
                 }}
                 className={"px-4 py-2 bg-teal-400 text-black rounded hover:bg-teal-500 mx-5"}>
