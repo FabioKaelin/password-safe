@@ -27,7 +27,7 @@ export default function CategoriesTable({isRefresh, setIsRefresh}: RefreshType) 
             return
         }
         const res = filteredEntries !== null && filteredEntries.filter(categoryFilter(searchInput));
-        res == null && setFilteredEntries(res)
+        res !== false && setFilteredEntries(res)
     }, [searchInput]);
 
     useEffect(() => {

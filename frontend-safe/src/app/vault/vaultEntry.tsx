@@ -1,4 +1,10 @@
 export type VaultEntry = {
+    total: number;
+    page: number;
+    passwords: Passwords[];
+}
+
+export type Passwords = {
     id: string;
     description: string;
     password: string;
@@ -14,9 +20,3 @@ export type CategoryWithApi = {
     name: string;
     userid: string;
 }
-
-export type PagingProps = {
-    entries: VaultEntry[];
-    currentPage: number;
-    setPage: React.Dispatch<React.SetStateAction<number>>;
-};

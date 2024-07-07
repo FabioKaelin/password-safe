@@ -1,7 +1,7 @@
 "use client"
 
 import React, {useEffect, useState} from "react";
-import {CategoryWithApi, VaultEntry} from "@/app/vault/vaultEntry";
+import {CategoryWithApi, Passwords, VaultEntry} from "@/app/vault/vaultEntry";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEye, faEyeSlash, faSort} from "@fortawesome/free-solid-svg-icons";
 import {deletePassword, getPasswordForUser} from "@/app/vault/api";
@@ -11,20 +11,21 @@ import EditPasswordModal from "@/app/components/modals/EditPasswordModal";
 import {useRouter} from "next/navigation";
 import {sortVaultEntries, vaultFilter} from "@/app/vault/FilteringHandler";
 import {getCategories} from "@/app/category/api";
-import PagingBar from "@/app/components/layout/PagingBar";
+import Paging from "@/app/components/layout/Paging";
 
 export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
 
     const [see, setSee] = useState<{ id: string, visible: boolean }[]>([{id: "", visible: false}])
-    const [entries, setEntries] = useState<VaultEntry[]>([])
-    const [filteredEntries, setFilteredEntries] = useState<VaultEntry[]>([])
+    const [entries, setEntries] = useState<VaultEntry>({page: 0, passwords: [], total: 0})
+    const [filteredEntries, setFilteredEntries] = useState<VaultEntry>({page: 0, passwords: [], total: 0})
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
     const [toBeDeleted, setToBeDeleted] = useState<DeleteConfirmationProps>()
     const [editModalOpen, setEditModalOpen] = useState(false);
-    const [currentEditEntry, setCurrentEditEntry] = useState<VaultEntry | null>(null);
+    const [currentEditEntry, setCurrentEditEntry] = useState<Passwords | null>(null);
     const [categories, setCategories] = useState<CategoryWithApi[]>([]);
     const [sortOrder, setSortOrder] = useState<{ [key: string]: boolean }>({});
     const [searchInput, setSearchInput] = useState<string>("");
+    const [currentPage, setCurrentPage] = useState<number>(1);
 
     const router = useRouter()
 
@@ -45,23 +46,22 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
             return
         }
         // Higher Function method
-        const res = filteredEntries.filter(vaultFilter(searchInput));
-        setFilteredEntries(res)
+        const res = filteredEntries.passwords.filter(vaultFilter(searchInput));
+        setFilteredEntries({total: entries.total, page: entries.page, passwords: res})
     }, [searchInput]);
 
     useEffect(() => {
         const handlePassword = async () => {
-            let entries = await getPasswordForUser();
+            let entries = await getPasswordForUser(currentPage);
             if (entries.status === 401) {
                 router.push("/login");
             }
 
             let entriesOnly = await entries.vault;
+            let passwords = entriesOnly.passwords;
 
-            console.log("entries")
-            console.log(entries)
-            entriesOnly = entriesOnly === null ? [] : entriesOnly;
-            entriesOnly.map(x => {
+            passwords = passwords === null ? [] : passwords;
+            passwords.map(x => {
                 setSee(prevState => {
                     if (!prevState.some(entry => entry.id === x.id)) {
                         return [...prevState, {id: x.id, visible: false}];
@@ -69,8 +69,9 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
                     return prevState;
                 });
             })
-            setEntries(entriesOnly)
-            setFilteredEntries(entriesOnly)
+            let res: VaultEntry = {page: entriesOnly.page, total: entriesOnly.total, passwords: passwords}
+            setEntries(res)
+            setFilteredEntries(res)
         }
         const handleCategories = async () => {
             const resp = await getCategories();
@@ -93,10 +94,11 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
             setFilteredEntries(entries);
             return;
         }
-        setFilteredEntries(entries.filter(entry => entry.category?.name === categories.find(x => x.id === category)?.name));
+        let filtered = entries.passwords.filter(entry => entry.category?.name === categories.find(x => x.id === category)?.name);
+        setFilteredEntries({total: entries.total, page: entries.page, passwords: filtered});
     }
 
-    const getPasswordContent = (entry: VaultEntry): React.JSX.Element => {
+    const getPasswordContent = (entry: Passwords): React.JSX.Element => {
         let visible = see.find(x => x.id === entry.id)?.visible;
         if (visible === undefined) {
             visible = false;
@@ -128,7 +130,7 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
         });
     };
 
-    const handleEdit = (entry: VaultEntry) => {
+    const handleEdit = (entry: Passwords) => {
         setCurrentEditEntry(entry);
         setEditModalOpen(true);
     };
@@ -193,7 +195,7 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
                 </thead>
                 <tbody>
                 {
-                    filteredEntries.map(entry => {
+                    filteredEntries.passwords.map(entry => {
                         return (
                             <tr key={entry.id}>
                                 <td>
@@ -246,6 +248,8 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
                 </tfoot>
             </table>
 
+            <Paging setPage={setCurrentPage} currentPage={currentPage} setEntries={setFilteredEntries} totalPages={entries.total}/>
+
             {
                 isModalOpen && (
                     <DeleteConfirmation title={"Are you sure?"}
@@ -263,7 +267,6 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
                     onUpdated={() => setIsRefresh(true)}
                     setIsOpen={setEditModalOpen}/>
             )}
-
 
 
         </div>

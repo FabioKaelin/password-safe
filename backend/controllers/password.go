@@ -13,7 +13,7 @@ func PasswordRouter(apiGroup *gin.RouterGroup) {
 	passwordGroup := apiGroup.Group("/passwords")
 	passwordGroup.Use(middleware.SetUserToContext())
 	{
-		passwordGroup.GET("/", passwordGet)
+		passwordGroup.GET("", passwordGet)
 		passwordGroup.POST("/", passwordPost)
 		passwordGroup.GET("/:id", passwordGetByID)
 		passwordGroup.PUT("/:id", passwordUpdate)

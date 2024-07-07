@@ -1,7 +1,7 @@
 "use client"
 
 import React, {useEffect, useState} from "react";
-import {CategoryWithApi, VaultEntry} from "@/app/vault/vaultEntry";
+import {CategoryWithApi, Passwords} from "@/app/vault/vaultEntry";
 import {createNewEntry} from "@/app/vault/api";
 import {useRouter} from "next/navigation";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -23,7 +23,7 @@ const categoryModal: CategoryWithApi = {
     userid: ""
 }
 
-const defaultModal: VaultEntry = {
+const defaultModal: Passwords = {
     category: categoryModal,
     description: "",
     id: "",
@@ -38,7 +38,7 @@ const defaultModal: VaultEntry = {
 export default function NewPasswordModal({setIsRefresh, setErrorMessage}: RefreshType) {
     const router = useRouter()
 
-    const [entry, setEntry] = useState<VaultEntry>(defaultModal);
+    const [entry, setEntry] = useState<Passwords>(defaultModal);
     const [categories, setCategories] = useState<CategoryWithApi[]>([])
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [showPassword, setShowPassword] = useState<boolean>(false)
@@ -62,24 +62,24 @@ export default function NewPasswordModal({setIsRefresh, setErrorMessage}: Refres
 
     useEffect(() => {
         const category = categories.find(x => x.id === categoryId)
-        category !== undefined && setEntry({...entry, category: category})
+        if (categoryId === "") {
+            setErrorMessage("Please select a category")
+        } else if (category !== undefined)
+            setEntry({...entry, category: category})
+
     }, [categoryId]);
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
         const createEntry = async () => {
             if (entry === null)
                 setErrorMessage("Please fill in all fields")
-
-            if (entry.category.id == "" || entry.category.id == null) {
-                entry.category.id = ""
-            }
-
+            
             if (entry.password.length < 8) {
                 setErrorMessage("Password must be at least 8 characters long")
                 return
             }
 
-            if (entry.password != "" && entry.url != "" && entry.username != "" && entry.title != "" && entry.description != "") {
+            if (entry.password != "" && entry.url != "" && entry.username != "" && entry.title != "" && entry.description != "" && entry.category.id != "") {
                 const resp = await createNewEntry(entry);
                 if (resp.status === 401) {
                     router.push("/login");
