@@ -1,7 +1,7 @@
 // code has been refactored with chatgpt
 
 import React, {useEffect, useState} from "react";
-import {CategoryWithApi, Passwords, VaultEntry} from "@/app/vault/vaultEntry";
+import {CategoryWithApi, Passwords} from "@/app/vault/vaultEntry";
 import {editEntryAPI} from "@/app/vault/api";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
@@ -63,7 +63,7 @@ export default function EditPasswordModal({entry, isOpen, onClose, onUpdated, se
                 return
             }
 
-            if (editedEntry.password != "" && editedEntry.url != "" && editedEntry.username != "" && editedEntry.title != "" && editedEntry.description != "") {
+            if (editedEntry.password != "" && editedEntry.url != "" && editedEntry.username != "" && editedEntry.title != "" && editedEntry.description != "" && editedEntry.title != "") {
                 const response = await editEntryAPI(editedEntry.id, editedEntry);
                 console.log("Update response:", response);
                 onUpdated();
