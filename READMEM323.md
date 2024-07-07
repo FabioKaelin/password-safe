@@ -2,7 +2,7 @@
 
 ## Nutzung von Functional programming in diesem Projekt
 
-### High Order Functions (Kompetenz C3F)
+### High Order Functions (Kompetenz C3E)
 
 Die Nutzung von High order Functions in diesem Projekt ist sehr fortgeschritten. Beispielsweise wird in der Datei: `CategoriesTable.tsx` ein useEFfect gebraucht, welcher einen Filter anwendet. Dieser Filter ist eine High Order Function.
 
