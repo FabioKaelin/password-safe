@@ -1,4 +1,4 @@
-import {CategoryWithApi, PagingProps, Passwords, VaultEntry} from "@/app/vault/vaultEntry";
+import {CategoryWithApi, Passwords, VaultEntry} from "@/app/vault/vaultEntry";
 
 export type SortHandlerProps = {
     toBeSorted: string;
@@ -21,7 +21,7 @@ export function sortVaultEntries({sort, toBeSorted, setSort, setFilteredEntries,
     setSort({...sort, [toBeSorted]: !isASC})
 }
 
-export const vaultFilter = (searchInput : string) => (entry : Passwords) => {
+export const vaultFilter =   (searchInput : string) => (entry : Passwords) => {
     return entry.title.toLowerCase().includes(searchInput.toLowerCase())
         || entry.description.toLowerCase().includes(searchInput.toLowerCase())
         || entry.url.toLowerCase().includes(searchInput.toLowerCase())
