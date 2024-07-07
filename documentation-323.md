@@ -4,17 +4,22 @@
 
 ### High Order Functions & Lambda Functions (Kompetenz `C3G`, `C3F`, `C3E`)
 
-Die Nutzung von High order Functions in diesem Projekt ist sehr fortgeschritten. Beispielsweise wird in der Datei: `CategoriesTable.tsx` ein useEFfect gebraucht, welcher einen Filter anwendet. Dieser Filter ist eine High Order Function.
+Die Nutzung von High order Functions in diesem Projekt ist sehr fortgeschritten. Beispielsweise wird in der Datei: `CategoriesTable.tsx` ein useEFfect gebraucht, welcher einen Filter anwendet. Dieser Filter ist eine High Order Function. Der Filter wird im `Filteringhandler.ts` definiert
 
 Zeile 29 - 31:
-Dabei wird ein Filter angwendet.
+Dabei wird ein Filter angwendet. `CategoriesTable.tsx`: 
 
 ```typescript
     useEffect(() => {
-        const categoryFilter = (searchInput: string) => (entry: Category) => entry.name.toLowerCase().includes(searchInput.toLowerCase());
         const res = filteredEntries !== null && filteredEntries.filter(categoryFilter(searchInput));
         setFilteredCategories(res);
     }, [searchInput, filteredEntries]);
+```
+`Filteringhandler.ts`: 
+```typescript
+export const categoryFilter = (searchInput: string) => (entry: CategoryWithApi) => {
+    return entry.name.toLowerCase().includes(searchInput.toLowerCase())
+};
 ```
 
 Die Definition des Filter befindet sich in der Datei: `FilteringHandler.ts` und sieht wie folgt aus:
@@ -142,4 +147,5 @@ Heute haben wir noch die restlichen Schritten zur Fertigstellung des Projekts be
 
 ## Reflexion Funktionale Programmierung
 
-Das Go Framework Gin hat die Definierung der Endpoints mit First Class Citizen ermöglicht. Dies hat uns ermöglicht, die Handler für die Endpoints zu übergeben. Die Higher Order Functions haben uns ermöglicht, die Filterfunktionen zu definieren und diese dann in den useEffect Hooks zu verwenden.
+Das Go Framework Gin hat die Definierung der Endpoints mit First Class Citizen ermöglicht. Dies hat uns ermöglicht, die Handler für die Endpoints zu übergeben. 
+Die High Order Functions waren äusserst nützlich im Frontend, weil wir dadurch den code in the component files reduzieren konnten und die Logik in die Filtering handler files übergeben konnten. Da die Components bereits gross waren, wäre unser Code noch grösser und damit noch komplexer ohne diese High Order Functions
