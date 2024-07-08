@@ -2,12 +2,12 @@
 
 ## Nutzung von Functional programming in diesem Projekt
 
-### High Order Functions & Lambda Functions (Kompetenz `C3G`, `C3F`, `C3E`)
+### High Order Functions & Lambda Functions (Kompetenz `CG3`, `CF3`, `CE3`)
 
 Die Nutzung von High order Functions in diesem Projekt ist sehr fortgeschritten. Beispielsweise wird in der Datei: `CategoriesTable.tsx` ein useEFfect gebraucht, welcher einen Filter anwendet. Dieser Filter ist eine High Order Function. Der Filter wird im `Filteringhandler.ts` definiert
 
 Zeile 29 - 31:
-Dabei wird ein Filter angwendet. `CategoriesTable.tsx`: 
+Dabei wird ein Filter angwendet. `CategoriesTable.tsx`:
 
 ```typescript
     useEffect(() => {
@@ -15,7 +15,9 @@ Dabei wird ein Filter angwendet. `CategoriesTable.tsx`:
         setFilteredCategories(res);
     }, [searchInput, filteredEntries]);
 ```
-`Filteringhandler.ts`: 
+
+`Filteringhandler.ts`:
+
 ```typescript
 export const categoryFilter = (searchInput: string) => (entry: CategoryWithApi) => {
     return entry.name.toLowerCase().includes(searchInput.toLowerCase())
@@ -57,7 +59,7 @@ Weiter wird es wie folgt bearbeitet:
     }, [searchInput]);
 ```
 
-### First Class Citizen (Kompetenz `C2G`, `C2F`, `C2E`)
+### First Class Citizen (Kompetenz `CG2`, `CF2`, `CE2`)
 
 Dieser Backend-Code ist für das Routing verantworlich und übergibt die Handler für die Endpoints.
 
@@ -122,7 +124,30 @@ func passwordGet(c *gin.Context) {
     }
 }
 ```
+
+### Pure Functions (Kompetenz `AG1`, `AF1`, `A1E`)
+
+Im Error Alert wird eine Pure Function verwendet. Diese Funktion gibt immer das gleiche Resultat zurück, wenn die gleichen Argumente übergeben werden. Es erhält ein Argument mit der message und diese wird angezeigt. Wenn die Message gleich bleibt, bleibt das Endresultat der Funktion auch gleich.
+
+`ErrorAlert.tsx`:
+
+```typescript
+export default function ErrorAlert({message}: ErrorAlertProps) {
+    return (
+        <div role="alert" className="alert alert-error">
+            <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none"
+                 viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+                      d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            <span>{message}</span>
+        </div>
+    );
+}
+```
+
 ## Reflexionen
+
 ### 20.06.2024
 
 Wir hatten heute nichts gross am Code geändert sondern bereits die nächsten Schritte besprochen was wir beim nächsten Mal alles implementieren müssen.
@@ -147,5 +172,5 @@ Heute haben wir noch die restlichen Schritten zur Fertigstellung des Projekts be
 
 ## Reflexion Funktionale Programmierung
 
-Das Go Framework Gin hat die Definierung der Endpoints mit First Class Citizen ermöglicht. Dies hat uns ermöglicht, die Handler für die Endpoints zu übergeben. 
+Das Go Framework Gin hat die Definierung der Endpoints mit First Class Citizen ermöglicht. Dies hat uns ermöglicht, die Handler für die Endpoints zu übergeben.
 Die High Order Functions waren äusserst nützlich im Frontend, weil wir dadurch den code in the component files reduzieren konnten und die Logik in die Filtering handler files übergeben konnten. Da die Components bereits gross waren, wäre unser Code noch grösser und damit noch komplexer ohne diese High Order Functions
