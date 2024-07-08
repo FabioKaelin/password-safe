@@ -151,7 +151,7 @@ in diesem Projekt haben wir recursive functions benutzt, um Passwörter zu gener
     }
 ```
 
-## Reflexionen
+## Arbeitsrappot
 
 ### 20.06.2024
 
@@ -176,7 +176,7 @@ Ich habe zusammen mit Shansai die Logik zur Erstellung von Kategorien umstruktur
 Heute haben wir noch die restlichen Schritten zur Fertigstellung des Projekts besprochen und dementsprechend auch umgesetzt. Einer dieser Punkte war die implementierung der Pagination Logik im Frontend. 
 Die Paging Funktion wurde von Lukas und Shansai im Frontend implementiert. Dabei hat Fabio das Backend leicht verändert, sodass es ein query parameter namens `page` abfrägt, welches die page bestimmt. Die Gesamtzahl von pages wird dabei auch zurückgegeben. Dadurch werden nur die Daten für die jeweilige Page zurückgegeben. Im Frontend ist es nun jedoch so, dass die Filtrirung mit searchbar nur für die geladenen Entries funktionieren. Als Zusatz probieren wir noch in den nächsten Tagen, dieses Feature so umzugestalten, dass man jede einzelne Entry filtern kann. 
 
-## Gesamtreflexion des Projects
+## Gesamtreflexion des Projekts
 
 ### Fabio
 
