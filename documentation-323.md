@@ -4,7 +4,7 @@
 
 ### High Order Functions & Lambda Functions (Kompetenz `CG3`, `CF3`, `CE3`)
 
-Die Nutzung von High order Functions in diesem Projekt ist sehr fortgeschritten. Beispielsweise wird in der Datei: `CategoriesTable.tsx` ein useEFfect gebraucht, welcher einen Filter anwendet. Dieser Filter ist eine High Order Function. Der Filter wird im `Filteringhandler.ts` definiert
+Die Nutzung von High order Functions in diesem Projekt ist sehr fortgeschritten. Beispielsweise wird in der Datei: `CategoriesTable.tsx` ein useEffect gebraucht, welcher einen Filter anwendet. Dieser Filter ist eine High Order Function. Der Filter wird im `Filteringhandler.ts` definiert
 
 Zeile 29 - 31:
 Dabei wird ein Filter angwendet. `CategoriesTable.tsx`:
@@ -174,7 +174,17 @@ Ich habe zusammen mit Shansai die Logik zur Erstellung von Kategorien umstruktur
 #### 04.07.2024
 
 Heute haben wir noch die restlichen Schritten zur Fertigstellung des Projekts besprochen und dementsprechend auch umgesetzt. Einer dieser Punkte war die implementierung der Pagination Logik im Frontend. 
-Die Paging Funktion wurde von Shansai im Frontend implementiert. Dabei hat Fabio das Backend leicht verändert, sodass es ein query parameter namens `page` abfrägt, welches die page bestimmt. Die Gesamtzahl von pages wird dabei auch zurückgegeben. Dadurch werden nur die Daten für die jeweilige Page zurückgegeben. Im Frontend ist es nun jedoch so, dass die Filtrirung mit searchbar nur für die geladenen Entries funktionieren. Als Zusatz probieren wir noch in den nächsten Tagen, dieses Feature so umzugestalten, dass man jede einzelne Entry filtern kann. 
+Die Paging Funktion wurde von Lukas und Shansai im Frontend implementiert. Dabei hat Fabio das Backend leicht verändert, sodass es ein query parameter namens `page` abfrägt, welches die page bestimmt. Die Gesamtzahl von pages wird dabei auch zurückgegeben. Dadurch werden nur die Daten für die jeweilige Page zurückgegeben. Im Frontend ist es nun jedoch so, dass die Filtrirung mit searchbar nur für die geladenen Entries funktionieren. Als Zusatz probieren wir noch in den nächsten Tagen, dieses Feature so umzugestalten, dass man jede einzelne Entry filtern kann. 
+
+## Gesamtreflexion des Projects
+
+### Fabio
+
+### Shansai
+
+Das Projekt verlief recht gut. Wir hatten keine Probleme untereinander und konnten unsere Aufgaben gut aufteilen. Ich konnte Lukas helfen im Frontend und vice versa. Mit Fabio konnte man auch gut arbeiten, speziell die Paging Funktion. Wir hatten auch recht glück, weil wir die meisten Code Zeilen bereits Funktional programmiert haben im vorherigen Modul. Das einzige was neu dazu gekommen war, ist die "Paging" Funktion. Diese konnten Lukas und ich zusammen im Frotnend implementieren, währrend Fabio die Backend Logik dafür bereitgemacht hat.
+
+### Lukas
 
 ## Reflexion Funktionale Programmierung
 
