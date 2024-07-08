@@ -7,6 +7,7 @@ import {useRouter} from "next/navigation";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowsRotate, faEye, faEyeSlash} from "@fortawesome/free-solid-svg-icons";
 import {getCategories as getCategory} from "@/app/category/api";
+import generatePassword from "@/app/vault/PasswordGenerator";
 /*
 import {Category, GetAllCategoriesFromVault} from "@/app/vault/category";
 */
@@ -93,12 +94,6 @@ export default function NewPasswordModal({setIsRefresh, setErrorMessage}: Refres
         }
         createEntry()
     };
-
-    function generatePassword(charset: string, length: number): string {
-        if (length <= 0) return '';
-        const randomChar = charset[Math.floor(Math.random() * charset.length)];
-        return randomChar + generatePassword(charset, length - 1);
-    }
 
     return (
         <>

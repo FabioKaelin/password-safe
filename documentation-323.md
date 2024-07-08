@@ -138,6 +138,19 @@ export const categoryFilter = (searchInput : string) => (entry : CategoryWithApi
 };
 ```
 
+### Recursive Functions:
+in diesem Projekt haben wir recursive functions benutzt, um Passwörter zu generieren. Dabei haben wir die folgende Methode genutzt:
+
+`PasswordGenerator.ts`
+
+```typescript
+    function generatePassword(charset: string, length: number): string {
+        if (length <= 0) return '';
+        const randomChar = charset[Math.floor(Math.random() * charset.length)];
+        return randomChar + generatePassword(charset, length - 1);
+    }
+```
+
 ## Reflexionen
 
 ### 20.06.2024
