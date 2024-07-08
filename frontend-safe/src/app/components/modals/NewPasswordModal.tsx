@@ -73,7 +73,7 @@ export default function NewPasswordModal({setIsRefresh, setErrorMessage}: Refres
         const createEntry = async () => {
             if (entry === null)
                 setErrorMessage("Please fill in all fields")
-            
+
             if (entry.password.length < 8) {
                 setErrorMessage("Password must be at least 8 characters long")
                 return

@@ -17,11 +17,11 @@ export function sortVaultEntries({sort, toBeSorted, setSort, setFilteredEntries,
             : a[key] < b[key] ? (isASC ? -1 : 1)
                 : 0;
     })
-    setFilteredEntries({total: filteredEntries.total, page: filteredEntries.page,  passwords: [...sortedEntries]})
+    setFilteredEntries({total: filteredEntries.total, page: filteredEntries.page, passwords: [...sortedEntries]})
     setSort({...sort, [toBeSorted]: !isASC})
 }
 
-export const vaultFilter =   (searchInput : string) => (entry : Passwords) => {
+export const vaultFilter = (searchInput: string) => (entry: Passwords) => {
     return entry.title.toLowerCase().includes(searchInput.toLowerCase())
         || entry.description.toLowerCase().includes(searchInput.toLowerCase())
         || entry.url.toLowerCase().includes(searchInput.toLowerCase())
@@ -29,6 +29,6 @@ export const vaultFilter =   (searchInput : string) => (entry : Passwords) => {
         || entry.category.name.toLowerCase().includes(searchInput.toLowerCase())
 };
 
-export const categoryFilter = (searchInput : string) => (entry : CategoryWithApi) => {
+export const categoryFilter = (searchInput: string) => (entry: CategoryWithApi) => {
     return entry.name.toLowerCase().includes(searchInput.toLowerCase())
 };
