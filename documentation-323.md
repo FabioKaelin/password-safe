@@ -127,23 +127,15 @@ func passwordGet(c *gin.Context) {
 
 ### Pure Functions (Kompetenz `AG1`, `AF1`, `A1E`)
 
-Im Error Alert wird eine Pure Function verwendet. Diese Funktion gibt immer das gleiche Resultat zurück, wenn die gleichen Argumente übergeben werden. Es erhält ein Argument mit der message und diese wird angezeigt. Wenn die Message gleich bleibt, bleibt das Endresultat der Funktion auch gleich.
+Im Filtering handler benutzern wir eine Pure function. Wenn man nach einer Kategorie sucht, wird immer das gleiche Ergebnis ausgegeben, wenn der Input auch das gleiche ist. 
+Es hat auch keine Side-Effects am eigentlichen set der Entries.
 
-`ErrorAlert.tsx`:
+`FilteringHandler.ts`:
 
 ```typescript
-export default function ErrorAlert({message}: ErrorAlertProps) {
-    return (
-        <div role="alert" className="alert alert-error">
-            <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none"
-                 viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
-                      d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-            </svg>
-            <span>{message}</span>
-        </div>
-    );
-}
+export const categoryFilter = (searchInput : string) => (entry : CategoryWithApi) => {
+    return entry.name.toLowerCase().includes(searchInput.toLowerCase())
+};
 ```
 
 ## Reflexionen
