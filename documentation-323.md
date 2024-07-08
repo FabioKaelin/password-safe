@@ -77,7 +77,7 @@ func PasswordRouter(apiGroup *gin.RouterGroup) {
 }
 ```
 
-Dies ist die Funktion/Handler die an Gin (API-Framework) übergeben $wird.
+Dies ist die Funktion/Handler die an Gin (API-Framework) übergeben wird.
 
 ```go
 // passwordGet             godoc
@@ -174,9 +174,10 @@ Ich habe zusammen mit Shansai die Logik zur Erstellung von Kategorien umstruktur
 #### 04.07.2024
 
 Heute haben wir noch die restlichen Schritten zur Fertigstellung des Projekts besprochen und dementsprechend auch umgesetzt. Einer dieser Punkte war die implementierung der Pagination Logik im Frontend. 
-Die Paging Funktion wurde von Shansai implementiert. Dabei hat Fabio das Backend leicht verändert, sodass es ein query parameter namens `page` nimmt, welches die page bestimmt. Die Totale Anzahl von pages wird dabei auch zurückgegeben. Dadurch werden nur die Daten für die jeweilige Page zurückgegeben. Im Frontend ist es nun jedoch so, dass die Filtrirung mit searchbar nur für die geladenen Entries funktionieren. Als Zusatz probieren wir noch in den nächsten Tagen, dieses Feature so umzugestalten, dass man jede einzelne Entry filtern kann. 
+Die Paging Funktion wurde von Shansai im Frontend implementiert. Dabei hat Fabio das Backend leicht verändert, sodass es ein query parameter namens `page` abfrägt, welches die page bestimmt. Die Gesamtzahl von pages wird dabei auch zurückgegeben. Dadurch werden nur die Daten für die jeweilige Page zurückgegeben. Im Frontend ist es nun jedoch so, dass die Filtrirung mit searchbar nur für die geladenen Entries funktionieren. Als Zusatz probieren wir noch in den nächsten Tagen, dieses Feature so umzugestalten, dass man jede einzelne Entry filtern kann. 
 
 ## Reflexion Funktionale Programmierung
 
 Das Go Framework Gin hat die Definierung der Endpoints mit First Class Citizen ermöglicht. Dies hat uns ermöglicht, die Handler für die Endpoints zu übergeben.
 Die High Order Functions waren äusserst nützlich im Frontend, weil wir dadurch den code in the component files reduzieren konnten und die Logik in die Filtering handler files übergeben konnten. Da die Components bereits gross waren, wäre unser Code noch grösser und damit noch komplexer ohne diese High Order Functions
+Die Generierung von Passwörtern dank der rekursiven Funktion vereinfachte es uns auch, da wir dadurch keine weiteren for-loops brauchten um diese zu generieren. Dies hat uns dazu gebracht, dass wir viele Code Zeilen sparen konnten.
