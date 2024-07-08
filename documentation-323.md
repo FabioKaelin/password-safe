@@ -171,9 +171,10 @@ Ich habe heute Lukas geholfen, um unsere neue Logik von Kategorien zu implementi
 
 Ich habe zusammen mit Shansai die Logik zur Erstellung von Kategorien umstrukturiert und zusätzlich noch die Logik zur Speicherung der Kategorien in der Datenbank. Es gab manchmal kleinere Probleme und Komplikationen aber diese konnte ich dank Shansai schnell fixen.
 
-#### 04.07.2026
+#### 04.07.2024
 
-Heute haben wir noch die restlichen Schritten zur Fertigstellung des Projekts besprochen und dementsprechend auch umgesetzt. Einer dieser Punkte war die implementierung der Pagination Logik im Frontend.
+Heute haben wir noch die restlichen Schritten zur Fertigstellung des Projekts besprochen und dementsprechend auch umgesetzt. Einer dieser Punkte war die implementierung der Pagination Logik im Frontend. 
+Die Paging Funktion wurde von Shansai implementiert. Dabei hat Fabio das Backend leicht verändert, sodass es ein query parameter namens `page` nimmt, welches die page bestimmt. Die Totale Anzahl von pages wird dabei auch zurückgegeben. Dadurch werden nur die Daten für die jeweilige Page zurückgegeben. Im Frontend ist es nun jedoch so, dass die Filtrirung mit searchbar nur für die geladenen Entries funktionieren. Als Zusatz probieren wir noch in den nächsten Tagen, dieses Feature so umzugestalten, dass man jede einzelne Entry filtern kann. 
 
 ## Reflexion Funktionale Programmierung
 
