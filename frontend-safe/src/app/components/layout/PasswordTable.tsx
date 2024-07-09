@@ -118,7 +118,7 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
             setFilteredEntries(entries);
             return;
         }
-        let filtered = entries.passwords.filter(entry => entry.category?.name === categories.find(x => x.id === category)?.name);
+        let filtered = allPasswords.filter(entry => entry.category?.name === categories.find(x => x.id === category)?.name);
         setFilteredEntries({total: entries.total, page: entries.page, passwords: filtered});
     }
 
@@ -271,9 +271,12 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
                 </tr>
                 </tfoot>
             </table>
-
-            <Paging setPage={setCurrentPage} currentPage={currentPage} setEntries={setFilteredEntries}
+            {
+                filteredEntries.passwords.length == 10
+                    && <Paging setPage={setCurrentPage} currentPage={currentPage} setEntries={setFilteredEntries}
                     totalPages={entries.total}/>
+            }
+            
 
             {
                 isModalOpen && (
