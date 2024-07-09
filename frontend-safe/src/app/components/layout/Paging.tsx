@@ -1,3 +1,5 @@
+"use client"
+
 import {VaultEntry} from "@/app/vault/vaultEntry";
 import {getPasswordForUser} from "@/app/vault/api";
 

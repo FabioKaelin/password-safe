@@ -1,4 +1,4 @@
-// code has been refactored with chatgpt
+"use client"
 
 import React, {useEffect, useState} from "react";
 import {CategoryWithApi, Passwords} from "@/app/vault/vaultEntry";
