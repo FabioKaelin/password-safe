@@ -18,4 +18,4 @@ cp .env.sample .env
 
 go run main.go
 
-echo "open localhost:3001 in your browser"
+echo "open localhost:3000 in your browser"
