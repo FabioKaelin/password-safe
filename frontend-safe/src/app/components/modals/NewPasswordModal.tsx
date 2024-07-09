@@ -66,9 +66,10 @@ export default function NewPasswordModal({setIsRefresh, setErrorMessage}: Refres
         if (categoryId === "") {
             setErrorMessage("Please select a category")
         } else if (category !== undefined)
-            setEntry({...entry, category: category})
+            setEntry(prev => ({...prev, category: category}))
 
     }, [categoryId]);
+    
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
         const createEntry = async () => {
@@ -79,7 +80,12 @@ export default function NewPasswordModal({setIsRefresh, setErrorMessage}: Refres
                 setErrorMessage("Password must be at least 8 characters long")
                 return
             }
-
+            console.log(entry.password)
+            console.log(entry.url)
+            console.log(entry.username)
+            console.log(entry.title)
+            console.log(entry.description)
+            console.log(entry.category)
             if (entry.password != "" && entry.url != "" && entry.username != "" && entry.title != "" && entry.description != "" && entry.category.id != "") {
                 const resp = await createNewEntry(entry);
                 if (resp.status === 401) {

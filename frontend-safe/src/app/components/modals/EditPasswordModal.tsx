@@ -48,8 +48,9 @@ export default function EditPasswordModal({entry, isOpen, onClose, onUpdated, se
     }, [isOpen, entry]); // Update bei jeder Öffnung und bei Änderung der entry-Prop
     useEffect(() => {
         const category = categories.find(x => x.id === categoryId)
-        category !== undefined && setEditedEntry({...entry, category: category})
+        category !== undefined && setEditedEntry(prev => ({...prev, category: category}))
     }, [categoryId]);
+
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
         if (!editedEntry.id) {
@@ -63,7 +64,7 @@ export default function EditPasswordModal({entry, isOpen, onClose, onUpdated, se
                 return
             }
 
-            if (editedEntry.password != "" && editedEntry.url != "" && editedEntry.username != "" && editedEntry.title != "" && editedEntry.description != "" && editedEntry.title != "") {
+            if (editedEntry.password != "" && editedEntry.url != "" && editedEntry.username != "" && editedEntry.title != "" && editedEntry.description != "" && editedEntry.title != "" && editedEntry.category.id != "") {
                 const response = await editEntryAPI(editedEntry.id, editedEntry);
                 console.log("Update response:", response);
                 onUpdated();

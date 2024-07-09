@@ -29,6 +29,41 @@ export async function getPasswordForUser(page: number): Promise<{
 
 }
 
+export async function getAllPasswordForUser(): Promise<{
+    passwords: Promise<Passwords[]>,
+    status: number
+}> {
+    const resp = await fetch(`${BACKENDURL}passwords`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        cache: "no-cache",
+        credentials: "include",
+        mode: "cors",
+    })
+
+    if (resp.status === 200)
+        return {passwords: resp.json(), status: resp.status}
+
+    let vault: Passwords = {
+        id: "",
+        description: "",
+        password: "",
+        title: "",
+        url: "",
+        userid: "",
+        username: "",
+        category: {
+            id: "",
+            name: "",
+            userid: ""
+        }
+    } 
+    return {passwords: Promise.resolve([vault]), status: resp.status}
+
+}
+
 export async function createNewEntry(entry: Passwords): Promise<{
     vault: Promise<VaultEntry>,
     status: number
