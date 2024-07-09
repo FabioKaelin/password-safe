@@ -57,6 +57,8 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
     }
 
     useEffect(() => {
+        console.log("input")
+        console.log(searchInput)
         if (searchInput === " " || searchInput === "" || searchInput === null) {
             setFilteredEntries(entries)
             return
