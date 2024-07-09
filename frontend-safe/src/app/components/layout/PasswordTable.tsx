@@ -4,7 +4,7 @@ import React, {useEffect, useState} from "react";
 import {CategoryWithApi, Passwords, VaultEntry} from "@/app/vault/vaultEntry";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEye, faEyeSlash, faSort} from "@fortawesome/free-solid-svg-icons";
-import {deletePassword, getPasswordForUser} from "@/app/vault/api";
+import {deletePassword, getAllPasswordForUser, getPasswordForUser} from "@/app/vault/api";
 import {RefreshType} from "@/app/components/modals/NewPasswordModal";
 import DeleteConfirmation, {DeleteConfirmationProps} from "@/app/components/modals/DeleteConfirmation";
 import EditPasswordModal from "@/app/components/modals/EditPasswordModal";
@@ -12,6 +12,21 @@ import {useRouter} from "next/navigation";
 import {sortVaultEntries, vaultFilter} from "@/app/vault/FilteringHandler";
 import {getCategories} from "@/app/category/api";
 import Paging from "@/app/components/layout/Paging";
+
+let defaultPasswordModel: Passwords[] = [{
+    id: "",
+    description: "",
+    password: "",
+    title: "",
+    url: "",
+    userid: "",
+    username: "",
+    category: {
+        id: "",
+        name: "",
+        userid: ""
+    }
+}]
 
 export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
 
@@ -26,6 +41,7 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
     const [sortOrder, setSortOrder] = useState<{ [key: string]: boolean }>({});
     const [searchInput, setSearchInput] = useState<string>("");
     const [currentPage, setCurrentPage] = useState<number>(1);
+    const [allPasswords, setAllPasswords] = useState<Passwords[]>(defaultPasswordModel);
 
     const router = useRouter()
 
@@ -46,7 +62,9 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
             return
         }
         // Higher Function method
-        const res = filteredEntries.passwords.filter(vaultFilter(searchInput));
+        const res = allPasswords.filter(vaultFilter(searchInput));
+        console.log("Filtered passwords: ")
+        console.log(res)
         setFilteredEntries({total: entries.total, page: entries.page, passwords: res})
     }, [searchInput]);
 
@@ -72,6 +90,10 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
             let res: VaultEntry = {page: entriesOnly.page, total: entriesOnly.total, passwords: passwords}
             setEntries(res)
             setFilteredEntries(res)
+
+            let allPasswords = await (await getAllPasswordForUser()).passwords;
+            setAllPasswords(allPasswords)
+            
         }
         const handleCategories = async () => {
             const resp = await getCategories();
