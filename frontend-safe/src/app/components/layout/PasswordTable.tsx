@@ -172,9 +172,6 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
         setSee([...see.filter(x => x.id !== id), foundId])
     }
 
-    // TODO IMPORTANT - NPM RUN BUILdD IS FAILING
-
-    // TODO table fixed is not the way to go. when a password is too big it overlaps with the next column
     return (
         <div className="">
             <div className={"flex items-center justify-center gap-x-5"}>
@@ -199,6 +196,9 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
                         onChange={(e) => setSearchInput(e.target.value)}
                         className="px-4 py-2 mb-3 input input-bordered border border-blue-500 rounded"
                     />
+                </div>
+                <div className="tooltip tooltip-top" data-tip="Please notice, that the categories filter and the search filter cannot work parallely. ">
+                    <button className="btn">Info</button>
                 </div>
             </div>
 
