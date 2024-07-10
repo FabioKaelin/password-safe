@@ -1,7 +1,6 @@
 package passwords
 
 import (
-	"github.com/davecgh/go-spew/spew"
 	"github.com/fabiokaelin/password-safe/pkg/category"
 	"github.com/fabiokaelin/password-safe/pkg/db"
 )
@@ -111,8 +110,6 @@ func GetByUserID(userId string) ([]Password, error) {
 		if err != nil {
 			return nil, err
 		}
-
-		spew.Dump(dbPassword)
 
 		categoryObj := category.Category{}
 
