@@ -69,7 +69,7 @@ export default function NewPasswordModal({setIsRefresh, setErrorMessage}: Refres
             setEntry(prev => ({...prev, category: category}))
 
     }, [categoryId]);
-    
+
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
         const createEntry = async () => {
@@ -92,6 +92,7 @@ export default function NewPasswordModal({setIsRefresh, setErrorMessage}: Refres
                     router.push("/login");
                 }
                 setEntry(defaultModal);
+                setCategoryId("")
                 setIsOpen(false);
                 setIsRefresh(true)
             } else {
