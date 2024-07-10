@@ -3,7 +3,7 @@
 import React, {useEffect, useState} from "react";
 import {CategoryWithApi, Passwords, VaultEntry} from "@/app/vault/vaultEntry";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faEye, faEyeSlash, faSort} from "@fortawesome/free-solid-svg-icons";
+import {faEye, faEyeSlash, faL, faSort} from "@fortawesome/free-solid-svg-icons";
 import {deletePassword, getAllPasswordForUser, getPasswordForUser} from "@/app/vault/api";
 import {RefreshType} from "@/app/components/modals/NewPasswordModal";
 import DeleteConfirmation, {DeleteConfirmationProps} from "@/app/components/modals/DeleteConfirmation";
@@ -42,6 +42,7 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
     const [searchInput, setSearchInput] = useState<string>("");
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [allPasswords, setAllPasswords] = useState<Passwords[]>(defaultPasswordModel);
+    const [categoriesSetted, setCategoriesSetted] = useState<boolean>(false);
 
     const router = useRouter()
 
@@ -116,10 +117,12 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
     const handleCategoryChange = (category: string) => {
         if (category === "") {
             setFilteredEntries(entries);
+            setCategoriesSetted(false)
             return;
         }
         let filtered = allPasswords.filter(entry => entry.category?.name === categories.find(x => x.id === category)?.name);
         setFilteredEntries({total: entries.total, page: entries.page, passwords: filtered});
+        setCategoriesSetted(true)
     }
 
     const getPasswordContent = (entry: Passwords): React.JSX.Element => {
@@ -273,7 +276,7 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
             </table>
 
             {
-                filteredEntries.total > 1 && searchInput == ""
+                filteredEntries.total > 1 && searchInput == "" && !categoriesSetted
                     && <Paging setPage={setCurrentPage} currentPage={currentPage} setEntries={setFilteredEntries}
                     totalPages={entries.total}/>
             }
