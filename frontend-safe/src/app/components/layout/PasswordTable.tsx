@@ -95,7 +95,7 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
 
             let allPasswords = await (await getAllPasswordForUser()).passwords;
             setAllPasswords(allPasswords)
-            
+
         }
         const handleCategories = async () => {
             const resp = await getCategories();
@@ -271,12 +271,18 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
                 </tr>
                 </tfoot>
             </table>
-            {
+            {/* {
                 filteredEntries.passwords.length == 10
                     && <Paging setPage={setCurrentPage} currentPage={currentPage} setEntries={setFilteredEntries}
                     totalPages={entries.total}/>
             }
-            
+             */}
+            {
+                entries.total > 1
+                    && <Paging setPage={setCurrentPage} currentPage={currentPage} setEntries={setFilteredEntries}
+                    totalPages={entries.total}/>
+            }
+
 
             {
                 isModalOpen && (

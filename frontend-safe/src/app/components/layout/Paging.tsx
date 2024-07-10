@@ -26,7 +26,8 @@ export default function Paging({currentPage, totalPages, setEntries, setPage}: P
                     if (currentPage === 1) return;
                     handlePageChange(currentPage - 1)
                 }}
-                className={"px-4 py-2 bg-teal-400 text-black rounded hover:bg-teal-500 mx-5"}>
+                disabled={currentPage === 1}
+                className={"px-4 py-2 bg-teal-400 text-black rounded hover:bg-teal-500 mx-5 disabled:opacity-50"}>
                 Previous
             </button>
             <div>{currentPage} of {totalPages}</div>
@@ -35,7 +36,8 @@ export default function Paging({currentPage, totalPages, setEntries, setPage}: P
                     if (currentPage == totalPages) return;
                     handlePageChange(currentPage + 1)
                 }}
-                className={"px-4 py-2 bg-teal-400 text-black rounded hover:bg-teal-500 mx-5"}>
+                disabled={currentPage === totalPages}
+                className={"px-4 py-2 bg-teal-400 text-black rounded hover:bg-teal-500 mx-5 disabled:opacity-50"}>
                 Next
             </button>
         </div>
