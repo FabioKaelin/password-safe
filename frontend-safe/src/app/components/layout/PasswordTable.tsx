@@ -271,14 +271,9 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
                 </tr>
                 </tfoot>
             </table>
-            {/* {
-                filteredEntries.passwords.length == 10
-                    && <Paging setPage={setCurrentPage} currentPage={currentPage} setEntries={setFilteredEntries}
-                    totalPages={entries.total}/>
-            }
-             */}
+
             {
-                entries.total > 1
+                filteredEntries.total > 1 && searchInput == ""
                     && <Paging setPage={setCurrentPage} currentPage={currentPage} setEntries={setFilteredEntries}
                     totalPages={entries.total}/>
             }
