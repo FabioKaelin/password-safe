@@ -182,9 +182,11 @@ Die Paging Funktion wurde von Lukas und Shansai im Frontend implementiert. Dabei
 
 ### Shansai
 
-Das Projekt verlief recht gut. Wir hatten keine Probleme untereinander und konnten unsere Aufgaben gut aufteilen. Ich konnte Lukas helfen im Frontend und vice versa. Mit Fabio konnte man auch gut arbeiten, speziell die Paging Funktion. Wir hatten auch recht glück, weil wir die meisten Code Zeilen bereits Funktional programmiert haben im vorherigen Modul. Das einzige was neu dazu gekommen war, ist die "Paging" Funktion. Diese konnten Lukas und ich zusammen im Frotnend implementieren, währrend Fabio die Backend Logik dafür bereitgemacht hat.
+Das Projekt verlief recht gut. Wir hatten keine Probleme untereinander und konnten unsere Aufgaben gut aufteilen. Ich konnte Lukas helfen im Frontend und vice versa. Mit Fabio konnte man auch gut arbeiten, speziell die Paging Funktion. Wir hatten auch recht Glück, weil wir die meisten Code Zeilen bereits Funktional programmiert haben im vorherigen Modul. Das einzige was neu dazu gekommen war, ist die "Paging" Funktion. Diese konnten Lukas und ich zusammen im Frontend implementieren, während Fabio die Backend Logik dafür bereitgemacht hat.
 
 ### Lukas
+
+Ich bin mit dem Verlauf dieses Projekts sehr zufrieden. Die Zusammenarbeit mit Shansai und Fabio war sehr angenehm und lehrreich für mich und wir konnten unsere Aufgaben ziemlich gut einteilen. Was mir bei den Aufgaben besonders wichtig war war, dass ich auch beim Programmieren mitwirke oder es zumindest versuche. Ich wollte nicht, dass Shansai und Fabio alles alleine programmierten während ich nur kleine Texte für Dokumentationen und Reflexionen schreiben würde. Jedoch war beim Programmieren immer mein mangelndes Wissen ein grosses Hindernis. Ich war deshalb oft gezwungen Shansai oder Fabio um Rat zu fragen, da ich das Problem selbst nicht hätte lösen können oder viel zu viel Zeit dafür in Anspruch genommen hätte. Nichtsdestotrotz war das Projekt für mich ein voller Erfolg auf den wir alle wirklich stolz sein können.
 
 ## Reflexion Funktionale Programmierung
 
