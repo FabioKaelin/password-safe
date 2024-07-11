@@ -6,7 +6,6 @@
 
 Die Nutzung von High order Functions in diesem Projekt ist sehr fortgeschritten. Beispielsweise wird in der Datei: `CategoriesTable.tsx` ein useEffect gebraucht, welcher einen Filter anwendet. Dieser Filter ist eine High Order Function. Der Filter wird im `Filteringhandler.ts` definiert
 
-Zeile 29 - 31:
 Dabei wird ein Filter angwendet. `CategoriesTable.tsx`:
 
 ```typescript
