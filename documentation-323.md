@@ -31,7 +31,7 @@ Davon werden mehrere Filter verwendet in verschiedenen Dateien, wie zum Beispiel
 export const categoryFilter = (searchInput: string) => (entry: Category) => entry.name.toLowerCase().includes(searchInput.toLowerCase());
 ```
 
-### Immutable values (kind of)
+### Immutable values
 
 #### Immutable values - Beispiel 1 (Kompetenz `AG1`, `AF1`)
 
