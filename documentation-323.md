@@ -127,7 +127,7 @@ func passwordGet(c *gin.Context) {
 
 ### Pure Functions (Kompetenz `AG1`, `AF1`, `A1E`)
 
-Im Filtering handler benutzern wir eine Pure function. Wenn man nach einer Kategorie sucht, wird immer das gleiche Ergebnis ausgegeben, wenn der Input auch das gleiche ist.
+Im Filtering handler benutzen wir eine Pure function. Wenn man nach einer Kategorie sucht, wird immer das gleiche Ergebnis ausgegeben, wenn der Input auch das gleiche ist.
 Es hat auch keine Side-Effects am eigentlichen set der Entries.
 
 `FilteringHandler.ts`:
@@ -140,7 +140,7 @@ export const categoryFilter = (searchInput : string) => (entry : CategoryWithApi
 
 ### Recursive Functions
 
-in diesem Projekt haben wir recursive functions benutzt, um Passwörter zu generieren. Dabei haben wir die folgende Methode genutzt:
+In diesem Projekt haben wir recursive functions benutzt, um Passwörter zu generieren. Dabei haben wir die folgende Methode genutzt:
 
 `PasswordGenerator.ts`
 
@@ -156,13 +156,13 @@ in diesem Projekt haben wir recursive functions benutzt, um Passwörter zu gener
 
 ### 20.06.2024
 
-Wir hatten heute nichts gross am Code geändert sondern bereits die nächsten Schritte besprochen was wir beim nächsten Mal alles implementieren müssen.
+Wir hatten heute nichts grosses am Code geändert sondern bereits die nächsten Schritte besprochen was wir beim nächsten Mal alles implementieren müssen.
 
 ### 27.06.2024
 
 #### Fabio
 
-Ich habe heute die Kategorien verbessert und nun ist Kategorie eine eigene Entity. Ich habe dafür die Datenbank angepasst und alle CRUD Operationen für Kategorien implementiert. Zudem habe ich eine Paginierung für die Passwörter implementiert. Dies war einfacher als ich es zu beginn erwartet hatte.
+Ich habe heute die Kategorien verbessert und nun ist Kategorie eine eigene Entity. Ich habe dafür die Datenbank angepasst und alle CRUD Operationen für Kategorien implementiert. Zudem habe ich eine Paginierung für die Passwörter implementiert. Dies war einfacher als ich zu beginn erwartet hatte.
 
 #### Shansai
 
@@ -170,7 +170,7 @@ Ich habe heute Lukas geholfen, um unsere neue Logik von Kategorien zu implementi
 
 #### Lukas
 
-Ich habe zusammen mit Shansai die Logik zur Erstellung von Kategorien umstrukturiert und zusätzlich noch die Logik zur Speicherung der Kategorien in der Datenbank. Es gab manchmal kleinere Probleme und Komplikationen aber diese konnte ich dank Shansai schnell fixen.
+Ich habe zusammen mit Shansai die Logik zur Erstellung von Kategorien umstrukturiert und zusätzlich noch die Logik zur Speicherung der Kategorien in der Datenbank. Es gab manchmal kleinere Probleme und Komplikationen, aber diese konnte ich dank Shansai schnell fixen.
 
 #### 04.07.2024
 
@@ -185,7 +185,7 @@ Ich bin echt zufrieden damit, wie das Projekt gelaufen ist. Die Zusammenarbeit m
 
 ### Shansai
 
-Das Projekt verlief recht gut. Wir hatten keine Probleme untereinander und konnten unsere Aufgaben gut aufteilen. Ich konnte Lukas helfen im Frontend und vice versa. Mit Fabio konnte man auch gut arbeiten, speziell die Paging Funktion. Wir hatten auch recht Glück, weil wir die meisten Code Zeilen bereits Funktional programmiert haben im vorherigen Modul. Das einzige was neu dazu gekommen war, ist die "Paging" Funktion. Diese konnten Lukas und ich zusammen im Frontend implementieren, während Fabio die Backend Logik dafür bereitgemacht hat.
+Das Projekt verlief recht gut. Wir hatten keine Probleme untereinander und konnten unsere Aufgaben gut aufteilen. Ich konnte Lukas helfen im Frontend und vice versa. Mit Fabio konnte man auch gut arbeiten, speziell bei der Paging Funktion. Wir hatten auch recht Glück, weil wir die meisten Code Zeilen bereits Funktional programmiert haben im vorherigen Modul. Das einzige was neu dazu gekommen war, ist die "Paging" Funktion. Diese konnten Lukas und ich zusammen im Frontend implementieren, während Fabio die Backend Logik dafür bereitgemacht hat.
 
 ### Lukas
 
@@ -194,5 +194,5 @@ Ich bin mit dem Verlauf dieses Projekts sehr zufrieden. Die Zusammenarbeit mit S
 ## Reflexion Funktionale Programmierung
 
 Das Go Framework Gin hat die Definierung der Endpoints mit First Class Citizen ermöglicht. Dies hat uns ermöglicht, die Handler für die Endpoints zu übergeben.
-Die High Order Functions waren äusserst nützlich im Frontend, weil wir dadurch den code in the component files reduzieren konnten und die Logik in die Filtering handler files übergeben konnten. Da die Components bereits gross waren, wäre unser Code noch grösser und damit noch komplexer ohne diese High Order Functions
-Die Generierung von Passwörtern dank der rekursiven Funktion vereinfachte es uns auch, da wir dadurch keine weiteren for-loops brauchten um diese zu generieren. Dies hat uns dazu gebracht, dass wir viele Code Zeilen sparen konnten.
+Die High Order Functions waren äusserst nützlich im Frontend, weil wir dadurch den code in the component files reduzieren und die Logik in die Filtering handler files übergeben konnten. Da die Components bereits gross waren, wäre unser Code noch grösser und damit noch komplexer ohne diese High Order Functions
+Die Generierung von Passwörtern wurde durch die rekusiven Funktionen verienfacht, da wir dadurch keine weiteren for-loops brauchten um diese zu generieren. Dies hat uns dazu gebracht, dass wir viele Code Zeilen sparen konnten.
