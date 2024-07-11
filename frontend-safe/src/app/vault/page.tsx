@@ -3,7 +3,7 @@
 import Header from "@/app/components/layout/Header";
 import PasswordTable from "@/app/components/layout/PasswordTable";
 import NewPasswordModal from "@/app/components/modals/NewPasswordModal";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import ChangeMasterPassword from "@/app/components/modals/ChangeMasterPassword";
 import ErrorAlert from "@/app/components/alerts/ErrorAlert";
 import Link from "next/link";
@@ -12,6 +12,11 @@ import Link from "next/link";
 export default function Page() {
     const [isRefresh, setIsRefresh] = useState<boolean>(true)
     const [errorMessage, setErrorMessage] = useState<string>("")
+
+    useEffect(() => {
+        isRefresh &&
+            setErrorMessage("")
+    }, [isRefresh])
     return (
         <>
             <div>

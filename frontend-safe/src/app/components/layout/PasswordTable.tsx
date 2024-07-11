@@ -3,7 +3,7 @@
 import React, {useEffect, useState} from "react";
 import {CategoryWithApi, Passwords, VaultEntry} from "@/app/vault/vaultEntry";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faEye, faEyeSlash, faSort} from "@fortawesome/free-solid-svg-icons";
+import {faEye, faEyeSlash, faL, faSort} from "@fortawesome/free-solid-svg-icons";
 import {deletePassword, getAllPasswordForUser, getPasswordForUser} from "@/app/vault/api";
 import {RefreshType} from "@/app/components/modals/NewPasswordModal";
 import DeleteConfirmation, {DeleteConfirmationProps} from "@/app/components/modals/DeleteConfirmation";
@@ -42,6 +42,7 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
     const [searchInput, setSearchInput] = useState<string>("");
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [allPasswords, setAllPasswords] = useState<Passwords[]>(defaultPasswordModel);
+    const [categoriesSetted, setCategoriesSetted] = useState<boolean>(false);
 
     const router = useRouter()
 
@@ -116,10 +117,12 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
     const handleCategoryChange = (category: string) => {
         if (category === "") {
             setFilteredEntries(entries);
+            setCategoriesSetted(false)
             return;
         }
         let filtered = allPasswords.filter(entry => entry.category?.name === categories.find(x => x.id === category)?.name);
         setFilteredEntries({total: entries.total, page: entries.page, passwords: filtered});
+        setCategoriesSetted(true)
     }
 
     const getPasswordContent = (entry: Passwords): React.JSX.Element => {
@@ -169,9 +172,6 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
         setSee([...see.filter(x => x.id !== id), foundId])
     }
 
-    // TODO IMPORTANT - NPM RUN BUILdD IS FAILING
-
-    // TODO table fixed is not the way to go. when a password is too big it overlaps with the next column
     return (
         <div className="">
             <div className={"flex items-center justify-center gap-x-5"}>
@@ -196,6 +196,9 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
                         onChange={(e) => setSearchInput(e.target.value)}
                         className="px-4 py-2 mb-3 input input-bordered border border-blue-500 rounded"
                     />
+                </div>
+                <div className="tooltip tooltip-top" data-tip="Please notice, that the categories filter and the search filter cannot work parallely. ">
+                    <button className="btn">Info</button>
                 </div>
             </div>
 
@@ -271,14 +274,9 @@ export default function PasswordTable({isRefresh, setIsRefresh}: RefreshType) {
                 </tr>
                 </tfoot>
             </table>
-            {/* {
-                filteredEntries.passwords.length == 10
-                    && <Paging setPage={setCurrentPage} currentPage={currentPage} setEntries={setFilteredEntries}
-                    totalPages={entries.total}/>
-            }
-             */}
+
             {
-                entries.total > 1
+                filteredEntries.total > 1 && searchInput == "" && !categoriesSetted
                     && <Paging setPage={setCurrentPage} currentPage={currentPage} setEntries={setFilteredEntries}
                     totalPages={entries.total}/>
             }
