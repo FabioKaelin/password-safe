@@ -47,14 +47,19 @@ Unser Auftrag war es ein Password-Safe zu erstellen. Dabei sollten wir ein Front
 Das Frontend von diesem Projekt wurde mit Next.JS gestaltet. Zwar hatte jeder Erfahrung mit react, jedoch nicht mit Next.
 
 Folgende Seiten wurden gestaltet:
-| Route     | Beschreibung                                                                                                                                                                                                                                                               | Bild                                                                                                            |
-| --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
-| /         | Die Home Seite zeigt ein einfaches Interface, welches zum Sign up oder LogIn weiterleitet                                                                                                                                                                                  | ![home](https://github.com/FabioKaelin/password-safe/assets/61542805/b4b9b4ab-3b02-41f1-af88-81f999a5c236)      |
-| /login    | Um sich bei Ihrem Tresor anzumelden, gehen Sie zu 1 und geben Sie Ihren Benutzernamen und Ihr Passwort ein.                                                                                                                                                                | ![login](https://github.com/FabioKaelin/password-safe/assets/61542805/d132e60c-fb64-4f2c-b73c-0919b5d0399c)     |
-| /register | Bei der Registrierung, können Sie sich für RoboGuard registrieren                                                                                                                                                                                                          | ![register](https://github.com/FabioKaelin/password-safe/assets/61542805/3653cfe3-d4f2-4e86-95e9-4534929dbf72)  |
-| /vault    | Im Vault kann man die Passwörter sehen, erstellen und bearbeiten. Man kann sie nach Kategorien filtern und den Master Passwort kann man auf dieser Seite auch gleich wechseln                                                                                              | ![vault](https://github.com/FabioKaelin/password-safe/assets/61542805/3ff1b65d-e57d-4bc0-a5b1-b310c16bc33f)     |
-| /vault    | Im Erstellungsmodal haben Sie die Möglichkeit, neue Einträge zu erstellen. Sie können auch eine Kategorie auswählen. Beachten Sie jedoch, dass die Kategorie erst erstellt wird, sobald der Passworteintrag erstellt ist. Dasselbe gilt für das Bearbeiten eines Eintrags. | ![create](https://github.com/FabioKaelin/password-safe/assets/61542805/34a36ff1-111d-4301-a99a-db133f904182)    |
-| /about    | Beinhaltet Informationen zum Entwickler / Erfinder Team                                                                                                                                                                                                                    | ![aboutPage](https://github.com/FabioKaelin/password-safe/assets/61542805/8144561d-998b-4bfc-b83b-5fcb753da464) |
+| Route     | Beschreibung | Bild |
+| --------- | ------------ | ---- |
+| /         | Die Home Seite zeigt ein einfaches Interface, welches zum Sign up oder LogIn weiterleitet |  ![home](https://github.com/FabioKaelin/password-safe/assets/61542805/80828b3d-61eb-4723-ad8c-e93d3cdb4398)  |
+| /login    | Um sich bei Ihrem Tresor anzumelden, gehen Sie zu 1 und geben Sie Ihren Benutzernamen und Ihr Passwort ein. | ![login](https://github.com/FabioKaelin/password-safe/assets/61542805/8d27e73e-6104-48c8-9707-a70554ff7cd1) |
+| /register | Bei der Registrierung, können Sie sich für RoboGuard registrieren | ![register](https://github.com/FabioKaelin/password-safe/assets/61542805/9ac6f3bc-4898-4077-9449-adc0dda90f44) |
+| /vault    | Im Vault kann man die Passwörter sehen, erstellen und bearbeiten. Man kann sie nach Kategorien filtern und den Master Passwort kann man auf dieser Seite auch gleich wechseln | ![vault](https://github.com/FabioKaelin/password-safe/assets/61542805/46321e91-665f-42d8-be97-6cf679d16b2a) |
+| /vault    | Im Erstellungsmodal haben Sie die Möglichkeit, neue Einträge zu erstellen. Sie können auch eine Kategorie auswählen. Dasselbe gilt für das Bearbeiten eines Eintrags. | ![create](https://github.com/FabioKaelin/password-safe/assets/61542805/3d206d89-2dc0-498d-8298-8aa55984c39c) |
+| /about    | Beinhaltet Informationen zum Entwickler / Erfinder Team | ![aboutPage](https://github.com/FabioKaelin/password-safe/assets/61542805/8144561d-998b-4bfc-b83b-5fcb753da464) |
+| /category | Zum Erstellen der Kategorien | ![category](https://github.com/FabioKaelin/password-safe/assets/61542805/b150e71c-259e-49ee-a9b9-58b4968c130b) |
+
+
+
+
 
 ## Nutzung im Dev Modus
 
