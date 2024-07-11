@@ -175,13 +175,13 @@ Ich habe zusammen mit Shansai die Logik zur Erstellung von Kategorien umstruktur
 #### 04.07.2024
 
 Heute haben wir noch die restlichen Schritten zur Fertigstellung des Projekts besprochen und dementsprechend auch umgesetzt. Einer dieser Punkte war die implementierung der Pagination Logik im Frontend.
-Die Paging Funktion wurde von Lukas und Shansai im Frontend implementiert. Dabei hat Fabio das Backend leicht verändert, sodass es ein query parameter namens `page` abfrägt, welches die page bestimmt. Die Gesamtzahl von pages wird dabei auch zurückgegeben. Dadurch werden nur die Daten für die jeweilige Page zurückgegeben. Im Frontend ist es nun jedoch so, dass die Filtrirung mit searchbar nur für die geladenen Entries funktionieren. Als Zusatz probieren wir noch in den nächsten Tagen, dieses Feature so umzugestalten, dass man jede einzelne Entry filtern kann.
+Die Paging Funktion wurde von Lukas und Shansai im Frontend implementiert. Dabei hat Fabio das Backend leicht verändert, sodass es ein query parameter namens `page` abfragt, welches die page bestimmt. Die Gesamtzahl von pages wird dabei auch zurückgegeben. Dadurch werden nur die Daten für die jeweilige Page zurückgegeben. Im Frontend ist es nun jedoch so, dass die Filterung mit searchbar nur für die geladenen Entries funktionieren. Als Zusatz probieren wir noch in den nächsten Tagen, dieses Feature so umzugestalten, dass man jede einzelne Entry filtern kann.
 
 ## Gesamtreflexion des Projekts
 
 ### Fabio
 
-Ich bin echt zufrieden damit, wie das Projekt gelaufen ist. Die Zusammenarbeit mit Shansai und Lukas war super produktiv und hat Spass gemacht. Wir haben die Aufgaben gut aufgeteilt und uns gegenseitig geholfen. Besonders cool war, wie gut die Implementierung der Paging-Funktion geklappt hat. Shansai und Lukas haben das Frontend gemacht, während ich die Backend-Logik entwickelt habe. Ich habe zu beginn nicht gedacht, dass es so einfach sein würde, aber es hat super geklappt. Ich bin stolz auf das, was wir erreicht haben.
+Ich bin echt zufrieden damit, wie das Projekt gelaufen ist. Die Zusammenarbeit mit Shansai und Lukas war super produktiv und hat Spass gemacht. Wir haben die Aufgaben gut aufgeteilt und uns gegenseitig geholfen. Besonders cool war, wie gut die Implementierung der Paging-Funktion geklappt hat. Shansai und Lukas haben das Frontend gemacht, während ich die Backend-Logik entwickelt habe. Ich habe zu Beginn nicht gedacht, dass es so einfach sein würde, aber es hat super geklappt. Ich bin stolz auf das, was wir erreicht haben.
 
 ### Shansai
 
